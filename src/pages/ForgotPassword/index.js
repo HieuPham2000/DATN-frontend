@@ -11,13 +11,13 @@ const cx = classNames.bind(styles);
 
 function ForgotPassword() {
     const location = useLocation();
-    const [email, setEmail] = useState(location?.state.email || '');
+    const [email, setEmail] = useState(location?.state?.email || '');
     const [error, setError] = useState({});
 
     const handleSendRequest = () => {
         setError({
             helperText: null,
-            emailError: new MyValidateChain().validateRequireField(email, "Email").validateEmail(email).msg,
+            emailError: new MyValidateChain().validateRequireField(email, 'Email').validateEmail(email).msg,
         });
         console.log({
             email,
@@ -48,15 +48,13 @@ function ForgotPassword() {
             <ToggleMode className={cx('btn-toggle-mode')} />
             <div className={cx('form-wrapper')}>
                 <img src={forgotPwImg} alt="" className={cx('form-img')} />
-                <Typography variant="h3" mb={2}>
+                <Typography variant="h3" textAlign='center' mb={2}>
                     Forgot your password?
                 </Typography>
-                <div className={cx('register-wrapper')}>
-                    <Typography variant="body1" color="text.secondary">
-                        Please enter the email address associated with your account. We will email you a link to reset
-                        your password.
-                    </Typography>
-                </div>
+                <Typography variant="body1" color="text.secondary" textAlign='center'>
+                    Please enter the email address associated with your account. We will email you a link to reset your
+                    password.
+                </Typography>
                 <TextField
                     id="txtEmail"
                     type="email"
