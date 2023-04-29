@@ -32,6 +32,14 @@
         .bg-img {
             width: 100%;
         }
+
+        .logo-img {
+            position: absolute;
+            top: 0px;
+            left: 10px;
+            width: 100px;
+            height: 100px;
+        }
     }
 
     @media screen and (max-width: 768px) {

@@ -38,6 +38,14 @@
             max-width: 100%;
             height: auto;
         }
+
+        .logo-img {
+            position: absolute;
+            top: 0px;
+            left: 10px;
+            width: 100px;
+            height: 100px;
+        }
     }
 
     @media screen and (max-width: 768px) {

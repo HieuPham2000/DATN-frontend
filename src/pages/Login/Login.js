@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { InputAdornment, IconButton, Button, Link, Typography, TextField, Box, useTheme } from '@mui/material';
+import { InputAdornment, IconButton, Button, Link, Typography, TextField, Box } from '@mui/material';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 import classNames from 'classnames/bind';
-import { ThemeName } from '~/scripts/common/constant';
 import loginImg from '~/assets/images/login-img.svg';
+import logoImg from '~/assets/logos/logo-with-text.png';
 import styles from './Login.module.scss';
-import ToggleMode from '~/components/ToggleMode';
-import { MyValidateChain } from '~/scripts/common/validate-form';
+import ToggleMode from '~/components/ToggleDarkMode';
+import { MyValidateChain } from '~/utils/common/validate-form';
+import { useDarkMode } from '~/stores';
 
 const cx = classNames.bind(styles);
 
 function Login() {
-    // const [isRemember, setRemember] = useState(false);
-    const theme = useTheme();
+    const isDarkMode = useDarkMode((state) => state.enabledState);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -72,7 +72,8 @@ function Login() {
             className={cx('wrapper')}
         >
             <ToggleMode className={cx('btn-toggle-mode')} />
-            <div className={cx('left-wrapper', theme.palette.mode === ThemeName.Dark && 'dark-mode')}>
+            <div className={cx('left-wrapper', isDarkMode && 'dark-mode')}>
+                <img className={cx('logo-img')} src={logoImg} alt="" />
                 <Typography variant="h3" m={2}>
                     Hi, welcome back!
                 </Typography>
@@ -80,7 +81,7 @@ function Login() {
             </div>
             <div className={cx('right-wrapper')}>
                 <Typography variant="h4" mb={2}>
-                    Log in to PVO
+                    Log in to HUST PVO
                 </Typography>
                 <div className={cx('register-wrapper')}>
                     <Typography variant="body2">New user?</Typography>
@@ -163,7 +164,7 @@ function Login() {
                     fullWidth
                     onClick={handleLogin}
                 >
-                    Login
+                    Log in
                 </Button>
             </div>
         </Box>

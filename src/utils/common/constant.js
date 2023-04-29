@@ -13,4 +13,8 @@ const ThemeName = {
     Dark: 'dark',
 };
 
-export { REGEX_TEST_EMAIL, REGEX_TEST_PASSWORD, ThemeName };
+const LocalStorageKey = {
+    DarkModeEnabled: 'dark-mode-enabled',
+};
+
+export { REGEX_TEST_EMAIL, REGEX_TEST_PASSWORD, ThemeName, LocalStorageKey };

@@ -1,12 +1,16 @@
-const getDesignTheme = (mode) => ({
+import { ThemeName } from '~/utils/common/constant';
+
+const getDesignTheme = (darkModeEnabled) => ({
     palette: {
-        mode,
-        ...(mode === 'dark' ? {
-          background: {
-            default: '#161C24',
-            paper: '#161C24',
-          }
-        } : {}),
+        mode: darkModeEnabled ? ThemeName.Dark : ThemeName.Light,
+        ...(darkModeEnabled
+            ? {
+                  background: {
+                      default: '#161C24',
+                      paper: '#161C24',
+                  },
+              }
+            : {}),
         primary: {
             light: '#5BE584',
             main: '#00AB55',

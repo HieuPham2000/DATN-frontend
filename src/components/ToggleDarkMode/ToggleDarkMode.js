@@ -1,19 +1,20 @@
 import { styled } from '@mui/material/styles';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { ThemeName } from '~/scripts/common/constant';
-import { useContext } from 'react';
-import { GlobalThemeContext } from '~/components/GlobalTheme';
+import { ThemeName } from '~/utils/common/constant';
+import { useDarkMode } from '~/stores';
 
-const ToggleMode = ({ children, ...props }) => {
-    const [themeName, toggleTheme] = useContext(GlobalThemeContext);
+const ToggleDarkMode = ({ children, ...props }) => {
+    const darkModeState = useDarkMode((state) => state.enabledState);
+    const setDarkModeState = useDarkMode((state) => state.setEnabledState);
+
     return (
         <FormControlLabel
             control={<MaterialUISwitch sx={{ m: 1 }} />}
             {...props}
             label=""
-            checked={themeName === ThemeName.Dark}
-            onChange={toggleTheme}
+            checked={darkModeState === true}
+            onChange={() => setDarkModeState(!darkModeState)}
         />
     );
 };
@@ -65,4 +66,4 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     },
 }));
 
-export default ToggleMode;
+export default ToggleDarkMode;

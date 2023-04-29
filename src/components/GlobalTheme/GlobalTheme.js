@@ -1,31 +1,14 @@
-import { useState, createContext, useMemo } from 'react';
-import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles';
-import { getDesignTheme } from '~/scripts/base/theme';
-import { ThemeName } from '~/scripts/common/constant';
-
-export const GlobalThemeContext = createContext();
+import { useMemo } from 'react';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { getDesignTheme } from '~/utils/base/theme';
+import { useDarkMode } from '~/stores';
 
 function GlobalTheme({ children }) {
-    // const theme = useMemo(() => responsiveFontSizes(createTheme(getDesignTheme(mode))), [mode]);
-    // return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+    const darkModeState = useDarkMode((state) => state.enabledState);
 
-    const [themeName, setThemeName] = useState(() => {
-        let currentThemeName = localStorage.getItem("themeName") || ThemeName.Light;
-        return currentThemeName;
-    });
-
-    const toggleTheme = () => {
-        let newThemeName = themeName === ThemeName.Light ? ThemeName.Dark : ThemeName.Light;
-        localStorage.setItem("themeName", newThemeName);
-        setThemeName(newThemeName);
-    };
     // const theme = useMemo(() => responsiveFontSizes(createTheme(getDesignTheme(themeName))), [themeName]);
-    const theme = useMemo(() => createTheme(getDesignTheme(themeName)), [themeName]);
-    return (
-        <GlobalThemeContext.Provider value={[themeName, toggleTheme]}>
-            <ThemeProvider theme={theme}>{children}</ThemeProvider>
-        </GlobalThemeContext.Provider>
-    );
+    const theme = useMemo(() => createTheme(getDesignTheme(darkModeState)), [darkModeState]);
+    return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }
 
 export default GlobalTheme;

@@ -4,8 +4,8 @@ import { Button, Typography, TextField, Box } from '@mui/material';
 import classNames from 'classnames/bind';
 import forgotPwImg from '~/assets/images/forgot-pw.svg';
 import styles from './ForgotPassword.module.scss';
-import ToggleMode from '~/components/ToggleMode';
-import { MyValidateChain } from '~/scripts/common/validate-form';
+import ToggleMode from '~/components/ToggleDarkMode';
+import { MyValidateChain } from '~/utils/common/validate-form';
 
 const cx = classNames.bind(styles);
 
@@ -48,10 +48,10 @@ function ForgotPassword() {
             <ToggleMode className={cx('btn-toggle-mode')} />
             <div className={cx('form-wrapper')}>
                 <img src={forgotPwImg} alt="" className={cx('form-img')} />
-                <Typography variant="h3" textAlign='center' mb={2}>
+                <Typography variant="h3" textAlign="center" mb={2}>
                     Forgot your password?
                 </Typography>
-                <Typography variant="body1" color="text.secondary" textAlign='center'>
+                <Typography variant="body1" color="text.secondary" textAlign="center">
                     Please enter the email address associated with your account. We will email you a link to reset your
                     password.
                 </Typography>

@@ -1,18 +1,19 @@
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { InputAdornment, IconButton, Button, Link, Typography, TextField, Box, useTheme } from '@mui/material';
+import { InputAdornment, IconButton, Button, Link, Typography, TextField, Box } from '@mui/material';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 import classNames from 'classnames/bind';
-import { ThemeName } from '~/scripts/common/constant';
 import registerImg from '~/assets/images/register-img.svg';
+import logoImg from '~/assets/logos/logo-with-text.png';
 import styles from './Register.module.scss';
-import ToggleMode from '~/components/ToggleMode';
-import { MyValidateChain } from '~/scripts/common/validate-form';
+import ToggleMode from '~/components/ToggleDarkMode';
+import { MyValidateChain } from '~/utils/common/validate-form';
+import { useDarkMode } from '~/stores';
 
 const cx = classNames.bind(styles);
 
 function Register() {
-    const theme = useTheme();
+    const isDarkMode = useDarkMode((state) => state.enabledState);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rePassword, setRePassword] = useState('');
@@ -94,11 +95,12 @@ function Register() {
             className={cx('wrapper')}
         >
             <ToggleMode className={cx('btn-toggle-mode')} />
-            <div className={cx('left-wrapper', theme.palette.mode === ThemeName.Dark && 'dark-mode')}>
-                <Typography variant="h3" className={cx('title-info')}>
+            <div className={cx('left-wrapper', isDarkMode && 'dark-mode')}>
+                <img className={cx('logo-img')} src={logoImg} alt="" />
+                <Typography variant="h4" className={cx('title-info')}>
                     Organize your vocabulary
                     <br />
-                    in a personalized way with PVO
+                    in a personalized way with HUST PVO
                 </Typography>
                 <img className={cx('bg-img')} src={registerImg} alt="" />
             </div>

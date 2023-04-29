@@ -1,4 +1,4 @@
-import { REGEX_TEST_EMAIL, REGEX_TEST_PASSWORD } from '~/scripts/common/constant';
+import { REGEX_TEST_EMAIL, REGEX_TEST_PASSWORD } from '~/utils/common/constant';
 
 const MyValidateChain = function () {
     this.valid = true;
@@ -55,7 +55,7 @@ MyValidateChain.prototype.validateMatchField = function (value1, value2, display
         return this;
     }
     if (value1 !== value2) {
-        debugger
+        debugger;
         return this.onError(`${displayFieldNames || 'Fields'} don't match.`);
     }
     return this.onValid();

@@ -3,7 +3,7 @@ import { Button, Typography, Box } from '@mui/material';
 import classNames from 'classnames/bind';
 import pageImg from '~/assets/images/page500.svg';
 import styles from './Page500.module.scss';
-import ToggleMode from '~/components/ToggleMode';
+import ToggleMode from '~/components/ToggleDarkMode';
 
 const cx = classNames.bind(styles);
 
