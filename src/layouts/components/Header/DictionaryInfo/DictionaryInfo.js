@@ -13,13 +13,15 @@ function DictionaryInfo({ small }) {
                     <DictionaryIcon color="primary" className={cx('ic-dictionary')} />
                 </Button>
             </Tooltip>
-            <Tooltip title="Current dictionary: My first PVO. Change?">
-                <Button className={cx('wrapper-item', 'wrapper-txt-dictionary')} component={Link} to="/dictionary">
-                    <div className={cx('dictionary-name')}>My first PVO</div>
-                    <div style={{ flex: 1 }}></div>
-                    <ChangeDictionaryIcon color="primary" className={cx('ic-change')} />
-                </Button>
-            </Tooltip>
+            {!small && (
+                <Tooltip title="Current dictionary: My first PVO. Change?">
+                    <Button className={cx('wrapper-item', 'wrapper-txt-dictionary')} component={Link} to="/dictionary">
+                        <div className={cx('dictionary-name')}>My first PVO</div>
+                        <div style={{ flex: 1 }}></div>
+                        <ChangeDictionaryIcon color="primary" className={cx('ic-change')} />
+                    </Button>
+                </Tooltip>
+            )}
         </div>
     );
 }

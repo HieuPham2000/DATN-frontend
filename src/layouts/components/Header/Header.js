@@ -21,7 +21,10 @@ function Header({ toggleDrawer }) {
     // 1. width < sm: lúc này sidebar nằm trong drawer, nhưng màn bé => hiển thị kiểu small dictionary info
     // 2. sm <= width < lg: lúc này sidebar nằm trong drawer, nhưng màn to tương đối => hiển thị kiểu full dictionary info
     // 3. width > lg: lúc này sidebar không ở trong drawer, có thể collapse => hiển thị kiểu small khi sidebar không bị collapse
-    const isSmallDictionaryInfo = (windowSize.width < HUSTConstant.WindowSize.Sm) || (windowSize.width >= HUSTConstant.WindowSize.Lg && !isCollapsedSidebar);
+    const isSmallDictionaryInfo =
+        windowSize.width < HUSTConstant.WindowSize.Sm ||
+        (windowSize.width >= HUSTConstant.WindowSize.Lg && !isCollapsedSidebar);
+
     return (
         <header className={cx('wrapper')}>
             <div className={cx('wrapper-left')}>
