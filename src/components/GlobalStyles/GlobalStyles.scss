@@ -9,6 +9,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scrollbar-width: thin;
 }
 
 html {
@@ -21,4 +22,17 @@ body {
     line-height: 1.5;
     color: $grey800;
     text-rendering: optimizeSpeed;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(224, 224, 224, 0.68);
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(224, 224, 224, 0.26);
 }
