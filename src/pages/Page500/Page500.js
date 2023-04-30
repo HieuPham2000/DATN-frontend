@@ -25,7 +25,7 @@ function Page500() {
                     size="large"
                     fullWidth
                     component={RouterLink}
-                    to="/login"
+                    to="/"
                 >
                     Back to Home
                 </Button>
