@@ -1,42 +1,42 @@
 import {
-    LibraryBooks as DictionaryIcon,
-    Dashboard as DashboardIcon,
-    Category as ConceptIcon,
-    StickyNote2 as ExampleIcon,
-    Search as SearchIcon,
-    AccountTree as TreeIcon,
+    LibraryBooksTwoTone as DictionaryIcon,
+    DashboardTwoTone as DashboardIcon,
+    CategoryTwoTone as ConceptIcon,
+    StickyNote2TwoTone as ExampleIcon,
+    SearchTwoTone as SearchIcon,
+    AccountTreeTwoTone as TreeIcon,
 } from '@mui/icons-material';
 
 const menuList = [
     {
         text: 'Dictionary',
         icon: DictionaryIcon,
-        link: null,
+        link: '/dictionary',
     },
     {
         text: 'Dashboard',
         icon: DashboardIcon,
-        link: null,
+        link: '/dashboard',
     },
     {
         text: 'Add concept',
         icon: ConceptIcon,
-        link: null,
+        link: '/concept',
     },
     {
         text: 'Add example',
         icon: ExampleIcon,
-        link: null,
+        link: '/example',
     },
     {
         text: 'Search',
         icon: SearchIcon,
-        link: null,
+        link: '/search',
     },
     {
         text: 'View tree',
         icon: TreeIcon,
-        link: null,
+        link: '/tree',
     },
 ];
 

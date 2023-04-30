@@ -1,10 +1,12 @@
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip, Typography } from '@mui/material';
 import styles from './Menu.module.scss';
 import classNames from 'classnames/bind';
 import menuList from '~/utils/base/menuList';
+import { NavLink, useLocation } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function Menu({ collapsed }) {
+    const { pathname } = useLocation();
     return (
         <List className={cx('menu-list', { collapsed: collapsed })}>
             {menuList
@@ -14,15 +16,34 @@ function Menu({ collapsed }) {
 
                     return (
                         <ListItem key={menuItem.text} className={cx('menu-item')}>
-                            <ListItemButton className={cx('menu-item-btn')}>
-                                {menuItem.icon && (
-                                    <ListItemIcon className={cx('menu-item-btn-icon')}>
-                                        <MenuItemIcon />
-                                    </ListItemIcon>
-                                )}
+                            <Tooltip title={collapsed ? menuItem.text : ''} placement="right">
+                                <ListItemButton
+                                    className={cx('menu-item-btn', { active: pathname === menuItem.link })}
+                                    component={NavLink}
+                                    to={menuItem.link}
 
-                                {!collapsed && <ListItemText primary={menuItem.text} />}
-                            </ListItemButton>
+                                    // style={({ isActive }) =>
+                                    //     isActive
+                                    //         ? {
+                                    //               backgroundColor: 'lightgray',
+                                    //           }
+                                    //         : null
+                                    // }
+                                    // sx={{ '&.active': { background: 'primary' } }}
+                                >
+                                    {menuItem.icon && (
+                                        <ListItemIcon className={cx('menu-item-btn-icon')}>
+                                            <MenuItemIcon className={cx('icon')} />
+                                        </ListItemIcon>
+                                    )}
+
+                                    {!collapsed && (
+                                        <ListItemText className={cx('menu-item-btn-text')}>
+                                            <Typography variant="body2">{menuItem.text}</Typography>
+                                        </ListItemText>
+                                    )}
+                                </ListItemButton>
+                            </Tooltip>
                         </ListItem>
                     );
                 })}
