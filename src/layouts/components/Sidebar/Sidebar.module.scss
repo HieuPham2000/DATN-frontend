@@ -9,7 +9,6 @@
     position: relative;
 
     .logo-wrapper {
-        // background-color: orange;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -25,6 +24,7 @@
     .dictionary-info-wrapper {
         width: 90%;
         margin: 0 auto;
+        margin-bottom: 10px;
     }
 
     .btn-collapse {
@@ -39,10 +39,35 @@
         z-index: 100;
     }
 
+    .menu-wrapper {
+        overflow: auto;
+    }
+
     &.collapsed {
-        width: 50px;
+        width: 53px;
+
+        .logo-wrapper {
+            display: none;
+        }
+
+        .dictionary-info-wrapper {
+            display: none;
+        }
+
+        .menu-wrapper {
+            margin-top: 80px;
+        }
+
         .ic-arrow {
             transform: rotate(180deg);
+        }
+    }
+
+    &.inside-drawer {
+        border-right: none;
+
+        .btn-collapse {
+            display: none;
         }
     }
 }

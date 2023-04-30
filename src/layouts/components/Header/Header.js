@@ -1,19 +1,27 @@
-import classNames from 'classnames/bind';
+import { memo } from 'react';
 import { Avatar, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import classNames from 'classnames/bind';
 
-import { stringAvatar } from '~/utils/common/common';
 import styles from './Header.module.scss';
+import { stringAvatar } from '~/utils/common/common';
 import ToggleDarkMode from '~/components/ToggleDarkMode';
-import useWindowSize from '~/hooks/useWindowSize';
 import HUSTConstant from '~/utils/common/constant';
-import { memo } from 'react';
 import DictionaryInfo from '~/layouts/components/Header/DictionaryInfo';
+import useWindowSize from '~/hooks/useWindowSize';
+import { useCollapseSidebar } from '~/stores';
 
 const cx = classNames.bind(styles);
 
 function Header({ toggleDrawer }) {
+    const isCollapsedSidebar = useCollapseSidebar((state) => state.collapsed);
     const windowSize = useWindowSize();
+
+    // Có 3 khoảng:
+    // 1. width < sm: lúc này sidebar nằm trong drawer, nhưng màn bé => hiển thị kiểu small dictionary info
+    // 2. sm <= width < lg: lúc này sidebar nằm trong drawer, nhưng màn to tương đối => hiển thị kiểu full dictionary info
+    // 3. width > lg: lúc này sidebar không ở trong drawer, có thể collapse => hiển thị kiểu small khi sidebar không bị collapse
+    const isSmallDictionaryInfo = (windowSize.width < HUSTConstant.WindowSize.Sm) || (windowSize.width >= HUSTConstant.WindowSize.Lg && !isCollapsedSidebar);
     return (
         <header className={cx('wrapper')}>
             <div className={cx('wrapper-left')}>
@@ -28,8 +36,7 @@ function Header({ toggleDrawer }) {
                         <div className={cx('dictionary-name')}>My first PVO</div>
                     </Button>
                 </Tooltip> */}
-                {/* <DictionaryInfo onlyShowIcon={windowSize.width < HUSTConstant.WindowSize.Sm} /> */}
-                <DictionaryInfo onlyShowIcon />
+                <DictionaryInfo small={isSmallDictionaryInfo} />
             </div>
             <div className={cx('wrapper-right')}>
                 <ToggleDarkMode />

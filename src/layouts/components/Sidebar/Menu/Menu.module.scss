@@ -1,0 +1,18 @@
+.menu-list {
+
+    &.collapsed {
+        .menu-item {
+            padding-left: 0;
+            padding-right: 0;
+
+            .menu-item-btn {
+                padding-left: 14px;
+                padding-right: 14px;
+
+                .menu-item-btn-icon {
+                    min-width: 24px;
+                }
+            }
+        }
+    }
+}

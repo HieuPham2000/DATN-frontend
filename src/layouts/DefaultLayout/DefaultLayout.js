@@ -1,11 +1,13 @@
-import Header from '../components/Header/Header';
-import Sidebar from '../components/Sidebar/Sidebar';
-import classNames from 'classnames/bind';
-import styles from './DefaultLayout.module.scss';
-import { Drawer } from '@mui/material';
 import { useCallback, useState } from 'react';
+import { Drawer } from '@mui/material';
+import classNames from 'classnames/bind';
+
+import styles from './DefaultLayout.module.scss';
 import useWindowSize from '~/hooks/useWindowSize';
 import HUSTConstant from '~/utils/common/constant';
+import Header from '../components/Header/Header';
+import Sidebar from '../components/Sidebar/Sidebar';
+
 const cx = classNames.bind(styles);
 
 function DefaultLayout({ children }) {
@@ -26,10 +28,12 @@ function DefaultLayout({ children }) {
         <div className={cx('wrapper')}>
             {windowSize.width < HUSTConstant.WindowSize.Lg ? (
                 <Drawer anchor="left" open={showDrawer} onClose={toggleDrawer(false)}>
-                    <Sidebar />
+                    <Sidebar insideDrawer />
                 </Drawer>
             ) : (
-                <Sidebar />
+                <div className={cx('wrapper-left')}>
+                    <Sidebar />
+                </div>
             )}
             <div className={cx('wrapper-right')}>
                 <Header toggleDrawer={toggleDrawer(true)} />

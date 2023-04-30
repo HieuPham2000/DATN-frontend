@@ -1,12 +1,18 @@
 import {
+    LibraryBooks as DictionaryIcon,
     Dashboard as DashboardIcon,
-    Abc as ConceptIcon,
+    Category as ConceptIcon,
     StickyNote2 as ExampleIcon,
     Search as SearchIcon,
     AccountTree as TreeIcon,
 } from '@mui/icons-material';
 
 const menuList = [
+    {
+        text: 'Dictionary',
+        icon: DictionaryIcon,
+        link: null,
+    },
     {
         text: 'Dashboard',
         icon: DashboardIcon,
