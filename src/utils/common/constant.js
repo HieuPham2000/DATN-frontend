@@ -17,4 +17,20 @@ const LocalStorageKey = {
     DarkModeEnabled: 'dark-mode-enabled',
 };
 
+const WindowSize = {
+    Xs: 0,
+    Sm: 576,
+    Md: 768,
+    Lg: 992,
+    Xl: 1200,
+};
+
+const HUSTConstant = {
+    ThemeName,
+    LocalStorageKey,
+    WindowSize,
+};
+
+export default HUSTConstant;
+
 export { REGEX_TEST_EMAIL, REGEX_TEST_PASSWORD, ThemeName, LocalStorageKey };

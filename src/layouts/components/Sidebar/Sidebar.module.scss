@@ -1,0 +1,48 @@
+@import '../../../scss/variables';
+
+.wrapper {
+    width: 250px;
+    height: 100vh;
+    border-right: 1px dashed $border-color;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .logo-wrapper {
+        // background-color: orange;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 20px 10px;
+
+        .logo-img {
+            width: 80%;
+            height: auto;
+        }
+    }
+
+    .dictionary-info-wrapper {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .btn-collapse {
+        position: absolute !important;
+        top: 48px;
+        right: 0;
+        transform: translateX(50%);
+        width: 30px;
+        height: 30px;
+        border: 1px dashed $border-color !important;
+        backdrop-filter: blur(6px);
+        z-index: 100;
+    }
+
+    &.collapsed {
+        width: 50px;
+        .ic-arrow {
+            transform: rotate(180deg);
+        }
+    }
+}
