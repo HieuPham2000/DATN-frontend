@@ -5,6 +5,8 @@
     align-items: center;
     justify-self: center;
     position: relative;
+    border-radius: 12px;
+    background-color: $box-bg-active;
 
     .wrapper-txt-dictionary {
         flex: 1;
@@ -14,11 +16,9 @@
         align-items: flex-start;
         text-transform: none;
         color: inherit;
-        background-color: $border-color;
-        border-radius: 12px;
 
         .dictionary-label {
-            font-size: 11px;
+            font-size: 1.2rem;
             font-weight: 400;
         }
 

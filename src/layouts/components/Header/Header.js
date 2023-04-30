@@ -30,12 +30,6 @@ function Header({ toggleDrawer }) {
                         <MenuIcon />
                     </IconButton>
                 )}
-                {/* <Tooltip title="Current dictionary: My first PVO">
-                    <Button className={cx('wrapper-dictionary')}>
-                        <BookIcon color="primary" />
-                        <div className={cx('dictionary-name')}>My first PVO</div>
-                    </Button>
-                </Tooltip> */}
                 <DictionaryInfo small={isSmallDictionaryInfo} />
             </div>
             <div className={cx('wrapper-right')}>

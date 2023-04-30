@@ -17,28 +17,6 @@
     .btn-toggle-drawer {
         margin-right: 8px;
     }
-
-    .wrapper-dictionary {
-        width: 300px;
-        padding: 10px 14px;
-        border-radius: 4px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        border: 1px dashed $border-color;
-
-        .dictionary-name {
-            margin-left: 8px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            text-transform: none;
-        }
-
-        &:hover {
-            border-color: $border-color;
-        }
-    }
 }
 
 .wrapper-right {
