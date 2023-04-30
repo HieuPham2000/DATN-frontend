@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { InputAdornment, IconButton, Button, Link, Typography, TextField, Box } from '@mui/material';
+import { InputAdornment, IconButton, Button, Link, Typography, TextField } from '@mui/material';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 import classNames from 'classnames/bind';
 import registerImg from '~/assets/images/register-img.svg';
@@ -87,13 +87,7 @@ function Register() {
     };
 
     return (
-        <Box
-            sx={{
-                bgcolor: 'background.default',
-                color: 'text.primary',
-            }}
-            className={cx('wrapper')}
-        >
+        <div className={cx('wrapper')}>
             <ToggleMode className={cx('btn-toggle-mode')} />
             <div className={cx('left-wrapper', isDarkMode && 'dark-mode')}>
                 <img className={cx('logo-img')} src={logoImg} alt="" />
@@ -201,7 +195,7 @@ function Register() {
                     Create Account
                 </Button>
             </div>
-        </Box>
+        </div>
     );
 }
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { InputAdornment, IconButton, Button, Link, Typography, TextField, Box } from '@mui/material';
+import { InputAdornment, IconButton, Button, Link, Typography, TextField } from '@mui/material';
 import { VisibilityOff, Visibility } from '@mui/icons-material';
 import classNames from 'classnames/bind';
 import loginImg from '~/assets/images/login-img.svg';
@@ -64,17 +64,11 @@ function Login() {
     };
 
     return (
-        <Box
-            sx={{
-                bgcolor: 'background.default',
-                color: 'text.primary',
-            }}
-            className={cx('wrapper')}
-        >
+        <div className={cx('wrapper')}>
             <ToggleMode className={cx('btn-toggle-mode')} />
             <div className={cx('left-wrapper', isDarkMode && 'dark-mode')}>
                 <img className={cx('logo-img')} src={logoImg} alt="" />
-                <Typography variant="h3" m={2}>
+                <Typography variant="h4" m={2}>
                     Hi, welcome back!
                 </Typography>
                 <img className={cx('bg-img')} src={loginImg} alt="" />
@@ -167,7 +161,7 @@ function Login() {
                     Log in
                 </Button>
             </div>
-        </Box>
+        </div>
     );
 }
 

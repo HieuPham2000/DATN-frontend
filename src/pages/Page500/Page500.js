@@ -1,5 +1,5 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { Button, Typography, Box } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import classNames from 'classnames/bind';
 import pageImg from '~/assets/images/page500.svg';
 import styles from './Page500.module.scss';
@@ -9,13 +9,7 @@ const cx = classNames.bind(styles);
 
 function Page500() {
     return (
-        <Box
-            sx={{
-                bgcolor: 'background.default',
-                color: 'text.primary',
-            }}
-            className={cx('wrapper')}
-        >
+        <div className={cx('wrapper')}>
             <ToggleMode className={cx('btn-toggle-mode')} />
             <div className={cx('form-wrapper')}>
                 <Typography variant="h3" textAlign="center" mb={2}>
@@ -36,7 +30,7 @@ function Page500() {
                     Back to Home
                 </Button>
             </div>
-        </Box>
+        </div>
     );
 }
 
