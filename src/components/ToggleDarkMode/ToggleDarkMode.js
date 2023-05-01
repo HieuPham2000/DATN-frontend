@@ -20,6 +20,7 @@ const ToggleDarkMode = ({ children, ...props }) => {
 };
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
+    transform: 'scale(0.9)',
     width: 62,
     height: 34,
     padding: 7,
