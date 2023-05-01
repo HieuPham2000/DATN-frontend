@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { InputAdornment, IconButton, Button, Link, Typography, TextField } from '@mui/material';
-import { VisibilityOff, Visibility } from '@mui/icons-material';
+import { Button, Link, Typography, TextField } from '@mui/material';
 import classNames from 'classnames/bind';
+
 import loginImg from '~/assets/images/login-img.svg';
 import logoImg from '~/assets/logos/logo-with-text.png';
 import styles from './Login.module.scss';
-import ToggleMode from '~/components/ToggleDarkMode';
 import { MyValidateChain } from '~/utils/common/validate-form';
 import { useDarkMode } from '~/stores';
+import ToggleMode from '~/components/ToggleDarkMode';
+import PasswordTextField from '~/components/PasswordTextField';
 
 const cx = classNames.bind(styles);
 
@@ -16,7 +17,6 @@ function Login() {
     const isDarkMode = useDarkMode((state) => state.enabledState);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState({});
 
     const handleLogin = () => {
@@ -57,12 +57,6 @@ function Login() {
         setPassword(newValue);
     };
 
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-    const handleMouseDownPassword = (e) => {
-        e.preventDefault();
-    };
-
     return (
         <div className={cx('wrapper')}>
             <ToggleMode className={cx('btn-toggle-mode')} />
@@ -95,30 +89,9 @@ function Login() {
                     helperText={error.emailError}
                     onChange={(e) => handleSetEmail(e.target.value)}
                 />
-                <TextField
+                <PasswordTextField
                     id="txtPassword"
-                    type={showPassword ? 'text' : 'password'}
                     label="Password"
-                    margin="normal"
-                    fullWidth
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    edge="end"
-                                >
-                                    {showPassword ? (
-                                        <Visibility fontSize="small" />
-                                    ) : (
-                                        <VisibilityOff fontSize="small" />
-                                    )}
-                                </IconButton>
-                            </InputAdornment>
-                        ),
-                    }}
                     value={password}
                     error={!!error.passwordError}
                     title={error.passwordError}
