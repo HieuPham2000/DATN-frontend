@@ -1,5 +1,7 @@
 import { useCallback, useState } from 'react';
-import { Drawer } from '@mui/material';
+import { Drawer, Fab, Tooltip } from '@mui/material';
+import { AutoStoriesTwoTone as DictionaryIcon } from '@mui/icons-material';
+
 import classNames from 'classnames/bind';
 
 import styles from './DefaultLayout.module.scss';
@@ -38,6 +40,11 @@ function DefaultLayout({ children }) {
             <div className={cx('wrapper-right')}>
                 <Header toggleDrawer={toggleDrawer(true)} />
                 <main className={cx('content')}>{children}</main>
+                <Fab aria-label="View all concepts" className={cx('btn-fab')}>
+                    <Tooltip title="View all concepts in this dictionary">
+                        <DictionaryIcon color="primary" className={cx('btn-fab-icon')} />
+                    </Tooltip>
+                </Fab>
             </div>
         </div>
     );

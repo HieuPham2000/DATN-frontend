@@ -15,4 +15,23 @@
             padding: 20px;
         }
     }
+
+    .btn-fab {
+        position: fixed;
+        border-radius: 50%;
+        bottom: 24px;
+        right: 24px;
+        z-index: 999;
+        backdrop-filter: blur(6px);
+        background-color: $box-bg-active;
+        color: $primary-main;
+
+        &:hover {
+            background-color: $box-bg-active;
+
+            .btn-fab-icon {
+                transform: scale(1.06);
+            }
+        }
+    }
 }
