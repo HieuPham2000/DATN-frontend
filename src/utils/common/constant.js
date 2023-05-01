@@ -25,10 +25,18 @@ const WindowSize = {
     Xl: 1200,
 };
 
+const ValidateType = {
+    Required: 'required',
+    Email: 'email',
+    Password: 'password',
+    Match: 'match'
+};
+
 const HUSTConstant = {
     ThemeName,
     LocalStorageKey,
     WindowSize,
+    ValidateType
 };
 
 export default HUSTConstant;

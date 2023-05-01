@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import forgotPwImg from '~/assets/images/forgot-pw.svg';
 import styles from './ForgotPassword.module.scss';
 import ToggleMode from '~/components/ToggleDarkMode';
-import { MyValidateChain } from '~/utils/common/validate-form';
+import { MyValidateChain } from '~/utils/common/validate/validateChain';
 
 const cx = classNames.bind(styles);
 

@@ -7,7 +7,7 @@ import logoImg from '~/assets/logos/logo-with-text.png';
 import styles from './Register.module.scss';
 import ToggleMode from '~/components/ToggleDarkMode';
 import PasswordTextField from '~/components/PasswordTextField';
-import { MyValidateChain } from '~/utils/common/validate-form';
+import { MyValidateChain } from '~/utils/common/validate/validateChain';
 import { useDarkMode } from '~/stores';
 
 const cx = classNames.bind(styles);

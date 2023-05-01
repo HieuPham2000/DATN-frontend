@@ -6,7 +6,7 @@ import classNames from 'classnames/bind';
 import loginImg from '~/assets/images/login-img.svg';
 import logoImg from '~/assets/logos/logo-with-text.png';
 import styles from './Login.module.scss';
-import { MyValidateChain } from '~/utils/common/validate-form';
+import { MyValidateChain } from '~/utils/common/validate/validateChain';
 import { useDarkMode } from '~/stores';
 import ToggleMode from '~/components/ToggleDarkMode';
 import PasswordTextField from '~/components/PasswordTextField';
@@ -49,11 +49,6 @@ function Login() {
      * @param {string} newValue
      */
     const handleSetPassword = (newValue) => {
-        let validateRes = new MyValidateChain().validateRequireField(newValue, 'Password');
-        setError({
-            ...error,
-            passwordError: validateRes.msg,
-        });
         setPassword(newValue);
     };
 
@@ -93,9 +88,10 @@ function Login() {
                     id="txtPassword"
                     label="Password"
                     value={password}
-                    error={!!error.passwordError}
-                    title={error.passwordError}
-                    helperText={error.passwordError}
+                    // error={!!error.passwordError}
+                    // title={error.passwordError}
+                    // helperText={error.passwordError}
+                    validateRules={['required', 'password']}
                     onChange={(e) => handleSetPassword(e.target.value)}
                 />
                 {error.helperText && (
