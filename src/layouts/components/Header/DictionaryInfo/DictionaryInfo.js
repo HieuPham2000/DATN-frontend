@@ -8,11 +8,11 @@ const cx = classNames.bind(styles);
 function DictionaryInfo({ small }) {
     return (
         <div className={cx('wrapper', { 'small-mode': small })}>
-            <Tooltip title="View all concepts in this dictionary">
+            {/* <Tooltip title="View all concepts in this dictionary">
                 <Button className={cx('wrapper-item', 'wrapper-btn-dictionary')}>
                     <DictionaryIcon color="primary" className={cx('ic-dictionary')} />
                 </Button>
-            </Tooltip>
+            </Tooltip> */}
             {!small && (
                 <Tooltip title="Current dictionary: My first PVO. Change?">
                     <Button className={cx('wrapper-item', 'wrapper-txt-dictionary')} component={Link} to="/dictionary">
