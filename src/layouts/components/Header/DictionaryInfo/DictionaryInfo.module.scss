@@ -1,0 +1,86 @@
+@import '../../../../scss/variables';
+
+.wrapper {
+    width: 300px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border: 1px solid $border-color;
+    background-color: $box-bg-active;
+    
+
+    .wrapper-btn-dictionary {
+        padding: 10px 2px;
+        min-width: 40px;
+        width: 45px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 0;
+        border-right: 1px solid $border-color;
+
+        &:hover {
+            .ic-dictionary {
+                transform: scale(1.06);
+            }
+        }
+    }
+
+    .wrapper-txt-dictionary {
+        flex: 1;
+        padding: 10px;
+        display: flex;
+        justify-content: flex-start;
+        border-top-left-radius: 0;
+        border-top-right-radius: 4px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 4px;
+
+        .dictionary-name {
+            margin-left: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-transform: none;
+        }
+
+        .ic-change {
+            display: none;
+        }
+
+        &:hover {
+            .ic-change {
+                display: block;
+                animation-name: rotate;
+                animation-duration: 5s;
+                animation-iteration-count: infinite;
+                animation-timing-function: linear;
+            }
+
+            @keyframes rotate {
+                from {
+                    transform: rotate(-360deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        }
+    }
+
+    &.small-mode {
+        width: auto;
+        border: none;
+        background-color: transparent;
+
+        .wrapper-btn-dictionary {
+            border-radius: 50%;
+            border: none;
+        }
+
+        .wrapper-txt-dictionary {
+            display: none;
+        }
+    }
+}

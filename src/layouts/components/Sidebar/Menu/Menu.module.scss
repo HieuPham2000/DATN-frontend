@@ -1,0 +1,47 @@
+@import '../../../../scss/variables';
+
+.menu-list {
+    .menu-item {
+        color: inherit;
+
+        .menu-item-btn {
+            border-radius: 6px;
+            color: $grey600;
+
+            // &:hover {
+            //     color: inherit;
+            // }
+
+            &.active {
+                background-color: $box-bg-active;
+                color: $primary-main;
+            }
+
+            .menu-item-btn-icon {
+                color: inherit;
+                min-width: 40px;
+            }
+
+            .menu-item-btn-text {
+                font-weight: 600;
+            }
+        }
+    }
+
+    &.collapsed {
+        .menu-item {
+            padding-left: 0;
+            padding-right: 0;
+
+            .menu-item-btn {
+                padding-left: 14px;
+                padding-right: 14px;
+                border-radius: 0;
+
+                .menu-item-btn-icon {
+                    min-width: 24px;
+                }
+            }
+        }
+    }
+}

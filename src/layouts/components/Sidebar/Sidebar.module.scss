@@ -1,0 +1,73 @@
+@import '../../../scss/variables';
+
+.wrapper {
+    width: 250px;
+    height: 100vh;
+    border-right: 1px dashed $border-color;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .logo-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 20px 10px;
+
+        .logo-img {
+            width: 80%;
+            height: auto;
+        }
+    }
+
+    .dictionary-info-wrapper {
+        width: 100%;
+        padding: 0 16px;
+        margin-bottom: 10px;
+    }
+
+    .btn-collapse {
+        position: absolute !important;
+        top: 48px;
+        right: 0;
+        transform: translateX(50%);
+        width: 30px;
+        height: 30px;
+        border: 1px dashed $border-color !important;
+        backdrop-filter: blur(6px);
+        z-index: 100;
+    }
+
+    .menu-wrapper {
+        overflow: auto;
+    }
+
+    &.collapsed {
+        width: 53px;
+
+        .logo-wrapper {
+            display: none;
+        }
+
+        .dictionary-info-wrapper {
+            display: none;
+        }
+
+        .menu-wrapper {
+            margin-top: 80px;
+        }
+
+        .ic-arrow {
+            transform: rotate(180deg);
+        }
+    }
+
+    &.inside-drawer {
+        border-right: none;
+
+        .btn-collapse {
+            display: none;
+        }
+    }
+}
