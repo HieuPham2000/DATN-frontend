@@ -1,10 +1,9 @@
 import { memo } from 'react';
-import { Avatar, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import classNames from 'classnames/bind';
 
 import styles from './Header.module.scss';
-import { stringAvatar } from '~/utils/common/common';
 import ToggleDarkMode from '~/components/ToggleDarkMode';
 import HUSTConstant from '~/utils/common/constant';
 import DictionaryInfo from '~/layouts/components/Header/DictionaryInfo';

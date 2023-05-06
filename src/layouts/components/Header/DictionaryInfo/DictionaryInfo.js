@@ -1,7 +1,7 @@
 import { Button, Tooltip } from '@mui/material';
 import styles from './DictionaryInfo.module.scss';
 import classNames from 'classnames/bind';
-import { ChangeCircle as ChangeDictionaryIcon, Book as DictionaryIcon } from '@mui/icons-material';
+import { ChangeCircle as ChangeDictionaryIcon } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 const cx = classNames.bind(styles);
 

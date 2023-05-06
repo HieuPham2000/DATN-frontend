@@ -1,4 +1,3 @@
-import { Outlet } from 'react-router-dom';
 import styles from './TreePage.module.scss';
 import classNames from 'classnames/bind';
 

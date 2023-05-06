@@ -49,6 +49,11 @@ function Login() {
      * @param {string} newValue
      */
     const handleSetPassword = (newValue) => {
+        let validateRes = new MyValidateChain().validateRequireField(newValue, 'Password');
+        setError({
+            ...error,
+            emailError: validateRes.msg,
+        });
         setPassword(newValue);
     };
 
@@ -88,9 +93,9 @@ function Login() {
                     id="txtPassword"
                     label="Password"
                     value={password}
-                    // error={!!error.passwordError}
-                    // title={error.passwordError}
-                    // helperText={error.passwordError}
+                    error={!!error.passwordError}
+                    title={error.passwordError}
+                    helperText={error.passwordError}
                     validateRules={['required', 'password']}
                     onChange={(e) => handleSetPassword(e.target.value)}
                 />
