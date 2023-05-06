@@ -12,6 +12,7 @@ import SearchPage from '~/pages/SearchPage';
 import TreePage from '~/pages/TreePage';
 import AuditLogPage from '~/pages/AuditLogPage';
 import UserSettingPage from '~/pages/UserSettingPage';
+import ActivateAccountResult from '~/pages/ActivateAccountResult';
 
 // Public routes
 const publicRoutes = [
@@ -20,6 +21,7 @@ const publicRoutes = [
     { path: '/register', component: Register, layout: null },
     { path: '/forgot-password', component: ForgotPassword, layout: null },
     { path: '/500', component: Page500, layout: null },
+    { path: '/activate-account/:token', component: ActivateAccountResult, layout: null },
 
     { path: '/dashboard', component: Dashboard },
     { path: '/dictionary', component: DictionaryPage },
