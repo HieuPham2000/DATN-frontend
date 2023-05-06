@@ -1,12 +1,15 @@
-@import 'normalize.css';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-
-:root {
-    --primary: #fe2c55;
-}
+@import url('https://fonts.googleapis.com/css2?family=Public Sans:wght@300;400;500;700&display=swap');
+@import 'normalize.css';
+@import '../../scss/variables';
+// :root {
+// }
 
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
+    scrollbar-width: thin;
 }
 
 html {
@@ -14,8 +17,22 @@ html {
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Public Sans', 'Roboto', sans-serif;
     font-size: 1.6rem;
     line-height: 1.5;
+    color: $grey800;
     text-rendering: optimizeSpeed;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(224, 224, 224, 0.68);
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(224, 224, 224, 0.26);
 }
