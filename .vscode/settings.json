@@ -1,5 +1,5 @@
 {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "cSpell.words": ["bgcolor", "HUST", "tanstack", "wght", "zustand"]
+    "cSpell.words": ["bgcolor", "HUST", "tanstack", "toastify", "wght", "zustand"]
 }

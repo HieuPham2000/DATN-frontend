@@ -1,0 +1,39 @@
+@import '../../scss/variables';
+
+:root {
+    --toastify-color-light: #fff;
+    --toastify-color-dark: #161c24;
+    --toastify-color-info: #{$info-main};
+    --toastify-color-success: #{$success-main};
+    --toastify-color-warning: #{$warning-main};
+    --toastify-color-error: #{$error-main};
+    --toastify-color-transparent: rgba(255, 255, 255, 0.7);
+   
+    --toastify-text-color-light: rgba(0, 0, 0, 0.87);
+    --toastify-text-color-dark: #fff;
+}
+
+.Toastify__toast {
+    font-size: 1.4rem;
+}
+
+.Toastify__toast.Toastify__toast--info {
+    background-color: #{$info-lighter};
+    color: #{$info-main};
+}
+.Toastify__toast.Toastify__toast--success {
+    background-color: #{$success-lighter};
+    color: #{$success-main};
+}
+.Toastify__toast.Toastify__toast--warning {
+    background-color: #{$warning-lighter};
+    color: #{$warning-main};
+}
+.Toastify__toast.Toastify__toast--error {
+    background-color: #{$error-lighter};
+    color: #{$error-main};
+}
+
+.Toastify__close-button {
+    color: inherit;
+}

@@ -5,6 +5,7 @@ import * as serviceWorkerRegistration from '~/serviceWorkerRegistration';
 import reportWebVitals from '~/reportWebVitals';
 import GlobalStyles from '~/components/GlobalStyles';
 import GlobalTheme from '~/components/GlobalTheme';
+import GlobalToast from '~/components/GlobalToast';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -12,6 +13,7 @@ root.render(
         <GlobalStyles>
             <GlobalTheme>
                 <App />
+                <GlobalToast />
             </GlobalTheme>
         </GlobalStyles>
     </React.StrictMode>,
