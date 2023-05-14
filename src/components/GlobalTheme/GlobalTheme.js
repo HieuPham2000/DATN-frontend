@@ -16,6 +16,7 @@ function GlobalTheme({ children }) {
                     bgcolor: 'background.default',
                     color: 'text.primary',
                 }}
+                className={darkModeState ? 'dark-mode' : ''}
             >
                 {children}
             </Box>
