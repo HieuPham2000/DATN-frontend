@@ -1,68 +1,49 @@
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Button, Link, Typography, TextField } from '@mui/material';
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 import classNames from 'classnames/bind';
+
+import { useDarkMode } from '~/stores';
+import yup from '~/utils/common/validate/yupGlobal';
+import ToggleMode from '~/components/ToggleDarkMode';
+import PasswordTextField from '~/components/PasswordTextField';
 import registerImg from '~/assets/images/register-img.svg';
 import logoImg from '~/assets/logos/logo-with-text.png';
 import styles from './Register.module.scss';
-import ToggleMode from '~/components/ToggleDarkMode';
-import PasswordTextField from '~/components/PasswordTextField';
-import { MyValidateChain } from '~/utils/common/validate/validateChain';
-import { useDarkMode } from '~/stores';
 
 const cx = classNames.bind(styles);
 
+const schema = yup.object().shape({
+    email: yup.string().required('Email is required.').email(),
+    password: yup.string().required('Password is required.').password(),
+    confirmPassword: yup
+        .string()
+        .required('Confirm password is required.')
+        .test('match-password', "Password don't match.", (value, context) => value === context.parent.password),
+});
+
 function Register() {
     const isDarkMode = useDarkMode((state) => state.enabledState);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [error, setError] = useState({});
+    const [errorServer, setErrorServer] = useState('');
+    const {
+        handleSubmit,
+        control,
+        // formState: { errors },
+    } = useForm({
+        mode: 'all',
+        defaultValues: {
+            email: '',
+            password: '',
+            confirmPassword: '',
+        },
+        resolver: yupResolver(schema),
+    });
 
-    const handleLogin = () => {
-        setError({
-            helperText: null,
-            emailError: new MyValidateChain().validateRequireField(email, 'Email').validateEmail(email).msg,
-            passwordError: new MyValidateChain().validateRequireField(password, 'Password').validatePassword(password)
-                .msg,
-            confirmPasswordError: new MyValidateChain()
-                .validateRequireField(confirmPassword, 'Confirm password')
-                .validateMatchField(confirmPassword, password, 'Passwords').msg,
-        });
-        console.log({
-            email,
-            password,
-            confirmPassword,
-        });
-    };
-
-    const handleChangeEmail = (newValue) => {
-        let validateRes = new MyValidateChain().validateRequireField(newValue, 'Email').validateEmail(newValue);
-        setError({
-            ...error,
-            emailError: validateRes.msg,
-        });
-        setEmail(newValue);
-    };
-
-    const handleChangePassword = (newValue) => {
-        let validateRes = new MyValidateChain().validateRequireField(newValue, 'Password').validatePassword(password);
-        setError({
-            ...error,
-            passwordError: validateRes.msg,
-        });
-        setPassword(newValue);
-    };
-
-    const handleChangeConfirmPassword = (newValue) => {
-        let validateRes = new MyValidateChain()
-            .validateRequireField(newValue, 'Confirm password')
-            .validateMatchField(newValue, password, 'Passwords');
-        setError({
-            ...error,
-            confirmPasswordError: validateRes.msg,
-        });
-        setConfirmPassword(newValue);
+    const handleRegister = (data) => {
+        console.log(data);
     };
 
     return (
@@ -87,39 +68,55 @@ function Register() {
                         Log in
                     </Link>
                 </div>
-                <TextField
-                    id="txtEmail"
-                    type="email"
-                    label="Email address"
-                    margin="normal"
-                    fullWidth
-                    value={email}
-                    error={!!error.emailError}
-                    title={error.emailError}
-                    helperText={error.emailError}
-                    onChange={(e) => handleChangeEmail(e.target.value)}
+                <Controller
+                    name="email"
+                    control={control}
+                    render={({ field, fieldState: { error } }) => (
+                        <TextField
+                            id="txtEmail"
+                            type="email"
+                            label="Email address"
+                            margin="normal"
+                            fullWidth
+                            {...field}
+                            error={!!error?.message}
+                            title={error?.message}
+                            helperText={error?.message}
+                        />
+                    )}
                 />
-                <PasswordTextField
-                    id="txtPassword"
-                    label="Password"
-                    value={password}
-                    error={!!error.passwordError}
-                    title={error.passwordError}
-                    helperText={error.passwordError}
-                    onChange={(e) => handleChangePassword(e.target.value)}
+                <Controller
+                    name="password"
+                    control={control}
+                    render={({ field, fieldState: { error } }) => (
+                        <PasswordTextField
+                            id="txtPassword"
+                            label="Password"
+                            {...field}
+                            error={!!error?.message}
+                            title={error?.message}
+                            helperText={error?.message}
+                        />
+                    )}
                 />
-                <PasswordTextField
-                    id="txtRePassword"
-                    label="Confirm password"
-                    value={confirmPassword}
-                    error={!!error.confirmPasswordError}
-                    title={error.confirmPasswordError}
-                    helperText={error.confirmPasswordError}
-                    onChange={(e) => handleChangeConfirmPassword(e.target.value)}
+                <Controller
+                    name="confirmPassword"
+                    control={control}
+                    render={({ field, fieldState: { error } }) => (
+                        <PasswordTextField
+                            id="txtConfirmPassword"
+                            label="Confirm password"
+                            {...field}
+                            error={!!error?.message}
+                            title={error?.message}
+                            helperText={error?.message}
+                        />
+                    )}
                 />
-                {error.helperText && (
+
+                {errorServer && (
                     <Typography variant="body2" color="error.main" mt={1}>
-                        {error.helperText}
+                        {errorServer}
                     </Typography>
                 )}
                 <Button
@@ -127,7 +124,7 @@ function Register() {
                     variant="contained"
                     size="large"
                     fullWidth
-                    onClick={handleLogin}
+                    onClick={handleSubmit(handleRegister)}
                 >
                     Create Account
                 </Button>

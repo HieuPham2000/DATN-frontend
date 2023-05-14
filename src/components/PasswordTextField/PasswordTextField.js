@@ -1,9 +1,8 @@
-import { Fragment, useState } from 'react';
+import { Fragment, forwardRef, useState } from 'react';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { Visibility as VisibilityIcon, VisibilityOff as VisibilityOffIcon } from '@mui/icons-material';
 
-
-function PasswordTextField({ id, label, value, onChange, error, title, helperText, ...rest}) {
+function PasswordTextField({ id, label, value, onChange, error, title, helperText, ...rest }, ref){
     const [show, setShow] = useState(false);
 
     const handleClickShow = () => setShow((show) => !show);
@@ -39,9 +38,10 @@ function PasswordTextField({ id, label, value, onChange, error, title, helperTex
                 title={title}
                 helperText={helperText}
                 onChange={onChange}
+                ref={ref}
             />
         </Fragment>
     );
 }
 
-export default PasswordTextField;
+export default forwardRef(PasswordTextField);

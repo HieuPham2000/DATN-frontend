@@ -8,6 +8,8 @@ const REGEX_TEST_EMAIL =
 // Minimum eight in length .{8,} (with the anchors) ? max 16
 const REGEX_TEST_PASSWORD = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$/;
 
+const REGEX_ONLY_NUMBER = /^\d+$/;
+
 const ThemeName = {
     Light: 'light',
     Dark: 'dark',
@@ -36,9 +38,12 @@ const HUSTConstant = {
     ThemeName,
     LocalStorageKey,
     WindowSize,
-    ValidateType
+    ValidateType,
+    REGEX_TEST_EMAIL,
+    REGEX_TEST_PASSWORD,
+    REGEX_ONLY_NUMBER
 };
 
 export default HUSTConstant;
 
-export { REGEX_TEST_EMAIL, REGEX_TEST_PASSWORD, ThemeName, LocalStorageKey };
+export { REGEX_TEST_EMAIL, REGEX_TEST_PASSWORD, REGEX_ONLY_NUMBER, ThemeName, LocalStorageKey };
