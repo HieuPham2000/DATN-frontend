@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Loading.module.scss';
-import icon from '~/assets/images/loading.svg';
-import { Box, Typography } from '@mui/material';
+// import icon from '~/assets/images/loading.svg';
+import { Box, CircularProgress, Typography } from '@mui/material';
 
 const cx = classNames.bind(styles);
 function Loading({ text, dense }) {
@@ -22,7 +22,8 @@ function Loading({ text, dense }) {
                     </Typography>
                 )}
                 <div className={cx('spinner')}>
-                    <object data={icon} aria-label="loading-icon"></object>
+                    <CircularProgress />
+                    {/* <object data={icon} aria-label="loading-icon"></object> */}
                 </div>
             </div>
         </div>
