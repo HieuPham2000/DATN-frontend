@@ -36,11 +36,3 @@ body {
 ::-webkit-scrollbar-track {
     background: rgba(224, 224, 224, 0.26);
 }
-
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active{
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
-}
