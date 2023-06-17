@@ -1,50 +1,37 @@
 import { useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
-import { Button, Typography, TextField, Box } from '@mui/material';
+import { Button, Typography, TextField } from '@mui/material';
 import classNames from 'classnames/bind';
 import forgotPwImg from '~/assets/images/forgot-pw.svg';
 import styles from './ForgotPassword.module.scss';
 import ToggleMode from '~/components/ToggleDarkMode';
-import { MyValidateChain } from '~/utils/common/validate/validateChain';
+import yup from '~/utils/common/validate/yupGlobal';
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const cx = classNames.bind(styles);
 
+const schema = yup.object().shape({
+    email: yup.string().required('Email is required.').email(),
+});
+
 function ForgotPassword() {
     const location = useLocation();
-    const [email, setEmail] = useState(location?.state?.email || '');
-    const [error, setError] = useState({});
+    const [errorServer, setErrorServer] = useState('');
+    const { handleSubmit, control } = useForm({
+        mode: 'onSubmit',
+        defaultValues: {
+            email: location?.state?.email || '',
+        },
+        resolver: yupResolver(schema),
+    });
 
-    const handleSendRequest = () => {
-        setError({
-            helperText: null,
-            emailError: new MyValidateChain().validateRequireField(email, 'Email').validateEmail(email).msg,
-        });
-        console.log({
-            email,
-        });
-    };
-
-    /**
-     * Xử lý error + set state email
-     * @param {string} newValue
-     */
-    const handleSetEmail = (newValue) => {
-        let validateRes = new MyValidateChain().validateRequireField(newValue, 'Email').validateEmail(newValue);
-        setError({
-            ...error,
-            emailError: validateRes.msg,
-        });
-        setEmail(newValue);
+    const handleSendRequest = (data) => {
+        console.log(data);
     };
 
     return (
-        <Box
-            sx={{
-                bgcolor: 'background.default',
-                color: 'text.primary',
-            }}
-            className={cx('wrapper')}
-        >
+        <div className={cx('wrapper')}>
             <ToggleMode className={cx('btn-toggle-mode')} />
             <div className={cx('form-wrapper')}>
                 <img src={forgotPwImg} alt="" className={cx('form-img')} />
@@ -55,21 +42,26 @@ function ForgotPassword() {
                     Please enter the email address associated with your account. We will email you a link to reset your
                     password.
                 </Typography>
-                <TextField
-                    id="txtEmail"
-                    type="email"
-                    label="Email address"
-                    margin="normal"
-                    fullWidth
-                    value={email}
-                    error={!!error.emailError}
-                    helperText={error.emailError}
-                    title={error.emailError}
-                    onChange={(e) => handleSetEmail(e.target.value)}
+                <Controller
+                    name="email"
+                    control={control}
+                    render={({ field, fieldState: { error } }) => (
+                        <TextField
+                            id="txtEmail"
+                            type="email"
+                            label="Email address"
+                            margin="normal"
+                            fullWidth
+                            {...field}
+                            error={!!error?.message}
+                            title={error?.message}
+                            helperText={error?.message}
+                        />
+                    )}
                 />
-                {error.helperText && (
+                {errorServer && (
                     <Typography variant="body2" color="error.main" mt={1}>
-                        {error.helperText}
+                        {errorServer}
                     </Typography>
                 )}
 
@@ -78,7 +70,7 @@ function ForgotPassword() {
                     variant="contained"
                     size="large"
                     fullWidth
-                    onClick={handleSendRequest}
+                    onClick={handleSubmit(handleSendRequest)}
                 >
                     Send request
                 </Button>
@@ -93,7 +85,7 @@ function ForgotPassword() {
                     Back to Sign in
                 </Button>
             </div>
-        </Box>
+        </div>
     );
 }
 
