@@ -13,6 +13,7 @@ import TreePage from '~/pages/TreePage';
 import AuditLogPage from '~/pages/AuditLogPage';
 import UserSettingPage from '~/pages/UserSettingPage';
 import ActivateAccountResult from '~/pages/ActivateAccountResult';
+import ResetPassword from '~/pages/ResetPassword';
 
 // Public routes
 const publicRoutes = [
@@ -22,6 +23,7 @@ const publicRoutes = [
     { path: '/forgot-password', component: ForgotPassword, layout: null },
     { path: '/500', component: Page500, layout: null },
     { path: '/activate-account/:token', component: ActivateAccountResult, layout: null },
+    { path: '/reset-password/:token', component: ResetPassword, layout: null },
 
     { path: '/dashboard', component: Dashboard },
     { path: '/dictionary', component: DictionaryPage },
