@@ -2,7 +2,7 @@ import { Fragment, forwardRef, useState } from 'react';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { Visibility as VisibilityIcon, VisibilityOff as VisibilityOffIcon } from '@mui/icons-material';
 
-function PasswordTextField({ id, label, value, onChange, error, title, helperText, ...rest }, ref){
+function PasswordTextField({ id, label, value, onChange, error, title, helperText, inputProps, ...rest }, ref){
     const [show, setShow] = useState(false);
 
     const handleClickShow = () => setShow((show) => !show);
@@ -19,6 +19,7 @@ function PasswordTextField({ id, label, value, onChange, error, title, helperTex
                 label={label}
                 margin="normal"
                 fullWidth
+                inputProps={inputProps}
                 InputProps={{
                     endAdornment: (
                         <InputAdornment position="end">

@@ -1,0 +1,11 @@
+@import '../../scss/variables';
+
+.modal-img-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.modal-img {
+    max-width: 30%;
+    height: auto;
+}

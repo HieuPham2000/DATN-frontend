@@ -31,7 +31,89 @@ const ValidateType = {
     Required: 'required',
     Email: 'email',
     Password: 'password',
-    Match: 'match'
+    Match: 'match',
+};
+
+const ToastMessage = {
+    GeneralError: 'Something went wrong, please contact HUST PVO for help',
+    Timeout: 'Request timeout, please try again',
+    Network: 'Please check your internet connection',
+    ServerOff: 'The server is not responding, please try again later',
+    TooManyRequestRangeTime: 'Please wait a few minutes before you try again',
+};
+
+const ErrorCode = {
+    // Too many requests
+    TooManyRequests: 429,
+
+    //Incorrect email or password
+    Err1000: 1000,
+
+    //Email already in use
+    Err1001: 1001,
+
+    //Invalid account
+    Err1002: 1002,
+
+    //Invalid verification token
+    Err1003: 1003,
+
+    //Unactivated account
+    Err1004: 1004,
+
+    //Dictionary doesn't exist
+    Err2000: 2000,
+
+    //Dictionary name already in use
+    Err2001: 2001,
+
+    //Dictionary is in use
+    Err2002: 2002,
+
+    //Source dictionary is empty
+    Err2003: 2003,
+
+    //Concept already exists
+    Err3001: 3001,
+
+    //Concept can't be deleted
+    Err3002: 3002,
+
+    //A concept can't link to itself
+    Err3003: 3003,
+
+    //Circular link
+    Err3004: 3004,
+
+    //Concept doesn't exist
+    Err3005: 3005,
+
+    //Example doesn't exist
+    Err4000: 4000,
+
+    //Duplicate examples
+    Err4001: 4001,
+
+    //Invalid parameters
+    Err9000: 9000,
+
+    //Invalid file upload
+    Err9001: 9001,
+
+    //This file is too large
+    Err9002: 9002,
+
+    //This file type is not supported
+    Err9003: 9003,
+
+    //Import session does not exist or has expired
+    Err9004: 9004,
+
+    //Data is stale
+    Err9998: 9998,
+
+    //General error
+    Err9999: 9999,
 };
 
 const HUSTConstant = {
@@ -41,7 +123,9 @@ const HUSTConstant = {
     ValidateType,
     REGEX_TEST_EMAIL,
     REGEX_TEST_PASSWORD,
-    REGEX_ONLY_NUMBER
+    REGEX_ONLY_NUMBER,
+    ToastMessage,
+    ErrorCode
 };
 
 export default HUSTConstant;
