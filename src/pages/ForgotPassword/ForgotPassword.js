@@ -82,7 +82,7 @@ function ForgotPassword() {
                     component={RouterLink}
                     to="/login"
                 >
-                    Back to Sign in
+                    Back to Log in
                 </Button>
             </div>
         </div>
