@@ -87,12 +87,7 @@ function Register() {
 
                     setErrorServer(data.Message);
                 }
-            },
-            onError: (err) => {
-                if (err.response) {
-                    toast.error(HUSTConstant.ToastMessage.GeneralError);
-                }
-            },
+            }
         },
     );
 

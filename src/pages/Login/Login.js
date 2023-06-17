@@ -20,8 +20,9 @@ import Loading from '~/components/Loading';
 import { Enum } from '~/utils/common/enumeration';
 import HUSTConstant from '~/utils/common/constant';
 import { toast } from 'react-toastify';
-import SendConfirmMailModal from '~/components/SendConfirmMailModal/SendConfirmMailModal';
+import SendConfirmMailModal from '~/components/SendConfirmMailModal';
 import Countdown from 'react-countdown';
+import { setUserSession } from '~/utils/httpRequest';
 
 const cx = classNames.bind(styles);
 
@@ -84,6 +85,7 @@ function Login() {
         {
             onSuccess: (data) => {
                 if (data?.Status === Enum.ServiceResultStatus.Success) {
+                    setUserSession(data.Data?.SessionId);
                     navigate('/', { replace: true });
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail && data.Message) {
                     // Chưa kích hoạt tài khoản

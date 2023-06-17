@@ -11,7 +11,6 @@ import { Enum } from '~/utils/common/enumeration';
 import { useMutation } from '@tanstack/react-query';
 import { activateAccount } from '~/services/accountService';
 import { toast } from 'react-toastify';
-import HUSTConstant from '~/utils/common/constant';
 
 const cx = classNames.bind(styles);
 
@@ -43,9 +42,6 @@ function ActivateAccountResult() {
                 }
             },
             onError: (err) => {
-                if (err.response) {
-                    toast.error(HUSTConstant.ToastMessage.GeneralError);
-                }
                 setError(true);
             },
         },

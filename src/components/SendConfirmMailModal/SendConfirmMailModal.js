@@ -62,12 +62,7 @@ function SendConfirmMailModal({ handleClose, email, password }) {
                         toast.error(data.Message);
                     }
                 }
-            },
-            onError: (err) => {
-                if (err.response) {
-                    toast.error(HUSTConstant.ToastMessage.GeneralError);
-                }
-            },
+            }
         },
     );
 

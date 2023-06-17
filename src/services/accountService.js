@@ -15,3 +15,7 @@ export const activateAccount = (token) => {
 export const login = (userName, password) => {
   return http.post('account/login', { UserName: userName, Password: password });
 };
+
+export const logout = () => {
+    return http.get('account/logout');
+  };

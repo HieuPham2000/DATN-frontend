@@ -10,11 +10,16 @@ import {
     HistoryToggleOffTwoTone as HistoryIcon,
     FeedbackTwoTone as FeedbackIcon,
 } from '@mui/icons-material';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { logout } from '~/services/accountService';
+import { toast } from 'react-toastify';
+import HUSTConstant from '~/utils/common/constant';
+import { clearUserSession } from '~/utils/httpRequest';
 
 const cx = classNames.bind(styles);
 
 function UserMenu() {
+    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -24,6 +29,16 @@ function UserMenu() {
 
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            clearUserSession();
+            navigate('/login', { replace: true });
+        } catch (err) {
+            toast.error(HUSTConstant.ToastMessage.GeneralError);
+        }
     };
 
     return (
@@ -115,7 +130,7 @@ function UserMenu() {
                     </ListItemIcon>
                     <Typography variant="body2">Feedback</Typography>
                 </MenuItem>
-                <MenuItem onClick={handleClose} component={NavLink} to="/login">
+                <MenuItem onClick={handleLogout}>
                     <ListItemIcon>
                         <LogoutIcon fontSize="small" />
                     </ListItemIcon>

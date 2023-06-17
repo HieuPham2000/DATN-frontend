@@ -1,3 +1,5 @@
+const USER_SESSION = 'x-session-id';
+
 const REGEX_TEST_EMAIL =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -17,6 +19,7 @@ const ThemeName = {
 
 const LocalStorageKey = {
     DarkModeEnabled: 'dark-mode-enabled',
+    UserSession: USER_SESSION
 };
 
 const WindowSize = {
@@ -131,9 +134,10 @@ const HUSTConstant = {
     REGEX_ONLY_NUMBER,
     ToastMessage,
     ErrorCode,
-    WaitTime
+    WaitTime,
+    USER_SESSION
 };
 
 export default HUSTConstant;
 
-export { REGEX_TEST_EMAIL, REGEX_TEST_PASSWORD, REGEX_ONLY_NUMBER, ThemeName, LocalStorageKey };
+export { REGEX_TEST_EMAIL, REGEX_TEST_PASSWORD, REGEX_ONLY_NUMBER, ThemeName, LocalStorageKey, USER_SESSION };
