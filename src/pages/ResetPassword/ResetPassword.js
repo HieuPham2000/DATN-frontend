@@ -15,6 +15,7 @@ import { Controller, useForm, useWatch } from 'react-hook-form';
 import PasswordTextField from '~/components/PasswordTextField';
 import yup from '~/utils/common/validate/yupGlobal';
 import { yupResolver } from '@hookform/resolvers/yup';
+import HUSTConstant from '~/utils/common/constant';
 
 const cx = classNames.bind(styles);
 
@@ -64,10 +65,13 @@ function ResetPassword() {
                     setMsg(data.Message);
                     setError(true);
                 } else {
+                    toast.error(HUSTConstant.ToastMessage.GeneralError);
+                    setMsg(HUSTConstant.ToastMessage.GeneralError);
                     setError(true);
                 }
             },
             onError: (err) => {
+                setMsg(HUSTConstant.ToastMessage.GeneralError);
                 setError(true);
             },
         },
@@ -97,10 +101,13 @@ function ResetPassword() {
                     setMsg(data.Message);
                     setError(true);
                 } else {
+                    toast.error(HUSTConstant.ToastMessage.GeneralError);
+                    setMsg(HUSTConstant.ToastMessage.GeneralError);
                     setError(true);
                 }
             },
             onError: (err) => {
+                setMsg(HUSTConstant.ToastMessage.GeneralError);
                 setError(true);
             },
         },
