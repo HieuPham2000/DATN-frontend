@@ -33,7 +33,7 @@ function Register() {
         control,
         // formState: { errors },
     } = useForm({
-        mode: 'all',
+        mode: 'onSubmit',
         defaultValues: {
             email: '',
             password: '',
