@@ -73,6 +73,7 @@ function Login() {
                             label="Email address"
                             margin="normal"
                             fullWidth
+                            inputProps={{ maxLength: 50 }}
                             {...field}
                             error={!!error?.message}
                             title={error?.message}
@@ -87,6 +88,7 @@ function Login() {
                         <PasswordTextField
                             id="txtPassword"
                             label="Password"
+                            inputProps={{ maxLength: 20 }}
                             {...field}
                             error={!!error?.message}
                             title={error?.message}
