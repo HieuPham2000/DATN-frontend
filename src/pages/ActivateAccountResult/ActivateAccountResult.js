@@ -6,9 +6,12 @@ import warnImg from '~/assets/images/warning.svg';
 import styles from './ActivateAccountResult.module.scss';
 import ToggleMode from '~/components/ToggleDarkMode';
 import { useEffect, useState } from 'react';
-import httpRequest from '~/utils/httpRequest';
 import Loading from '~/components/Loading';
 import { Enum } from '~/utils/common/enumeration';
+import { useMutation } from '@tanstack/react-query';
+import { activateAccount } from '~/services/accountService';
+import { toast } from 'react-toastify';
+import HUSTConstant from '~/utils/common/constant';
 
 const cx = classNames.bind(styles);
 
@@ -16,42 +19,46 @@ function ActivateAccountResult() {
     const { token } = useParams();
     const [msg, setMsg] = useState(null);
     const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        let handleActivateAccount = async () => {
-            try {
-                let param = {
-                    params: {
-                        token: token,
-                    },
-                };
-                let res = await httpRequest.get('account/activate_account', param);
-                let data = res.data;
-                if (data && data.Status === Enum.ServiceResultStatus.Success) {
-                    setMsg(res.data.Message);
+    /**
+     * Call api activate account
+     */
+    const { mutate: handleActivateAccount, isLoading } = useMutation(
+        async () => {
+            const res = await activateAccount(token);
+            return res.data;
+        },
+        {
+            onSuccess: (data) => {
+                console.log(data)
+                if (data?.Status === Enum.ServiceResultStatus.Success) {
+                    toast.success(data.Message);
+                    setMsg(data.Message);
                     setError(false);
-                } else if (data && data.Status === Enum.ServiceResultStatus.Fail) {
-                    setMsg(res.data.Message);
+                } else if (data?.Status === Enum.ServiceResultStatus.Fail && data.Message) {
+                    toast.error(data.Message);
+                    setMsg(data.Message);
                     setError(true);
                 } else {
-                    setMsg('An error has occurred');
                     setError(true);
                 }
-            } catch (err) {
-                setMsg('An error has occurred');
+            },
+            onError: (err) => {
+                if (err.response) {
+                    toast.error(HUSTConstant.ToastMessage.GeneralError);
+                }
                 setError(true);
-            } finally {
-                setLoading(false);
-            }
-        };
+            },
+        },
+    );
 
+    useEffect(() => {
         handleActivateAccount();
-    }, [token]);
+    },[]);
 
     return (
         <div className={cx('wrapper')}>
-            {loading && <Loading text="Wait for activate your account" dense />}
+            {isLoading && <Loading text="Wait for activate your account" dense />}
             <ToggleMode className={cx('btn-toggle-mode')} />
             <div className={cx('form-wrapper')}>
                 <img src={error ? warnImg : successImg} alt={error ? "Warning" : "Success"} className={cx('form-img')} />
@@ -64,9 +71,9 @@ function ActivateAccountResult() {
                     size="large"
                     fullWidth
                     component={RouterLink}
-                    to="/"
+                    to="/login"
                 >
-                    Back to Home
+                    Back to Log in
                 </Button>
             </div>
         </div>
