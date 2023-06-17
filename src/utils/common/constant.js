@@ -117,6 +117,10 @@ const ErrorCode = {
     Err9999: 9999,
 };
 
+const WaitTime = {
+    SendActivateEmail: 120000, // 2 phút
+};
+
 const HUSTConstant = {
     ThemeName,
     LocalStorageKey,
@@ -126,7 +130,8 @@ const HUSTConstant = {
     REGEX_TEST_PASSWORD,
     REGEX_ONLY_NUMBER,
     ToastMessage,
-    ErrorCode
+    ErrorCode,
+    WaitTime
 };
 
 export default HUSTConstant;

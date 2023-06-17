@@ -11,3 +11,7 @@ export const sendActivateEmail = (userName, password) => {
 export const activateAccount = (token) => {
     return http.get('account/activate_account', { params: { token } });
 };
+
+export const login = (userName, password) => {
+  return http.post('account/login', { UserName: userName, Password: password });
+};

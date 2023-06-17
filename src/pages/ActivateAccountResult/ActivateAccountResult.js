@@ -30,7 +30,6 @@ function ActivateAccountResult() {
         },
         {
             onSuccess: (data) => {
-                console.log(data)
                 if (data?.Status === Enum.ServiceResultStatus.Success) {
                     toast.success(data.Message);
                     setMsg(data.Message);
@@ -54,14 +53,19 @@ function ActivateAccountResult() {
 
     useEffect(() => {
         handleActivateAccount();
-    },[]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className={cx('wrapper')}>
             {isLoading && <Loading text="Wait for activate your account" dense />}
             <ToggleMode className={cx('btn-toggle-mode')} />
             <div className={cx('form-wrapper')}>
-                <img src={error ? warnImg : successImg} alt={error ? "Warning" : "Success"} className={cx('form-img')} />
+                <img
+                    src={error ? warnImg : successImg}
+                    alt={error ? 'Warning' : 'Success'}
+                    className={cx('form-img')}
+                />
                 <Typography variant="body1" color="text.secondary" textAlign="center" mb={5}>
                     {msg}
                 </Typography>
@@ -72,6 +76,7 @@ function ActivateAccountResult() {
                     fullWidth
                     component={RouterLink}
                     to="/login"
+                    replace
                 >
                     Back to Log in
                 </Button>

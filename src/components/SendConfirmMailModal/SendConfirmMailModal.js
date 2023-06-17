@@ -30,8 +30,6 @@ const style = {
     p: 4,
 };
 
-const waitTime = 120000; // 2 phút
-
 function SendConfirmMailModal({ open, email, password }) {
     const [openState, setOpenState] = useState(open);
     const handleClose = () => setOpenState(false);
@@ -41,7 +39,7 @@ function SendConfirmMailModal({ open, email, password }) {
     useEffect(() => {
         setOpenState(open);
         if (open) {
-            setDateCounter(Date.now() + waitTime);
+            setDateCounter(Date.now() + HUSTConstant.WaitTime.SendActivateEmail);
             setKeyCountdown(Date.now());
         }
     }, [open]);
@@ -58,11 +56,11 @@ function SendConfirmMailModal({ open, email, password }) {
             onSuccess: (data) => {
                 if (data?.Status === Enum.ServiceResultStatus.Success) {
                     toast.success('Resend email successfully');
-                    setDateCounter(Date.now() + waitTime);
+                    setDateCounter(Date.now() + HUSTConstant.WaitTime.SendActivateEmail);
                     setKeyCountdown(Date.now());
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail && data.Message) {
                     if (data.ErrorCode === HUSTConstant.ErrorCode.TooManyRequests && data.Data > 0) {
-                        setDateCounter(Date.now() + data.Data*1000);
+                        setDateCounter(Date.now() + data.Data * 1000);
                         setKeyCountdown(Date.now());
                         toast.error(HUSTConstant.ToastMessage.TooManyRequestRangeTime);
                     } else {
@@ -141,6 +139,7 @@ function SendConfirmMailModal({ open, email, password }) {
                         onClick={handleClose}
                         component={RouterLink}
                         to="/login"
+                        replace
                     >
                         Back to Log in
                     </Button>

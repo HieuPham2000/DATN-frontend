@@ -79,7 +79,12 @@ function Register() {
                     toast.success('Successful account registration');
                     setOpenModal(true);
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail && data.Message) {
-                    toast.warning(data.Message);
+                    if (data.ErrorCode === HUSTConstant.ErrorCode.Err1001) {
+                        toast.warning(data.Message);
+                    } else {
+                        toast.error(data.Message);
+                    }
+
                     setErrorServer(data.Message);
                 }
             },
