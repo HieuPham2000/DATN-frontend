@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import HUSTConstant from '~/utils/common/constant';
+import { Enum } from '~/utils/common/enumeration';
 
 /**
  * Thiết lập cơ bản cho API (base url, content type...)
@@ -15,10 +16,13 @@ var httpRequest = axios.create({
 
 httpRequest.interceptors.response.use(
     (response) => {
+        if (response && response.data && response.data.Status === Enum.ServiceResultStatus.Exception) {
+            toast.error(HUSTConstant.ToastMessage.Exception);
+        }
         return response;
     },
     (error) => {
-        switch(error.code) {
+        switch (error.code) {
             case AxiosError.ECONNABORTED:
             case AxiosError.ETIMEDOUT:
                 toast.error(HUSTConstant.ToastMessage.Timeout);

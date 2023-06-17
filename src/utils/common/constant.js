@@ -36,6 +36,7 @@ const ValidateType = {
 
 const ToastMessage = {
     GeneralError: 'Something went wrong, please contact HUST PVO for help',
+    Exception: 'Something went wrong, please contact HUST PVO for help',
     Timeout: 'Request timeout, please try again',
     Network: 'Please check your internet connection',
     ServerOff: 'The server is not responding, please try again later',
