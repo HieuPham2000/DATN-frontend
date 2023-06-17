@@ -30,19 +30,14 @@ const style = {
     p: 4,
 };
 
-function SendConfirmMailModal({ open, email, password }) {
-    const [openState, setOpenState] = useState(open);
-    const handleClose = () => setOpenState(false);
+function SendConfirmMailModal({ handleClose, email, password }) {
     const [dateCounter, setDateCounter] = useState(Date.now());
     const [keyCountdown, setKeyCountdown] = useState(Date.now());
 
     useEffect(() => {
-        setOpenState(open);
-        if (open) {
-            setDateCounter(Date.now() + HUSTConstant.WaitTime.SendActivateEmail);
-            setKeyCountdown(Date.now());
-        }
-    }, [open]);
+        setDateCounter(Date.now() + HUSTConstant.WaitTime.SendActivateEmail);
+        setKeyCountdown(Date.now());
+    }, []);
 
     /**
      * Call api send mail
@@ -103,7 +98,7 @@ function SendConfirmMailModal({ open, email, password }) {
         <Modal
             aria-labelledby="modal-title"
             aria-describedby="modal-description"
-            open={openState}
+            open
             // onClose={handleClose}
             // closeAfterTransition
             slots={{ backdrop: Backdrop }}
@@ -113,7 +108,7 @@ function SendConfirmMailModal({ open, email, password }) {
                 },
             }}
         >
-            <Fade in={openState}>
+            <Fade in>
                 <Box sx={style}>
                     {isLoading && <Loading />}
                     <Typography id="modal-title" variant="h6" component="h2">

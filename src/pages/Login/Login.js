@@ -148,7 +148,7 @@ function Login() {
      */
     const handleBeforeSendMail = () => {
         if (dateCounter > Date.now()) {
-            toast.warning(HUSTConstant.ToastMessage.TooManyRequestRangeTime);
+            toast.error(HUSTConstant.ToastMessage.TooManyRequestRangeTime);
         } else {
             handleSendMail();
         }
@@ -157,7 +157,7 @@ function Login() {
     return (
         <div className={cx('wrapper')}>
             {(isLoading || isLoadingSendMail) && <Loading />}
-            {openModal && <SendConfirmMailModal open={openModal} email={email} password={password} />}
+            {openModal && <SendConfirmMailModal handleClose={() => setOpenModal(false)} email={email} password={password} />}
 
             <ToggleMode className={cx('btn-toggle-mode')} />
             <div className={cx('left-wrapper', isDarkMode && 'dark-mode')}>

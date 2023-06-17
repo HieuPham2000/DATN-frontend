@@ -99,7 +99,7 @@ function Register() {
     return (
         <div className={cx('wrapper')}>
             {isLoading && <Loading />}
-            {openModal && <SendConfirmMailModal open={openModal} email={email} password={password} />}
+            {openModal && <SendConfirmMailModal handleClose={() => setOpenModal(false)} email={email} password={password} />}
 
             <ToggleMode className={cx('btn-toggle-mode')} />
             <div className={cx('left-wrapper', isDarkMode && 'dark-mode')}>
