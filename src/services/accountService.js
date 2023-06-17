@@ -13,9 +13,13 @@ export const activateAccount = (token) => {
 };
 
 export const login = (userName, password) => {
-  return http.post('account/login', { UserName: userName, Password: password });
+    return http.post('account/login', { UserName: userName, Password: password });
 };
 
 export const logout = () => {
     return http.get('account/logout');
-  };
+};
+
+export const forgotPassword = (email) => {
+    return http.get('account/forgot_password', { params: { email } });
+};
