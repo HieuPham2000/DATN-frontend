@@ -112,7 +112,7 @@ function Register() {
                 </Typography>
                 <div className={cx('register-wrapper')}>
                     <Typography variant="body2">Already have an account?</Typography>
-                    <Link ml={0.5} underline="hover" variant="subtitle2" component={RouterLink} to="/login">
+                    <Link ml={0.5} underline="hover" variant="subtitle2" component={RouterLink} to="/login" replace>
                         Log in
                     </Link>
                 </div>

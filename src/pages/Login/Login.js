@@ -175,7 +175,7 @@ function Login() {
                 </Typography>
                 <div className={cx('register-wrapper')}>
                     <Typography variant="body2">New user?</Typography>
-                    <Link ml={0.5} underline="hover" variant="subtitle2" component={RouterLink} to="/register">
+                    <Link ml={0.5} underline="hover" variant="subtitle2" component={RouterLink} to="/register" replace>
                         Create an account
                     </Link>
                 </div>
@@ -255,6 +255,7 @@ function Login() {
                         component={RouterLink}
                         to="/forgot-password"
                         state={{ email }}
+                        replace
                     >
                         Forgot password?
                     </Link>
