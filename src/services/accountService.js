@@ -23,3 +23,11 @@ export const logout = () => {
 export const forgotPassword = (email) => {
     return http.get('account/forgot_password', { params: { email } });
 };
+
+export const checkAccessResetPassword = (token) => {
+    return http.get('account/check_access_reset_password', { params: { token } });
+};
+
+export const resetPassword = (token, newPassword) => {
+    return http.put('account/reset_password', { Token: token, NewPassword: newPassword });
+};
