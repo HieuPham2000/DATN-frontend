@@ -133,7 +133,7 @@ function FeedbackDialog({ open, onClose }) {
                 </ListItem>
             </List>
             <div className={cx('note')}>
-                <Typography variant="body2">
+                <Typography variant="body2" color="text.secondary">
                     Thank you for taking the time to provide feedback. While we don't respond to every report, we will
                     let you know if we need more details.
                 </Typography>
