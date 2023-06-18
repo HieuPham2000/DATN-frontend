@@ -1,4 +1,4 @@
-import { Avatar, Divider, IconButton, Link, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
+import { Avatar, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
 import classNames from 'classnames/bind';
 
 import styles from './UserMenu.module.scss';
@@ -16,6 +16,7 @@ import { toast } from 'react-toastify';
 import HUSTConstant from '~/utils/common/constant';
 import { clearUserSession } from '~/utils/httpRequest';
 import { useQueryClient } from '@tanstack/react-query';
+import FeedbackDialog from '~/components/FeedbackDialog';
 
 const cx = classNames.bind(styles);
 
@@ -23,6 +24,7 @@ function UserMenu() {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
 
+    const [openFeedback, setOpenFeedback] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -32,6 +34,11 @@ function UserMenu() {
 
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const handleFeedback = () => {
+        setOpenFeedback(true);
+        handleClose();
     };
 
     const handleLogout = async () => {
@@ -48,6 +55,7 @@ function UserMenu() {
 
     return (
         <Fragment>
+            <FeedbackDialog open={openFeedback} onClose={() => setOpenFeedback(false)} />
             <Tooltip title="Account">
                 <IconButton
                     onClick={handleClick}
@@ -125,11 +133,7 @@ function UserMenu() {
                     </ListItemIcon>
                     <Typography variant="body2">History</Typography>
                 </MenuItem>
-                <MenuItem
-                    onClick={handleClose}
-                    component={Link}
-                    href="mailto:hieu.pt183535@gmail.com?subject=[Feedback] HUST PVO feedback&body=Hello"
-                >
+                <MenuItem onClick={handleFeedback}>
                     <ListItemIcon>
                         <FeedbackIcon fontSize="small" />
                     </ListItemIcon>
