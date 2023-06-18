@@ -17,6 +17,7 @@ const menuList = [
         text: 'Dashboard',
         icon: DashboardIcon,
         link: '/dashboard',
+        default: true
     },
     {
         text: 'Add concept',
