@@ -97,6 +97,7 @@ function Login() {
                     //     DictionaryId: data.Data.DictionaryId,
                     // });
                     queryClient.setQueryData(['isAuthenticate'], true);
+                    queryClient.invalidateQueries(['accountInfo']);
                     navigate(from, { replace: true });
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail && data.Message) {
                     // Chưa kích hoạt tài khoản
