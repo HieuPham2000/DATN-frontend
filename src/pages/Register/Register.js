@@ -104,7 +104,10 @@ function Register() {
                     <br />
                     in a personalized way with HUST PVO
                 </Typography>
-                <img className={cx('bg-img')} src={registerImg} alt="" />
+                <img className={cx('bg-img')} src={registerImg} alt="Register" />
+                <Typography variant="body2" m={2}>
+                    For educational purposes only
+                </Typography>
             </div>
             <div className={cx('right-wrapper')}>
                 <Typography variant="h4" mb={2}>

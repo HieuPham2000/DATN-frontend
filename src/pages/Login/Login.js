@@ -159,7 +159,9 @@ function Login() {
     return (
         <div className={cx('wrapper')}>
             {(isLoading || isLoadingSendMail) && <Loading />}
-            {openModal && <SendConfirmMailModal handleClose={() => setOpenModal(false)} email={email} password={password} />}
+            {openModal && (
+                <SendConfirmMailModal handleClose={() => setOpenModal(false)} email={email} password={password} />
+            )}
 
             <ToggleMode className={cx('btn-toggle-mode')} />
             <div className={cx('left-wrapper', isDarkMode && 'dark-mode')}>
@@ -167,7 +169,10 @@ function Login() {
                 <Typography variant="h4" m={2}>
                     Hi, welcome back!
                 </Typography>
-                <img className={cx('bg-img')} src={loginImg} alt="" />
+                <img className={cx('bg-img')} src={loginImg} alt="Login" />
+                <Typography variant="body2" m={2}>
+                    For educational purposes only
+                </Typography>
             </div>
             <div className={cx('right-wrapper')}>
                 <Typography variant="h4" mb={2}>
