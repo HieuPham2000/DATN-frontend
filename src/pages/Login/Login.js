@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Link, Typography, TextField } from '@mui/material';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -14,7 +14,7 @@ import yup from '~/utils/common/validate/yupGlobal';
 import loginImg from '~/assets/images/login-img.svg';
 import logoImg from '~/assets/logos/logo-with-text.png';
 import styles from './Login.module.scss';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { login, sendActivateEmail } from '~/services/accountService';
 import Loading from '~/components/Loading';
 import { Enum } from '~/utils/common/enumeration';
@@ -23,6 +23,7 @@ import { toast } from 'react-toastify';
 import SendConfirmMailModal from '~/components/SendConfirmMailModal';
 import Countdown from 'react-countdown';
 import { setUserSession } from '~/utils/httpRequest';
+import { Helmet } from 'react-helmet-async';
 
 const cx = classNames.bind(styles);
 
@@ -33,6 +34,10 @@ const schema = yup.object().shape({
 
 function Login() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { from } = useMemo(() => location.state || { from: { pathname: '/' } }, [location]);
+
+    const queryClient = useQueryClient();
     const isDarkMode = useDarkMode((state) => state.enabledState);
 
     const [errorServer, setErrorServer] = useState('');
@@ -85,8 +90,14 @@ function Login() {
         {
             onSuccess: (data) => {
                 if (data?.Status === Enum.ServiceResultStatus.Success) {
-                    setUserSession(data.Data?.SessionId);
-                    navigate('/', { replace: true });
+                    setUserSession(data.Data.SessionId);
+                    // queryClient.setQueryData(['me'], {
+                    //     UserId: data.Data.UserId,
+                    //     UserName: data.Data.UserName,
+                    //     DictionaryId: data.Data.DictionaryId,
+                    // });
+                    queryClient.setQueryData(['isAuthenticate'], true);
+                    navigate(from, { replace: true });
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail && data.Message) {
                     // Chưa kích hoạt tài khoản
                     if (data.ErrorCode === HUSTConstant.ErrorCode.Err1004) {
@@ -158,6 +169,9 @@ function Login() {
 
     return (
         <div className={cx('wrapper')}>
+            <Helmet>
+                <title>HUST PVO - Personalized vocabulary organizer</title>
+            </Helmet>
             {(isLoading || isLoadingSendMail) && <Loading />}
             {openModal && (
                 <SendConfirmMailModal handleClose={() => setOpenModal(false)} email={email} password={password} />

@@ -15,11 +15,14 @@ import { logout } from '~/services/accountService';
 import { toast } from 'react-toastify';
 import HUSTConstant from '~/utils/common/constant';
 import { clearUserSession } from '~/utils/httpRequest';
+import { useQueryClient } from '@tanstack/react-query';
 
 const cx = classNames.bind(styles);
 
 function UserMenu() {
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
+
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -35,6 +38,8 @@ function UserMenu() {
         try {
             await logout();
             clearUserSession();
+            // await queryClient.invalidateQueries('me');
+            await queryClient.invalidateQueries('isAuthenticate');
             navigate('/login', { replace: true });
         } catch (err) {
             toast.error(HUSTConstant.ToastMessage.GeneralError);
@@ -59,7 +64,7 @@ function UserMenu() {
                             height: 40,
                             opacity: open ? 0.7 : 1,
                         }}
-                        src="https://scontent.fhan4-2.fna.fbcdn.net/v/t39.30808-1/322942734_655434292997879_995178307131386601_n.jpg?stp=dst-jpg_s320x320&_nc_cat=106&ccb=1-7&_nc_sid=7206a8&_nc_ohc=A-8qKCYccBMAX_7VOfp&_nc_ht=scontent.fhan4-2.fna&oh=00_AfBRZK-e21TqkF3dJIqWeQXkeOMNXerxc0fgNzRJh0b46A&oe=64511BE4"
+                        src=""
                     />
                 </IconButton>
             </Tooltip>

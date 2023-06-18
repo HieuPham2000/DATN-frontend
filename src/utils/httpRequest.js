@@ -22,24 +22,24 @@ const setRequestSession = (sessionId) => {
 const clearRequestSession = () => {
     httpRequest.defaults.headers.common[USER_SESSION] = null;
 };
-  
+
 export const setUserSession = (sessionId) => {
-    if(process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === 'development') {
         setSessionInStorage(sessionId);
         setRequestSession(sessionId);
     }
-}
+};
 
 export const clearUserSession = () => {
-    if(process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === 'development') {
         clearSessionInStorage();
         clearRequestSession();
     }
-}
-  
+};
+
 (() => {
-const sessionId = getSessionInStorage();
-setRequestSession(sessionId);
+    const sessionId = getSessionInStorage();
+    setRequestSession(sessionId);
 })();
 
 httpRequest.interceptors.response.use(
@@ -50,8 +50,7 @@ httpRequest.interceptors.response.use(
         return response;
     },
     (error) => {
-        console.info(error.response);
-        if(!error.response) {
+        if (!error.response) {
             switch (error.code) {
                 case AxiosError.ECONNABORTED:
                 case AxiosError.ETIMEDOUT:
@@ -66,9 +65,12 @@ httpRequest.interceptors.response.use(
         } else {
             switch (error.response.status) {
                 case HttpStatusCode.Unauthorized:
-                    // redirect('/login');
-                    // history.push('/login');
-                    window.location.replace('/login');
+                    // if (error.config?.url !== 'user/me' && window.location.pathname !== '/login') {
+                    //     window.location.replace('/login');
+                    // }
+                    if (window.location.pathname !== '/login') {
+                        window.location.replace('/login');
+                    }
                     break;
                 case HttpStatusCode.InternalServerError:
                 case HttpStatusCode.BadGateway:
