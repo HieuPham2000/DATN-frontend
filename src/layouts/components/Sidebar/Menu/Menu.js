@@ -13,12 +13,12 @@ function Menu({ collapsed }) {
                 .filter((menuItem) => collapsed || menuItem.text !== 'Dictionary')
                 .map((menuItem) => {
                     let MenuItemIcon = menuItem.icon;
-
+                    let isActive = pathname === menuItem.link || (pathname === '/' && menuItem.default);
                     return (
                         <ListItem key={menuItem.text} className={cx('menu-item')}>
                             <Tooltip title={collapsed ? menuItem.text : ''} placement="right">
                                 <ListItemButton
-                                    className={cx('menu-item-btn', { active: pathname === menuItem.link })}
+                                    className={cx('menu-item-btn', { active: isActive })}
                                     component={NavLink}
                                     to={menuItem.link}
 

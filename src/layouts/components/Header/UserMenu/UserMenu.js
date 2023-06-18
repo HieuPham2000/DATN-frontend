@@ -1,4 +1,4 @@
-import { Avatar, Divider, IconButton, Link, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
+import { Avatar, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
 import classNames from 'classnames/bind';
 
 import styles from './UserMenu.module.scss';
@@ -15,11 +15,16 @@ import { logout } from '~/services/accountService';
 import { toast } from 'react-toastify';
 import HUSTConstant from '~/utils/common/constant';
 import { clearUserSession } from '~/utils/httpRequest';
+import { useQueryClient } from '@tanstack/react-query';
+import FeedbackDialog from '~/components/FeedbackDialog';
 
 const cx = classNames.bind(styles);
 
 function UserMenu() {
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
+
+    const [openFeedback, setOpenFeedback] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -31,10 +36,17 @@ function UserMenu() {
         setAnchorEl(null);
     };
 
+    const handleFeedback = () => {
+        setOpenFeedback(true);
+        handleClose();
+    };
+
     const handleLogout = async () => {
         try {
             await logout();
             clearUserSession();
+            // await queryClient.invalidateQueries('me');
+            await queryClient.invalidateQueries('isAuthenticate');
             navigate('/login', { replace: true });
         } catch (err) {
             toast.error(HUSTConstant.ToastMessage.GeneralError);
@@ -43,6 +55,7 @@ function UserMenu() {
 
     return (
         <Fragment>
+            <FeedbackDialog open={openFeedback} onClose={() => setOpenFeedback(false)} />
             <Tooltip title="Account">
                 <IconButton
                     onClick={handleClick}
@@ -59,7 +72,7 @@ function UserMenu() {
                             height: 40,
                             opacity: open ? 0.7 : 1,
                         }}
-                        src="https://scontent.fhan4-2.fna.fbcdn.net/v/t39.30808-1/322942734_655434292997879_995178307131386601_n.jpg?stp=dst-jpg_s320x320&_nc_cat=106&ccb=1-7&_nc_sid=7206a8&_nc_ohc=A-8qKCYccBMAX_7VOfp&_nc_ht=scontent.fhan4-2.fna&oh=00_AfBRZK-e21TqkF3dJIqWeQXkeOMNXerxc0fgNzRJh0b46A&oe=64511BE4"
+                        src=""
                     />
                 </IconButton>
             </Tooltip>
@@ -120,11 +133,7 @@ function UserMenu() {
                     </ListItemIcon>
                     <Typography variant="body2">History</Typography>
                 </MenuItem>
-                <MenuItem
-                    onClick={handleClose}
-                    component={Link}
-                    href="mailto:hieu.pt183535@gmail.com?subject=[Feedback] HUST PVO feedback&body=Hello"
-                >
+                <MenuItem onClick={handleFeedback}>
                     <ListItemIcon>
                         <FeedbackIcon fontSize="small" />
                     </ListItemIcon>
