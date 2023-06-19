@@ -6,12 +6,13 @@ import { useQuery } from '@tanstack/react-query';
 import { getNumberRecord } from '~/services/dictionaryService';
 import { Category as ConceptIcon, StickyNote2 as ExampleIcon } from '@mui/icons-material';
 import { useMemo } from 'react';
-import Loading2 from '~/components/Loading2';
+import numeral from 'numeral';
+import { FormatThousand } from '~/utils/common/number';
 
 const cx = classNames.bind(styles);
 
 function Dashboard() {
-    const { data: numberRecord, isLoading } = useQuery({
+    const { data: numberRecord } = useQuery({
         queryKey: ['numberRecord'],
         queryFn: async () => {
             const res = await getNumberRecord();
@@ -27,7 +28,6 @@ function Dashboard() {
             <Helmet>
                 <title>Dashboard | HUST PVO</title>
             </Helmet>
-            {/* {isLoading && <Loading2 dense />} */}
             <Typography variant="h4">Dashboard</Typography>
             <div className={cx('content-wrapper')}>
                 <Grid container spacing={3}>
@@ -35,7 +35,7 @@ function Dashboard() {
                         <Paper className={cx('card-number-record', 'number-concept')}>
                             <div className={cx('card-content')}>
                                 <Typography variant="h2" className={cx('card-number')}>
-                                    {numberConcept}
+                                    {numeral(numberConcept).format(FormatThousand)}
                                 </Typography>
                                 <Typography variant="h5" className={cx('card-text')}>
                                     {numberConcept >= 2 ? 'Concepts' : 'Concept'}
@@ -50,7 +50,7 @@ function Dashboard() {
                         <Paper className={cx('card-number-record', 'number-example')}>
                             <div className={cx('card-content')}>
                                 <Typography variant="h2" className={cx('card-number')}>
-                                    {numberExample}
+                                    {numeral(numberExample).format(FormatThousand)}
                                 </Typography>
                                 <Typography variant="h5" className={cx('card-text')}>
                                     {numberExample >= 2 ? 'Examples' : 'Example'}
