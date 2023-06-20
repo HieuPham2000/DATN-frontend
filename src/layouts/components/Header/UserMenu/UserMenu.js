@@ -59,7 +59,7 @@ function UserMenu() {
 
     return (
         <Fragment>
-            <FeedbackDialog open={openFeedback} onClose={() => setOpenFeedback(false)} />
+            <FeedbackDialog open={openFeedback} onClose={() => setOpenFeedback(false)} userEmail={user.Email} />
             <Tooltip title="Account">
                 <IconButton
                     onClick={handleClick}
