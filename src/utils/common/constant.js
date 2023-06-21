@@ -124,11 +124,16 @@ const WaitTime = {
     SendActivateEmail: 120000, // 2 phút
 };
 
+const ValidateMessage = {
+    Password: 'Password must be from 8-16 characters, contain at least 1 lowercase letter, 1 uppercase letter, 1 number, and 1 special character.'
+}
+
 const HUSTConstant = {
     ThemeName,
     LocalStorageKey,
     WindowSize,
     ValidateType,
+    ValidateMessage,
     REGEX_TEST_EMAIL,
     REGEX_TEST_PASSWORD,
     REGEX_ONLY_NUMBER,
