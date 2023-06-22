@@ -1,0 +1,1 @@
+export { BaseUploadAvatarControl } from './BaseUploadControl';

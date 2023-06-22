@@ -47,6 +47,9 @@ const getDesignTheme = (darkModeEnabled) => ({
             dark: '#B71D18',
             contrastText: '#fff',
         },
+        minor: {
+            main: '#637381',
+        },
     },
     typography: {
         htmlFontSize: 10,
@@ -85,6 +88,36 @@ const getDesignTheme = (darkModeEnabled) => ({
             fontSize: '1.8rem',
             lineHeight: 1.556,
             letterSpacing: '0em',
+        },
+    },
+    components: {
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    textTransform: 'none',
+                },
+            },
+        },
+        MuiInputBase: {
+            styleOverrides: {
+                root: {
+                    fontSize: '1.4rem',
+                },
+            },
+        },
+        MuiFormLabel: {
+            styleOverrides: {
+                root: {
+                    fontSize: '1.4rem',
+                },
+            },
+        },
+        MuiLoadingButton: {
+            styleOverrides: {
+                root: {
+                    fontSize: '1.4rem',
+                },
+            },
         },
     },
 });

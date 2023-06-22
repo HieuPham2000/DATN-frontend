@@ -19,12 +19,10 @@ import {
 } from '@mui/icons-material';
 
 const cx = classNames.bind(styles);
-
-function FeedbackDialog({ open, onClose }) {
+const email = process.env["EMAIL_SUPPORT"] || 'hieu.pt183535@gmail.com';
+function FeedbackDialog({ open, onClose, userEmail }) {
     const handleFeedbackImprovement = () => {
-        let email = 'hieu.pt183535@gmail.com',
-            userEmail = '',
-            subject = '[Feedback][App improvement] HUST PVO feedback',
+        let subject = '[Feedback][App improvement] HUST PVO feedback',
             body = `# Account information:
 - User email: ${userEmail}
 
@@ -42,9 +40,7 @@ function FeedbackDialog({ open, onClose }) {
     };
 
     const handleFeedbackBug = () => {
-        let email = 'hieu.pt183535@gmail.com',
-            userEmail = '',
-            subject = '[Feedback][Bug report] HUST PVO feedback',
+        let subject = '[Feedback][Bug report] HUST PVO feedback',
             body = `# Account information:
 - User email: ${userEmail}
 
@@ -68,9 +64,7 @@ function FeedbackDialog({ open, onClose }) {
     };
 
     const handleFeedbackOther = () => {
-        let email = 'hieu.pt183535@gmail.com',
-            userEmail = '',
-            subject = '[Feedback][Other] HUST PVO feedback',
+        let subject = '[Feedback][Other] HUST PVO feedback',
             body = `# Account information:
 - User email: ${userEmail}
 
@@ -133,7 +127,7 @@ function FeedbackDialog({ open, onClose }) {
                 </ListItem>
             </List>
             <div className={cx('note')}>
-                <Typography variant="body2">
+                <Typography variant="body2" color="text.secondary">
                     Thank you for taking the time to provide feedback. While we don't respond to every report, we will
                     let you know if we need more details.
                 </Typography>

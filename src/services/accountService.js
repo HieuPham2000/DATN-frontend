@@ -35,3 +35,7 @@ export const resetPassword = (token, newPassword) => {
 export const checkAuthenticate = () => {
     return http.get('account/check_authenticate');
 };
+
+export const getAccountInfo = () => {
+    return http.get('account/get_account_info');
+};

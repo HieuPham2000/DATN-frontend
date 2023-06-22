@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 
 import styles from './UserMenu.module.scss';
 import { stringAvatar } from '~/utils/common/common';
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useMemo } from 'react';
 import {
     LogoutTwoTone as LogoutIcon,
     SettingsTwoTone as SettingIcon,
@@ -17,12 +17,16 @@ import HUSTConstant from '~/utils/common/constant';
 import { clearUserSession } from '~/utils/httpRequest';
 import { useQueryClient } from '@tanstack/react-query';
 import FeedbackDialog from '~/components/FeedbackDialog';
+import useAccountInfo from '~/hooks/data/useAccountInfo';
 
 const cx = classNames.bind(styles);
 
 function UserMenu() {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
+    const { data: accountInfo } = useAccountInfo();
+    const user = useMemo(() => accountInfo?.User ?? {}, [accountInfo]);
+    const displayName = useMemo(() => user.DisplayName || user.Email, [user]);
 
     const [openFeedback, setOpenFeedback] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -46,7 +50,10 @@ function UserMenu() {
             await logout();
             clearUserSession();
             // await queryClient.invalidateQueries('me');
-            await queryClient.invalidateQueries('isAuthenticate');
+
+            queryClient.clear();
+            queryClient.setQueryData(['isAuthenticate'], false);
+            // await queryClient.invalidateQueries(['isAuthenticate']);
             navigate('/login', { replace: true });
         } catch (err) {
             toast.error(HUSTConstant.ToastMessage.GeneralError);
@@ -55,7 +62,7 @@ function UserMenu() {
 
     return (
         <Fragment>
-            <FeedbackDialog open={openFeedback} onClose={() => setOpenFeedback(false)} />
+            <FeedbackDialog open={openFeedback} onClose={() => setOpenFeedback(false)} userEmail={user.Email} />
             <Tooltip title="Account">
                 <IconButton
                     onClick={handleClick}
@@ -65,14 +72,14 @@ function UserMenu() {
                     aria-expanded={open ? 'true' : undefined}
                 >
                     <Avatar
-                        {...stringAvatar('Hieu Pham')}
+                        {...stringAvatar(displayName)}
                         className={cx('avatar')}
                         sx={{
                             width: 40,
                             height: 40,
                             opacity: open ? 0.7 : 1,
                         }}
-                        src=""
+                        src={user.Avatar}
                     />
                 </IconButton>
             </Tooltip>
@@ -116,8 +123,8 @@ function UserMenu() {
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
                 <div className={cx('wrapper-user-info')}>
-                    <Typography variant="subtitle2">Hieu Pham</Typography>
-                    <Typography variant="body2">hieu.pt183535@gmail.com</Typography>
+                    <Typography variant="subtitle2">{displayName}</Typography>
+                    {displayName !== user.Email && <Typography variant="body2">{user.Email}</Typography>}
                 </div>
 
                 <Divider />

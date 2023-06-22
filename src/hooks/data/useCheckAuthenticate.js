@@ -11,9 +11,10 @@ const useCheckAuthenticate = () =>
         },
         staleTime: 300000,
         refetchOnWindowFocus: false,
-        retry: (failureCount, error) => {
-            return error?.response?.status !== HttpStatusCode.Unauthorized && failureCount <= 3 ? true : false;
-        },
+        // retry: (failureCount, error) => {
+        //     return error?.response?.status !== HttpStatusCode.Unauthorized && failureCount <= 3 ? true : false;
+        // },
+        retry: false
     });
 
 export default useCheckAuthenticate;

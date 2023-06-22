@@ -19,7 +19,7 @@ const ThemeName = {
 
 const LocalStorageKey = {
     DarkModeEnabled: 'dark-mode-enabled',
-    UserSession: USER_SESSION
+    UserSession: USER_SESSION,
 };
 
 const WindowSize = {
@@ -124,18 +124,29 @@ const WaitTime = {
     SendActivateEmail: 120000, // 2 phút
 };
 
+const ValidateMessage = {
+    Password:
+        'Password must be from 8-16 characters, contain at least 1 lowercase letter, 1 uppercase letter, 1 number, and 1 special character.',
+};
+
+const MaxFileSize = {
+    Image: 3145728, // 3 * 1024 * 1024 byte = 3 MiB = 3.1 MB
+};
+
 const HUSTConstant = {
     ThemeName,
     LocalStorageKey,
     WindowSize,
     ValidateType,
+    ValidateMessage,
     REGEX_TEST_EMAIL,
     REGEX_TEST_PASSWORD,
     REGEX_ONLY_NUMBER,
     ToastMessage,
     ErrorCode,
     WaitTime,
-    USER_SESSION
+    MaxFileSize,
+    USER_SESSION,
 };
 
 export default HUSTConstant;
