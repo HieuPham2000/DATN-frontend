@@ -15,6 +15,7 @@ import moment from 'moment';
 import { BaseUploadAvatarControl } from '~/components/BaseComponent/BaseUploadControl';
 import { formatData } from '~/utils/common/utils';
 import HUSTConstant from '~/utils/common/constant';
+import { saveLog } from '~/services/auditLogService';
 
 const cx = classNames.bind(styles);
 
@@ -61,7 +62,7 @@ function AccountGeneralTab() {
         control,
         reset,
         setValue,
-        formState: { isDirty },
+        formState: { isDirty, dirtyFields },
     } = useForm({
         mode: 'onSubmit',
         // defaultValues: {
@@ -110,6 +111,21 @@ function AccountGeneralTab() {
             onSuccess: (data) => {
                 if (data?.Status === Enum.ServiceResultStatus.Success) {
                     toast.success('Update successfully');
+
+                    let logDescription = 'Change information: ';
+                    avatar !== convertUserInfo.avatarLink && (logDescription += 'Avatar, ');
+                    dirtyFields.fullName && (logDescription += 'Full Name, ');
+                    dirtyFields.displayName && (logDescription += 'Display Name, ');
+                    dirtyFields.birthday && (logDescription += 'Birthday, ');
+                    dirtyFields.position && (logDescription += 'Position, ');
+                    logDescription = logDescription.slice(0, -2);
+                    let logParam = {
+                        ScreenInfo: HUSTConstant.ScreenInfo.AccountSettingGeneralTab,
+                        ActionType: HUSTConstant.LogAction.ChangeInfo.Type,
+                        Description: logDescription,
+                    };
+                    saveLog(logParam);
+
                     queryClient.invalidateQueries(['userGeneralInfo']);
                     queryClient.invalidateQueries(['accountInfo']);
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail) {
