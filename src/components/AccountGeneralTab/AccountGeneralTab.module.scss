@@ -1,0 +1,44 @@
+@import '../../scss/variables';
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 48px 16px;
+}
+
+.avatar-wrapper {
+    width: 144px;
+    height: 144px;
+    padding: 8px;
+    margin: auto;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 1px dashed $border-color;
+
+    .upload-placeholder {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: #{$grey200};
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #{$grey500};
+    }
+}
+
+.content-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 16px;
+}
+
+@media screen and (max-width: 600px) {
+    .wrapper {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .content-wrapper {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
