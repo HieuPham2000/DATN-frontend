@@ -8,7 +8,15 @@ import GlobalTheme from '~/components/GlobalTheme';
 import GlobalToast from '~/components/GlobalToast';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HelmetProvider } from 'react-helmet-async';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import moment from 'moment';
 
+moment.updateLocale('en', {
+    week: {
+        dow: 1,
+    },
+});
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,7 +25,9 @@ root.render(
             <GlobalTheme>
                 <HelmetProvider>
                     <QueryClientProvider client={queryClient}>
-                        <App />
+                        <LocalizationProvider dateAdapter={AdapterMoment}>
+                            <App />
+                        </LocalizationProvider>
                     </QueryClientProvider>
                 </HelmetProvider>
                 <GlobalToast />
