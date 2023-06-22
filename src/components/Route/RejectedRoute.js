@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { Suspense, memo, useMemo } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import Loading from '~/components/Loading';
 import useCheckAuthenticate from '~/hooks/data/useCheckAuthenticate';
@@ -18,7 +18,12 @@ const RejectedRoute = memo(() => {
 
     if (isLoading) return <Loading dense />;
 
-    if (error || !data) return <Outlet />;
+    if (error || !data)
+        return (
+            <Suspense fallback={<Loading dense />}>
+                <Outlet />
+            </Suspense>
+        );
 
     return <Navigate to={from} replace />;
 });
