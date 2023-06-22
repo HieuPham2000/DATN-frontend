@@ -1,9 +1,9 @@
 import classNames from 'classnames/bind';
-import styles from './Loading2.module.scss';
+import styles from './LoadingScreen.module.scss';
 import { Box, Fade, LinearProgress, Typography } from '@mui/material';
 
 const cx = classNames.bind(styles);
-function Loading2({ text, dense }) {
+function LoadingScreen({ text, dense }) {
     return (
         <Fade in>
             <div className={cx('wrapper')}>
@@ -30,4 +30,4 @@ function Loading2({ text, dense }) {
     );
 }
 
-export default Loading2;
+export default LoadingScreen;

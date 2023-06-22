@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { Suspense, useCallback, useState } from 'react';
 import { Drawer, Fab, Tooltip } from '@mui/material';
 import { AutoStoriesTwoTone as DictionaryIcon } from '@mui/icons-material';
 
@@ -9,6 +9,7 @@ import useWindowSize from '~/hooks/useWindowSize';
 import HUSTConstant from '~/utils/common/constant';
 import Header from '../components/Header/Header';
 import Sidebar from '../components/Sidebar/Sidebar';
+import LoadingScreen from '~/components/LoadingScreen';
 
 const cx = classNames.bind(styles);
 
@@ -39,7 +40,9 @@ function DefaultLayout({ children }) {
             )}
             <div className={cx('wrapper-right')}>
                 <Header toggleDrawer={toggleDrawer(true)} />
-                <main className={cx('content')}>{children}</main>
+                <main className={cx('content')}>
+                    <Suspense fallback={<LoadingScreen />}>{children}</Suspense>
+                </main>
                 <Fab aria-label="View all concepts" className={cx('btn-fab')}>
                     <Tooltip title="View all concepts in this dictionary">
                         <DictionaryIcon color="primary" className={cx('btn-fab-icon')} />
