@@ -24,7 +24,7 @@ const cx = classNames.bind(styles);
 function UserMenu() {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    const {data: accountInfo} = useAccountInfo();
+    const { data: accountInfo } = useAccountInfo();
     const user = useMemo(() => accountInfo?.User ?? {}, [accountInfo]);
     const displayName = useMemo(() => user.DisplayName || user.Email, [user]);
 
@@ -50,7 +50,10 @@ function UserMenu() {
             await logout();
             clearUserSession();
             // await queryClient.invalidateQueries('me');
-            await queryClient.invalidateQueries(['isAuthenticate']);
+
+            queryClient.clear();
+            queryClient.setQueryData(['isAuthenticate'], false);
+            // await queryClient.invalidateQueries(['isAuthenticate']);
             navigate('/login', { replace: true });
         } catch (err) {
             toast.error(HUSTConstant.ToastMessage.GeneralError);
@@ -121,7 +124,7 @@ function UserMenu() {
             >
                 <div className={cx('wrapper-user-info')}>
                     <Typography variant="subtitle2">{displayName}</Typography>
-                    <Typography variant="body2">{user.Email}</Typography>
+                    {displayName !== user.Email && <Typography variant="body2">{user.Email}</Typography>}
                 </div>
 
                 <Divider />
