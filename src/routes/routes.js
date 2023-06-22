@@ -49,9 +49,11 @@ const privateRoutes = [
     { path: '/tree', component: TreePage },
     { path: '/history', component: AuditLogPage },
     { path: '/account', component: UserSettingPage },
-    { path: '/500', component: Page500, layout: null },
+];
 
+const normalRoutes = [
+    { path: '/500', component: Page500, layout: null },
     { path: '*', component: Page404, layout: null },
 ];
 
-export { publicRoutes, privateRoutes };
+export { publicRoutes, privateRoutes, normalRoutes };
