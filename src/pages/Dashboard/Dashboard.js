@@ -7,7 +7,7 @@ import { getNumberRecord } from '~/services/dictionaryService';
 import { Category as ConceptIcon, StickyNote2 as ExampleIcon } from '@mui/icons-material';
 import { useMemo } from 'react';
 import numeral from 'numeral';
-import { FormatThousand } from '~/utils/common/number';
+import { FormatThousand } from '~/utils/common/config';
 
 const cx = classNames.bind(styles);
 
