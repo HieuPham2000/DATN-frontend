@@ -58,7 +58,7 @@ function AuditLogPage() {
     });
 
     // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows = data?.Data?.length && page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.Data.length) : 0;
+    const emptyRows = data?.Data?.length && page > 0 ? Math.max(0, rowsPerPage - data.Data.length) : 0;
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -139,7 +139,7 @@ function AuditLogPage() {
                 />
             </Box>
             <Paper sx={{ ...stylePaper, mx: 1, mt: 2, mb: 3, flex: 1, display: 'flex', overflow: 'auto' }}>
-                <Table stickyHeader aria-label="access history table" sx={{ minWidth: 800 }}>
+                <Table stickyHeader aria-label="access history table" sx={{ minWidth: 800 }} size="small">  
                     <TableHead>
                         <TableRow>
                             <TableCell align="center">Date time</TableCell>
