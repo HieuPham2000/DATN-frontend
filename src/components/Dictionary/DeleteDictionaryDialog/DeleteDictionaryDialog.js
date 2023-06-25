@@ -114,7 +114,6 @@ function DeleteDictionaryDialog({ open, onClose, dictId, dictName }) {
     };
 
     const handleClearData = () => {
-        debugger;
         // Check số lượng > 0
         if (numberRecord?.NumberConcept || numberRecord?.NumberExample) {
             setAlertConfig({
