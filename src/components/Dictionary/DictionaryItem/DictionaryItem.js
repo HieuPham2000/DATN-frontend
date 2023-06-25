@@ -27,6 +27,7 @@ import { formatDateTime } from '~/utils/common/utils';
 import EditDictionaryDialog from '~/components/Dictionary/EditDictionaryDialog';
 import DeleteDictionaryDialog from '~/components/Dictionary/DeleteDictionaryDialog';
 import TransferDialog from '~/components/Dictionary/TransferDialog';
+import ExportDialog from '~/components/Dictionary/ExportDialog/ExportDialog';
 
 const cx = classNames.bind(styles);
 function DictionaryItem({ id, name, lastViewAt, active }) {
@@ -37,6 +38,7 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
     const [openEditDialog, setOpenEditDialog] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [openTransferDialog, setOpenTransferDialog] = useState(false);
+    const [openExportDialog, setOpenExportDialog] = useState(false);
 
     const queryClient = useQueryClient();
     const { mutate: loadDict } = useMutation(
@@ -51,11 +53,10 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
                     setUserSession(data.Data.SessionId);
                     queryClient.setQueryData(['isAuthenticate'], true);
 
-                    let logDescription = `Load: ${name}`;
                     let logParam = {
                         ScreenInfo: HUSTConstant.ScreenInfo.Dictionary,
                         ActionType: HUSTConstant.LogAction.LoadDictionary.Type,
-                        Description: logDescription,
+                        Reference: `Dictionary: ${name}`,
                     };
                     saveLog(logParam);
 
@@ -109,6 +110,11 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
         handleClose();
     };
 
+    const handleExport = () => {
+        setOpenExportDialog(true);
+        handleClose();
+    };
+
     return (
         <Paper
             sx={{
@@ -120,24 +126,38 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
             }}
             className={cx('wrapper', { active: active })}
         >
-            <EditDictionaryDialog
-                open={openEditDialog}
-                onClose={() => setOpenEditDialog(false)}
-                dictId={id}
-                dictName={name}
-            />
-            <DeleteDictionaryDialog
-                open={openDeleteDialog}
-                onClose={() => setOpenDeleteDialog(false)}
-                dictId={id}
-                dictName={name}
-            />
-            <TransferDialog
-                open={openTransferDialog}
-                onClose={() => setOpenTransferDialog(false)}
-                dictId={id}
-                dictName={name}
-            />
+            {openEditDialog && (
+                <EditDictionaryDialog
+                    open={openEditDialog}
+                    onClose={() => setOpenEditDialog(false)}
+                    dictId={id}
+                    dictName={name}
+                />
+            )}
+            {openDeleteDialog && (
+                <DeleteDictionaryDialog
+                    open={openDeleteDialog}
+                    onClose={() => setOpenDeleteDialog(false)}
+                    dictId={id}
+                    dictName={name}
+                />
+            )}
+            {openTransferDialog && (
+                <TransferDialog
+                    open={openTransferDialog}
+                    onClose={() => setOpenTransferDialog(false)}
+                    dictId={id}
+                    dictName={name}
+                />
+            )}
+            {openExportDialog && (
+                <ExportDialog
+                    open={openExportDialog}
+                    onClose={() => setOpenExportDialog(false)}
+                    dictId={id}
+                    dictName={name}
+                />
+            )}
             <Tooltip title={name}>
                 <Box
                     className={cx('content-wrapper')}
@@ -198,7 +218,7 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
                     </ListItemIcon>
                     <ListItemText>Import</ListItemText>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleExport}>
                     <ListItemIcon>
                         <CloudDownload fontSize="small" />
                     </ListItemIcon>
