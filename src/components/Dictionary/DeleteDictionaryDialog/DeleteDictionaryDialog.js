@@ -1,5 +1,5 @@
 import { memo, useMemo, useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import BaseDialog from '~/components/BaseComponent/BaseDialog';
 import { deleteDictionary, deleteDictionaryData, getNumberRecord } from '~/services/dictionaryService';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -10,6 +10,7 @@ import { Enum } from '~/utils/common/enumeration';
 import useAccountInfo from '~/hooks/data/useAccountInfo';
 import AlertDialog from '~/components/BaseComponent/AlertDialog';
 import { formatNumber } from '~/utils/common/utils';
+import deleteImg from '~/assets/images/delete.svg';
 
 function DeleteDictionaryDialog({ open, onClose, dictId, dictName }) {
     const queryClient = useQueryClient();
@@ -144,7 +145,8 @@ function DeleteDictionaryDialog({ open, onClose, dictId, dictName }) {
     };
 
     const Content = (
-        <>
+        <Stack alignItems="center" justifyContent="center" spacing={1}>
+            <img src={deleteImg} alt="Delete" style={{ maxWidth: '60%' }}></img>
             <Button
                 sx={{ mt: 1, textTransform: 'none' }}
                 variant="outlined"
@@ -166,7 +168,7 @@ function DeleteDictionaryDialog({ open, onClose, dictId, dictName }) {
             >
                 Delete dictionary
             </Button>
-        </>
+        </Stack>
     );
 
     const Action = <></>;
