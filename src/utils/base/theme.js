@@ -89,6 +89,9 @@ const getDesignTheme = (darkModeEnabled) => ({
             lineHeight: 1.556,
             letterSpacing: '0em',
         },
+        body1: {
+            fontSize: '1.4rem',
+        },
     },
     components: {
         MuiButton: {
