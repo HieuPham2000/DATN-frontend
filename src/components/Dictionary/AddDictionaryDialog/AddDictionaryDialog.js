@@ -16,7 +16,7 @@ const schema = yup.object().shape({
 });
 function AddDictionaryDialog({ open, onClose, dictionaries }) {
     const queryClient = useQueryClient();
-    const { handleSubmit, control, reset } = useForm({
+    const { handleSubmit, control, reset, setError } = useForm({
         mode: 'onSubmit',
         defaultValues: {
             dictionaryName: '',
@@ -69,6 +69,13 @@ function AddDictionaryDialog({ open, onClose, dictionaries }) {
                     queryClient.invalidateQueries(['listDictionary']);
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail) {
                     toast.error(data.Message || 'Create failed');
+                    if (data.ErrorCode === HUSTConstant.ErrorCode.Err2001) {
+                        setError(
+                            'dictionaryName',
+                            { type: HUSTConstant.ErrorCode.Err2001, message: data.Message },
+                            { shouldFocus: true },
+                        );
+                    }
                 } else {
                     toast.error('Create failed');
                 }
