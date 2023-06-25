@@ -15,15 +15,7 @@ import {
 import { memo, useRef, useState } from 'react';
 import { stylePaper } from '~/utils/style/muiCustomStyle';
 import dictionaryImg from '~/assets/images/dictionary.png';
-import {
-    CloudDownload,
-    Delete,
-    DriveFileMove,
-    Edit,
-    ImportContacts,
-    Input,
-    MoreVert,
-} from '@mui/icons-material';
+import { CloudDownload, Delete, DriveFileMove, Edit, ImportContacts, Input, MoreVert } from '@mui/icons-material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { loadDictionary as loadDictionaryService } from '~/services/dictionaryService';
 import HUSTConstant from '~/utils/common/constant';
@@ -32,12 +24,15 @@ import { Enum } from '~/utils/common/enumeration';
 import { saveLog } from '~/services/auditLogService';
 import { setUserSession } from '~/utils/httpRequest';
 import { formatDateTime } from '~/utils/common/utils';
+import EditDictionaryDialog from '~/components/Dictionary/EditDictionaryDialog/EditDictionaryDialog';
 
 const cx = classNames.bind(styles);
 function DictionaryItem({ id, name, lastViewAt, active }) {
     const actionBtn = useRef(null);
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+
+    const [openEditDialog, setOpenEditDialog] = useState(false);
 
     const queryClient = useQueryClient();
     const { mutate: loadDict } = useMutation(
@@ -95,6 +90,11 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
         handleClose();
     };
 
+    const handleEdit = () => {
+        setOpenEditDialog(true);
+        handleClose();
+    };
+
     return (
         <Paper
             sx={{
@@ -106,6 +106,12 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
             }}
             className={cx('wrapper', { active: active })}
         >
+            <EditDictionaryDialog
+                open={openEditDialog}
+                onClose={() => setOpenEditDialog(false)}
+                dictId={id}
+                dictName={name}
+            />
             <Tooltip title={name}>
                 <Box
                     className={cx('content-wrapper')}
@@ -151,7 +157,7 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
                         <ListItemText>Load</ListItemText>
                     </MenuItem>
                 )}
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleEdit}>
                     <ListItemIcon>
                         <Edit fontSize="small" />
                     </ListItemIcon>

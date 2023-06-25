@@ -22,3 +22,10 @@ export const addDictionary = (dictionaryName, cloneDictionaryId) => {
         CloneDictionaryId: cloneDictionaryId,
     });
 };
+
+export const updateDictionary = (dictionaryId, dictionaryName) => {
+    return http.patch('dictionary/update_dictionary', {
+        DictionaryId: dictionaryId,
+        DictionaryName: dictionaryName?.trim(),
+    });
+};

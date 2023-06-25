@@ -157,6 +157,10 @@ const LogAction = {
         Type: 4,
         Text: 'Create dictionary',
     },
+    EditDictionary: {
+        Type: 5,
+        Text: 'Edit dictionary',
+    },
 };
 
 const SortListDictionary = {
