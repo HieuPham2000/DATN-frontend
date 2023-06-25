@@ -136,6 +136,8 @@ const MaxFileSize = {
 const ScreenInfo = {
     AccountSettingGeneralTab: 'Account Settings/General',
     AccountSettingSecurityTab: 'Account Settings/Security',
+    AccessHistory: 'Access History',
+    Dictionary: 'Dictionary',
 };
 
 const LogAction = {
@@ -147,7 +149,20 @@ const LogAction = {
         Type: 2,
         Text: 'Change user information',
     },
+    LoadDictionary: {
+        Type: 3,
+        Text: 'Load dictionary',
+    },
+    AddDictionary: {
+        Type: 4,
+        Text: 'Create dictionary',
+    },
 };
+
+const SortListDictionary = {
+    DescLastView: 'LastView',
+    AscName: 'Name'
+}
 
 const HUSTConstant = {
     USER_SESSION,
@@ -165,6 +180,7 @@ const HUSTConstant = {
     MaxFileSize,
     ScreenInfo,
     LogAction,
+    SortListDictionary
 };
 
 export default HUSTConstant;
