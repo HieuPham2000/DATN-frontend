@@ -25,9 +25,9 @@ function DeleteDictionaryDialog({ open, onClose, dictId, dictName }) {
     });
 
     const { data: numberRecord } = useQuery({
-        queryKey: ['numberRecord'],
+        queryKey: ['numberRecord', dictId],
         queryFn: async () => {
-            const res = await getNumberRecord();
+            const res = await getNumberRecord(dictId);
             return res.data.Data;
         },
     });
