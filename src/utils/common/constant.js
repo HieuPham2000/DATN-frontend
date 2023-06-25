@@ -173,6 +173,10 @@ const LogAction = {
         Type: 8,
         Text: 'Transfer',
     },
+    ExportData: {
+        Type: 9,
+        Text: 'Export',
+    },
 };
 
 const SortListDictionary = {

@@ -3,9 +3,10 @@ import styles from './BaseDialog.module.scss';
 import { memo } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
+import Loading from '~/components/Loading';
 
 const cx = classNames.bind(styles);
-function BaseDialog({ open, onClose, title, content, actions }) {
+function BaseDialog({ open, onClose, title, content, actions, isLoading }) {
     return (
         <div className={cx('wrapper')}>
             <Dialog
@@ -17,6 +18,7 @@ function BaseDialog({ open, onClose, title, content, actions }) {
                 maxWidth="sm"
                 disableRestoreFocus
             >
+                {isLoading && <Loading />}
                 <IconButton
                     aria-label="close"
                     onClick={onClose}
