@@ -169,6 +169,10 @@ const LogAction = {
         Type: 7,
         Text: 'Delete data',
     },
+    TransferDictionaryData: {
+        Type: 8,
+        Text: 'Transfer',
+    },
 };
 
 const SortListDictionary = {

@@ -45,3 +45,11 @@ export const deleteDictionaryData = (dictionaryId) => {
         },
     });
 };
+
+export const transferDictionary = ({ SourceDictionaryId, DestDictionaryId, IsDeleteData }) => {
+    return http.post('dictionary/transfer_dictionary', {
+        SourceDictionaryId,
+        DestDictionaryId,
+        IsDeleteData,
+    });
+};

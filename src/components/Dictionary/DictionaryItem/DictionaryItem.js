@@ -26,6 +26,7 @@ import { setUserSession } from '~/utils/httpRequest';
 import { formatDateTime } from '~/utils/common/utils';
 import EditDictionaryDialog from '~/components/Dictionary/EditDictionaryDialog';
 import DeleteDictionaryDialog from '~/components/Dictionary/DeleteDictionaryDialog';
+import TransferDialog from '~/components/Dictionary/TransferDialog';
 
 const cx = classNames.bind(styles);
 function DictionaryItem({ id, name, lastViewAt, active }) {
@@ -35,6 +36,8 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
 
     const [openEditDialog, setOpenEditDialog] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [openTransferDialog, setOpenTransferDialog] = useState(false);
+
 
     const queryClient = useQueryClient();
     const { mutate: loadDict } = useMutation(
@@ -102,6 +105,11 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
         handleClose();
     };
 
+    const handleTransfer = () => {
+        setOpenTransferDialog(true);
+        handleClose();
+    };
+
     return (
         <Paper
             sx={{
@@ -122,6 +130,12 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
             <DeleteDictionaryDialog
                 open={openDeleteDialog}
                 onClose={() => setOpenDeleteDialog(false)}
+                dictId={id}
+                dictName={name}
+            />
+            <TransferDialog
+                open={openTransferDialog}
+                onClose={() => setOpenTransferDialog(false)}
                 dictId={id}
                 dictName={name}
             />
@@ -191,18 +205,12 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
                     <ListItemText>Export</ListItemText>
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleTransfer}>
                     <ListItemIcon>
                         <DriveFileMove fontSize="small" />
                     </ListItemIcon>
                     <ListItemText>Transfer</ListItemText>
                 </MenuItem>
-                {/* <MenuItem onClick={handleClose}>
-                    <ListItemIcon>
-                        <ClearAll fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText>Empty</ListItemText>
-                </MenuItem> */}
                 <MenuItem onClick={handleDelete}>
                     <ListItemIcon>
                         <Delete fontSize="small" />
