@@ -1,3 +1,9 @@
+@import '../../../../scss/variables';
+
 .wrapper-user-info {
     padding: 10px 16px;
+}
+
+.avatar {
+    background-color: #{$grey400};
 }

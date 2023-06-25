@@ -133,20 +133,74 @@ const MaxFileSize = {
     Image: 3145728, // 3 * 1024 * 1024 byte = 3 MiB = 3.1 MB
 };
 
+const ScreenInfo = {
+    AccountSettingGeneralTab: 'Account Settings/General',
+    AccountSettingSecurityTab: 'Account Settings/Security',
+    AccessHistory: 'Access History',
+    Dictionary: 'Dictionary',
+};
+
+const LogAction = {
+    ChangePassword: {
+        Type: 1,
+        Text: 'Change password',
+    },
+    ChangeInfo: {
+        Type: 2,
+        Text: 'Change user information',
+    },
+    LoadDictionary: {
+        Type: 3,
+        Text: 'Load',
+    },
+    AddDictionary: {
+        Type: 4,
+        Text: 'Create',
+    },
+    EditDictionary: {
+        Type: 5,
+        Text: 'Edit',
+    },
+    DeleteDictionary: {
+        Type: 6,
+        Text: 'Delete',
+    },
+    DeleteDictionaryData: {
+        Type: 7,
+        Text: 'Delete data',
+    },
+    TransferDictionaryData: {
+        Type: 8,
+        Text: 'Transfer',
+    },
+    ExportData: {
+        Type: 9,
+        Text: 'Export',
+    },
+};
+
+const SortListDictionary = {
+    DescLastView: 'LastView',
+    AscName: 'Name',
+};
+
 const HUSTConstant = {
+    USER_SESSION,
+    REGEX_TEST_EMAIL,
+    REGEX_TEST_PASSWORD,
+    REGEX_ONLY_NUMBER,
     ThemeName,
     LocalStorageKey,
     WindowSize,
     ValidateType,
     ValidateMessage,
-    REGEX_TEST_EMAIL,
-    REGEX_TEST_PASSWORD,
-    REGEX_ONLY_NUMBER,
     ToastMessage,
     ErrorCode,
     WaitTime,
     MaxFileSize,
-    USER_SESSION,
+    ScreenInfo,
+    LogAction,
+    SortListDictionary,
 };
 
 export default HUSTConstant;

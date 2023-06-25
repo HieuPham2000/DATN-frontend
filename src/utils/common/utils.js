@@ -1,4 +1,15 @@
+import moment from 'moment';
 import numeral from 'numeral';
+import { FormatDate, FormatDateTime } from '~/utils/common/config';
+import HUSTConstant from '~/utils/common/constant';
+
+export function formatDate(date) {
+    return date ? moment(date).format(FormatDate) : '';
+}
+
+export function formatDateTime(dateTime) {
+    return dateTime ? moment(dateTime).format(FormatDateTime) : '';
+}
 
 export function formatNumber(number) {
     return numeral(number).format();
@@ -24,9 +35,9 @@ export function formatData(number) {
 
 /**
  * Thực hiện bỏ phần thập phân nếu phần thập phân chỉ toàn số 0
- * @param {*} format 
- * @param {*} key 
- * @returns 
+ * @param {*} format
+ * @param {*} key
+ * @returns
  */
 function getResultFormat(format, key = '.00') {
     const isInteger = format.includes(key);
@@ -83,4 +94,12 @@ export function getRatio(ratio = '1/1') {
         '9/21': 'calc(100% / 9 * 21)',
         '1/1': '100%',
     }[ratio];
+}
+
+export function getMapLogActionType() {
+    let obj = {};
+    Object.keys(HUSTConstant.LogAction).forEach(
+        (key) => (obj[HUSTConstant.LogAction[key].Type] = HUSTConstant.LogAction[key].Text),
+    );
+    return obj;
 }

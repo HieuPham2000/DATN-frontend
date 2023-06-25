@@ -3,11 +3,14 @@
 .wrapper {
     display: flex;
     height: 100vh;
+    width: 100vw;
+    overflow: hidden;
 
     .wrapper-right {
         flex: 1;
         display: flex;
         flex-direction: column;
+        overflow: hidden;
 
         .content {
             flex: 1;
@@ -21,7 +24,7 @@
         position: fixed;
         border-radius: 50%;
         bottom: 24px;
-        right: 24px;
+        left: 24px;
         z-index: 999;
         backdrop-filter: blur(6px);
         background-color: $box-bg-active;

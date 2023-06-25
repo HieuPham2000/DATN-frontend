@@ -14,12 +14,21 @@ import { Enum } from '~/utils/common/enumeration';
 import { toast } from 'react-toastify';
 import { LoadingButton } from '@mui/lab';
 import Loading from '~/components/Loading/Loading';
+import { saveLog } from '~/services/auditLogService';
 
 const cx = classNames.bind(styles);
 
 const schema = yup.object().shape({
     oldPassword: yup.string().required('Old Password is required'),
-    newPassword: yup.string().required('New Password is required').password(),
+    newPassword: yup
+        .string()
+        .required('New Password is required')
+        .test(
+            'not-different',
+            'Password must be different from the old password',
+            (value, context) => value !== context.parent.oldPassword,
+        )
+        .password(),
     confirmNewPassword: yup
         .string()
         .test('match-password', "Password don't match", (value, context) => value === context.parent.newPassword),
@@ -53,6 +62,12 @@ function AccountSecurityTab() {
             onSuccess: (data) => {
                 if (data?.Status === Enum.ServiceResultStatus.Success) {
                     toast.success('Update successfully');
+
+                    let logParam = {
+                        ScreenInfo: HUSTConstant.ScreenInfo.AccountSettingSecurityTab,
+                        ActionType: HUSTConstant.LogAction.ChangePassword.Type,
+                    };
+                    saveLog(logParam);
                     reset();
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail) {
                     if (data.ErrorCode === HUSTConstant.ErrorCode.Err1000) {

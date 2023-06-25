@@ -55,7 +55,6 @@ MyValidateChain.prototype.validateMatchField = function (value1, value2, display
         return this;
     }
     if (value1 !== value2) {
-        debugger;
         return this.onError(`${displayFieldNames || 'Fields'} don't match.`);
     }
     return this.onValid();

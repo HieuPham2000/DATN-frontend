@@ -1,0 +1,74 @@
+.wrapper {
+    cursor: pointer;
+    opacity: 0.76;
+
+    &.active {
+        opacity: 1;
+        border: 1px dashed #00ab55;
+        background-color: #00ab5514;
+    }
+
+    &:hover {
+        opacity: 1;
+
+        .dict-img {
+            transform: scale(1.1);
+        }
+    }
+}
+.content-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+
+    .btn-more {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+    }
+
+    .dict-img {
+        width: 120px;
+        max-width: 85%;
+        transition: scale 300ms linear;
+    }
+}
+
+.gradient {
+    --border-width: 3px;
+    position: relative;
+    border-radius: var(--border-width);
+
+    &::after {
+        position: absolute;
+        content: '';
+        top: calc(-1 * var(--border-width));
+        left: calc(-1 * var(--border-width));
+        z-index: -1;
+        width: calc(100% + var(--border-width) * 2);
+        height: calc(100% + var(--border-width) * 2);
+        background: linear-gradient(
+            60deg,
+            hsl(224, 85%, 66%),
+            hsl(269, 85%, 66%),
+            hsl(314, 85%, 66%),
+            hsl(359, 85%, 66%),
+            hsl(44, 85%, 66%),
+            hsl(89, 85%, 66%),
+            hsl(134, 85%, 66%),
+            hsl(179, 85%, 66%)
+        );
+        background-size: 300% 300%;
+        background-position: 0 50%;
+        border-radius: calc(2 * var(--border-width));
+        animation: moveGradient 4s alternate infinite;
+    }
+}
+
+@keyframes moveGradient {
+    50% {
+        background-position: 100% 50%;
+    }
+}
