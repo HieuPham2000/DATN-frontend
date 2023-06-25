@@ -43,12 +43,11 @@ function EditDictionaryDialog({ open, onClose, dictId, dictName }) {
                 if (data?.Status === Enum.ServiceResultStatus.Success) {
                     toast.success('Update successfully');
 
-                    let logDescription = `Rename from "${dictName}" to "${dictionaryName}"`;
-
                     let logParam = {
                         ScreenInfo: HUSTConstant.ScreenInfo.Dictionary,
                         ActionType: HUSTConstant.LogAction.EditDictionary.Type,
-                        Description: logDescription,
+                        Reference: `Dictionary: ${dictName}`,
+                        Description: `Rename to "${dictionaryName}"`,
                     };
                     saveLog(logParam);
 

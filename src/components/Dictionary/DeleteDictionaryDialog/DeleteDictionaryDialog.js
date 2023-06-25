@@ -42,11 +42,10 @@ function DeleteDictionaryDialog({ open, onClose, dictId, dictName }) {
                 if (data?.Status === Enum.ServiceResultStatus.Success) {
                     toast.success('Delete successfully');
 
-                    let logDescription = `Delete: ${dictName}`;
                     let logParam = {
                         ScreenInfo: HUSTConstant.ScreenInfo.Dictionary,
                         ActionType: HUSTConstant.LogAction.DeleteDictionary.Type,
-                        Description: logDescription,
+                        Reference: `Dictionary: ${dictName}`,
                     };
                     saveLog(logParam);
                     handleClose();
@@ -70,11 +69,10 @@ function DeleteDictionaryDialog({ open, onClose, dictId, dictName }) {
                 if (data?.Status === Enum.ServiceResultStatus.Success) {
                     toast.success('Clear data successfully');
 
-                    let logDescription = `Clear data: ${dictName}`;
                     let logParam = {
                         ScreenInfo: HUSTConstant.ScreenInfo.Dictionary,
                         ActionType: HUSTConstant.LogAction.DeleteDictionaryData.Type,
-                        Description: logDescription,
+                        Reference: `Dictionary: ${dictName}`,
                     };
                     saveLog(logParam);
                     handleClose();
