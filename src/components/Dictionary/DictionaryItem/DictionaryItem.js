@@ -38,7 +38,6 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [openTransferDialog, setOpenTransferDialog] = useState(false);
 
-
     const queryClient = useQueryClient();
     const { mutate: loadDict } = useMutation(
         async () => {
@@ -165,6 +164,7 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
                             overflow: 'hidden',
                             WebkitBoxOrient: 'vertical',
                             WebkitLineClamp: 5,
+                            fontSize: '1.6rem',
                         }}
                     >
                         {name}
