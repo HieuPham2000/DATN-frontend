@@ -34,7 +34,11 @@ function AddDictionaryDialog({ open, onClose, dictionaries }) {
         name: 'cloneFrom',
     });
 
-    const cloneFromOptions = useMemo(() => (dictionaries || []).map((x) => x.DictionaryName), [dictionaries]);
+    const cloneFromOptions = useMemo(() => {
+        let mapName = (dictionaries || []).map((x) => x.DictionaryName);
+        mapName.sort();
+        return mapName;
+    }, [dictionaries]);
 
     const { mutate: createDictionary } = useMutation(
         async (data) => {

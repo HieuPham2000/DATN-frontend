@@ -39,7 +39,8 @@ function DictionaryPage() {
             case HUSTConstant.SortListDictionary.DescLastView:
                 return dictionaries;
             case HUSTConstant.SortListDictionary.AscName:
-                return _.orderBy(dictionaries || [], (dict) => dict.DictionaryName.toLowerCase(), 'asc');
+                // return _.orderBy(dictionaries || [], (dict) => dict.DictionaryName.toLowerCase(), 'asc');
+                return _.orderBy(dictionaries || [], 'DictionaryName', 'asc');
             default:
                 return dictionaries;
         }
