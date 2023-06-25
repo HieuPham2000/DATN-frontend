@@ -16,7 +16,7 @@ const schema = yup.object().shape({
 });
 function AddDictionaryDialog({ open, onClose, dictionaries }) {
     const queryClient = useQueryClient();
-    const { handleSubmit, control, reset, setError } = useForm({
+    const { handleSubmit, control, reset, setError, setValue } = useForm({
         mode: 'onSubmit',
         defaultValues: {
             dictionaryName: '',
@@ -112,23 +112,22 @@ function AddDictionaryDialog({ open, onClose, dictionaries }) {
             <Controller
                 name="cloneFrom"
                 control={control}
-                render={({ field: { onChange, value } }) => (
+                render={({ field }) => (
                     <Autocomplete
                         id="txtCloneFrom"
                         options={cloneFromOptions}
-                        // getOptionLabel={(option) => {
-                        //     return option?.DictionaryName;
-                        // }}
+                        selectOnFocus
+                        handleHomeEndKeys
                         renderInput={(params) => (
                             <TextField
                                 {...params}
                                 inputProps={{ ...params.inputProps, maxLength: 255 }}
                                 label="Clone Data From"
-                                onChange={onChange}
                             />
                         )}
-                        onChange={(event, values, reason) => onChange(values)}
-                        value={value}
+                        {...field}
+                        onChange={(event, newValue) => setValue('cloneFrom', newValue, { shouldValidate: true })}
+                        // onChange={(event, newValue) => field.onChange(newValue)}
                         sx={{ mt: 2 }}
                     />
                 )}
