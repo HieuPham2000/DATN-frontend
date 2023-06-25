@@ -29,3 +29,19 @@ export const updateDictionary = (dictionaryId, dictionaryName) => {
         DictionaryName: dictionaryName?.trim(),
     });
 };
+
+export const deleteDictionary = (dictionaryId) => {
+    return http.delete('dictionary/delete_dictionary', {
+        params: {
+            dictionaryId,
+        },
+    });
+};
+
+export const deleteDictionaryData = (dictionaryId) => {
+    return http.delete('dictionary/delete_dictionary_data', {
+        params: {
+            dictionaryId,
+        },
+    });
+};

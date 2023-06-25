@@ -24,7 +24,8 @@ import { Enum } from '~/utils/common/enumeration';
 import { saveLog } from '~/services/auditLogService';
 import { setUserSession } from '~/utils/httpRequest';
 import { formatDateTime } from '~/utils/common/utils';
-import EditDictionaryDialog from '~/components/Dictionary/EditDictionaryDialog/EditDictionaryDialog';
+import EditDictionaryDialog from '~/components/Dictionary/EditDictionaryDialog';
+import DeleteDictionaryDialog from '~/components/Dictionary/DeleteDictionaryDialog';
 
 const cx = classNames.bind(styles);
 function DictionaryItem({ id, name, lastViewAt, active }) {
@@ -33,6 +34,7 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
     const open = Boolean(anchorEl);
 
     const [openEditDialog, setOpenEditDialog] = useState(false);
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
     const queryClient = useQueryClient();
     const { mutate: loadDict } = useMutation(
@@ -95,6 +97,11 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
         handleClose();
     };
 
+    const handleDelete = () => {
+        setOpenDeleteDialog(true);
+        handleClose();
+    };
+
     return (
         <Paper
             sx={{
@@ -109,6 +116,12 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
             <EditDictionaryDialog
                 open={openEditDialog}
                 onClose={() => setOpenEditDialog(false)}
+                dictId={id}
+                dictName={name}
+            />
+            <DeleteDictionaryDialog
+                open={openDeleteDialog}
+                onClose={() => setOpenDeleteDialog(false)}
                 dictId={id}
                 dictName={name}
             />
@@ -190,14 +203,12 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
                     </ListItemIcon>
                     <ListItemText>Empty</ListItemText>
                 </MenuItem> */}
-                {!active && (
-                    <MenuItem onClick={handleClose}>
-                        <ListItemIcon>
-                            <Delete fontSize="small" />
-                        </ListItemIcon>
-                        <ListItemText>Delete</ListItemText>
-                    </MenuItem>
-                )}
+                <MenuItem onClick={handleDelete}>
+                    <ListItemIcon>
+                        <Delete fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText>Delete</ListItemText>
+                </MenuItem>
             </Menu>
         </Paper>
     );

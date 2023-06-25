@@ -151,22 +151,30 @@ const LogAction = {
     },
     LoadDictionary: {
         Type: 3,
-        Text: 'Load dictionary',
+        Text: 'Load',
     },
     AddDictionary: {
         Type: 4,
-        Text: 'Create dictionary',
+        Text: 'Create',
     },
     EditDictionary: {
         Type: 5,
-        Text: 'Edit dictionary',
+        Text: 'Edit',
+    },
+    DeleteDictionary: {
+        Type: 6,
+        Text: 'Delete',
+    },
+    DeleteDictionaryData: {
+        Type: 7,
+        Text: 'Delete data',
     },
 };
 
 const SortListDictionary = {
     DescLastView: 'LastView',
-    AscName: 'Name'
-}
+    AscName: 'Name',
+};
 
 const HUSTConstant = {
     USER_SESSION,
@@ -184,7 +192,7 @@ const HUSTConstant = {
     MaxFileSize,
     ScreenInfo,
     LogAction,
-    SortListDictionary
+    SortListDictionary,
 };
 
 export default HUSTConstant;

@@ -1,18 +1,6 @@
-import classNames from 'classnames/bind';
-import styles from './AlertDialog.module.scss';
-import { useState } from 'react';
-import {
-    Button,
-    Dialog,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    DialogActions,
-    IconButton,
-} from '@mui/material';
+import { Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions, IconButton } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 
-const cx = classNames.bind(styles);
 export default function AlertDialog({ open, onClose, title, content, children: buttons }) {
     return (
         <Dialog
@@ -20,6 +8,8 @@ export default function AlertDialog({ open, onClose, title, content, children: b
             onClose={onClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
+            fullWidth
+            maxWidth="xs"
         >
             <IconButton
                 aria-label="close"
@@ -35,8 +25,6 @@ export default function AlertDialog({ open, onClose, title, content, children: b
             <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
             <DialogContent
                 sx={{
-                    width: 360,
-                    maxWidth: '80%',
                     minHeight: 70,
                     overflowX: 'hidden',
                     overflowY: 'auto',
