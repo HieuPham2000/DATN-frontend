@@ -6,7 +6,7 @@ import { Close as CloseIcon } from '@mui/icons-material';
 import Loading from '~/components/Loading';
 
 const cx = classNames.bind(styles);
-function BaseDialog({ open, onClose, title, content, actions, isLoading }) {
+function BaseDialog({ open, onClose, title, content, actions, isLoading, isFullScreen }) {
     return (
         <div className={cx('wrapper')}>
             <Dialog
@@ -17,6 +17,7 @@ function BaseDialog({ open, onClose, title, content, actions, isLoading }) {
                 fullWidth
                 maxWidth="sm"
                 disableRestoreFocus
+                fullScreen={isFullScreen}
             >
                 {isLoading && <Loading />}
                 <IconButton
