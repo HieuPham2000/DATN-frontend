@@ -1,8 +1,8 @@
 import icExcel from '~/assets/icons/ic_excel.svg';
-import icImg from '~/assets/icons/ic_excel.svg';
-import icWord from '~/assets/icons/ic_excel.svg';
-import icPdf from '~/assets/icons/ic_excel.svg';
-import icFolder from '~/assets/icons/ic_excel.svg';
+import icImg from '~/assets/icons/ic_img.svg';
+import icWord from '~/assets/icons/ic_word.svg';
+import icPdf from '~/assets/icons/ic_pdf.svg';
+import icFolder from '~/assets/icons/ic_folder.svg';
 import icFile from '~/assets/icons/ic_file.svg';
 import { getFileTypeByUrl } from '~/utils/common/utils';
 
