@@ -136,7 +136,7 @@ function DeleteDictionaryDialog({ open, onClose, dictId, dictName }) {
                     numberRecord.NumberExample > 1
                         ? `${formatNumber(numberRecord.NumberExample)} examples`
                         : `${numberRecord.NumberExample} example`,
-                alertContent = `${textConcept} and ${textExample} examples in this dictionary will be lost and cannot be recovered. Are you sure?`;
+                alertContent = `${textConcept} and ${textExample} in this dictionary will be lost and cannot be recovered. Are you sure?`;
             return alertContent;
         }
         return '';
