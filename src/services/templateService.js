@@ -37,3 +37,14 @@ export const exportDictionary = (dictionaryId) => {
 export const backupDictionary = (dictionaryId) => {
     return http.get('template/backup', { params: { dictionaryId } });
 };
+
+export const importDictionary = (file, dictionaryId) => {
+    let bodyFormData = new FormData();
+    file != null && bodyFormData.append('file', file);
+    dictionaryId != null && bodyFormData.append('dictionaryId', dictionaryId);
+    return http.post('template/import', bodyFormData, { headers: { 'Content-Type': 'multipart/form-data' } });
+};
+
+export const doImport = (importSession) => {
+    return http.post('template/do_import', importSession);
+};

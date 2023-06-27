@@ -27,7 +27,8 @@ import { formatDateTime } from '~/utils/common/utils';
 import EditDictionaryDialog from '~/components/Dictionary/EditDictionaryDialog';
 import DeleteDictionaryDialog from '~/components/Dictionary/DeleteDictionaryDialog';
 import TransferDialog from '~/components/Dictionary/TransferDialog';
-import ExportDialog from '~/components/Dictionary/ExportDialog/ExportDialog';
+import ExportDialog from '~/components/Dictionary/ExportDialog';
+import ImportDialog from '~/components/Dictionary/ImportDialog';
 
 const cx = classNames.bind(styles);
 function DictionaryItem({ id, name, lastViewAt, active }) {
@@ -39,6 +40,7 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [openTransferDialog, setOpenTransferDialog] = useState(false);
     const [openExportDialog, setOpenExportDialog] = useState(false);
+    const [openImportDialog, setOpenImportDialog] = useState(false);
 
     const queryClient = useQueryClient();
     const { mutate: loadDict } = useMutation(
@@ -115,6 +117,11 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
         handleClose();
     };
 
+    const handleImport = () => {
+        setOpenImportDialog(true);
+        handleClose();
+    };
+
     return (
         <Paper
             sx={{
@@ -158,6 +165,14 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
                     dictName={name}
                 />
             )}
+            {openImportDialog && (
+                <ImportDialog
+                    open={openImportDialog}
+                    onClose={() => setOpenImportDialog(false)}
+                    dictId={id}
+                    dictName={name}
+                />
+            )}
             <Tooltip title={name}>
                 <Box
                     className={cx('content-wrapper')}
@@ -183,7 +198,7 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
                             display: '-webkit-box',
                             overflow: 'hidden',
                             WebkitBoxOrient: 'vertical',
-                            WebkitLineClamp: 5,
+                            WebkitLineClamp: 3,
                             fontSize: '1.6rem',
                         }}
                     >
@@ -212,7 +227,7 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
                 </MenuItem>
 
                 <Divider />
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleImport}>
                     <ListItemIcon>
                         <Input fontSize="small" />
                     </ListItemIcon>
