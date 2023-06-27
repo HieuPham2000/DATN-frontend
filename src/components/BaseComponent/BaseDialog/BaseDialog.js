@@ -6,7 +6,7 @@ import { Close as CloseIcon } from '@mui/icons-material';
 import Loading from '~/components/Loading';
 
 const cx = classNames.bind(styles);
-function BaseDialog({ open, onClose, title, content, actions, isLoading }) {
+function BaseDialog({ open, onClose, title, content, actions, isLoading, isFullScreen }) {
     return (
         <div className={cx('wrapper')}>
             <Dialog
@@ -17,6 +17,7 @@ function BaseDialog({ open, onClose, title, content, actions, isLoading }) {
                 fullWidth
                 maxWidth="sm"
                 disableRestoreFocus
+                fullScreen={isFullScreen}
             >
                 {isLoading && <Loading />}
                 <IconButton
@@ -30,7 +31,17 @@ function BaseDialog({ open, onClose, title, content, actions, isLoading }) {
                 >
                     <CloseIcon />
                 </IconButton>
-                <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+                <DialogTitle
+                    id="alert-dialog-title"
+                    sx={{
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        mr: 2,
+                    }}
+                >
+                    {title}
+                </DialogTitle>
                 <DialogContent
                     id="alert-dialog-description"
                     sx={{

@@ -130,7 +130,12 @@ const ValidateMessage = {
 };
 
 const MaxFileSize = {
-    Image: 3145728, // 3 * 1024 * 1024 byte = 3 MiB = 3.1 MB
+    Image: 3145728, // 3 * 1024 * 1024 byte = 3 MiB = 3.1 MB,
+    Import: 5242880, // 5 * 1024 * 1024
+};
+
+const FileContentType = {
+    Excel2007: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 };
 
 const ScreenInfo = {
@@ -177,6 +182,10 @@ const LogAction = {
         Type: 9,
         Text: 'Export',
     },
+    ImportData: {
+        Type: 10,
+        Text: 'Import',
+    },
 };
 
 const SortListDictionary = {
@@ -198,6 +207,7 @@ const HUSTConstant = {
     ErrorCode,
     WaitTime,
     MaxFileSize,
+    FileContentType,
     ScreenInfo,
     LogAction,
     SortListDictionary,

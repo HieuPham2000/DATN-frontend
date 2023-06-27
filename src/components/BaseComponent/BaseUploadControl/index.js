@@ -1,1 +1,1 @@
-export { BaseUploadAvatarControl } from './BaseUploadControl';
+export { BaseUploadAvatarControl, BaseUploadControl } from './BaseUploadControl';
