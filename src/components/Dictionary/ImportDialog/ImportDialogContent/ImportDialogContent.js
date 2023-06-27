@@ -8,7 +8,7 @@ import ImportStepThree from '~/components/Dictionary/ImportDialog/ImportStepThre
 
 const cx = classNames.bind(styles);
 const steps = ['Select import file', 'Check import data', 'View import result'];
-function ImportDialogContent({ dictId, onClose }) {
+function ImportDialogContent({ dictId, dictName, onClose }) {
     const [activeStep, setActiveStep] = useState(0);
     const [importData, setImportData] = useState({
         ImportSession: null,
@@ -53,6 +53,7 @@ function ImportDialogContent({ dictId, onClose }) {
                         onNext={handleNext}
                         onBack={handleBack}
                         dictId={dictId}
+                        dictName={dictName}
                         importData={importData}
                         setNumberSuccessRecord={setNumberSuccessRecord}
                     />

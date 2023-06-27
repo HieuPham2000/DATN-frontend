@@ -14,9 +14,10 @@ import emptyImg from '~/assets/images/no-error.svg';
 import { Enum } from '~/utils/common/enumeration';
 import { getNumberRecord } from '~/services/dictionaryService';
 import AlertDialog from '~/components/BaseComponent/AlertDialog/AlertDialog';
+import { saveLog } from '~/services/auditLogService';
 const cx = classNames.bind(styles);
 
-function ImportStepTwo({ onBack, onNext, dictId, importData, setNumberSuccessRecord }) {
+function ImportStepTwo({ onBack, onNext, dictId, dictName, importData, setNumberSuccessRecord }) {
     const { data: numberRecord } = useQuery({
         queryKey: ['numberRecord', dictId],
         queryFn: async () => {
@@ -99,6 +100,26 @@ function ImportStepTwo({ onBack, onNext, dictId, importData, setNumberSuccessRec
                 if (data?.Status === Enum.ServiceResultStatus.Success) {
                     toast.success('Import successfully');
                     setNumberSuccessRecord(data.Data);
+
+                    let logDescription = '';
+                    if (numberRecord?.NumberConcept) {
+                        logDescription += `Delete ${formatNumber(numberRecord.NumberConcept)} concept(s). `;
+                    }
+                    if (numberRecord?.NumberExample) {
+                        logDescription += `Delete ${formatNumber(numberRecord.NumberExample)} example(s). `;
+                    }
+
+                    if (data.Data) {
+                        logDescription += `Import ${formatNumber(data.Data)} record(s). `;
+                    }
+
+                    let logParam = {
+                        ScreenInfo: HUSTConstant.ScreenInfo.Dictionary,
+                        ActionType: HUSTConstant.LogAction.ImportData.Type,
+                        Reference: `Dictionary: ${dictName}`,
+                        Description: logDescription,
+                    };
+                    saveLog(logParam);
                     onNext();
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail) {
                     toast.error(data.Message || 'Import failed');

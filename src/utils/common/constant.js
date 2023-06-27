@@ -182,6 +182,10 @@ const LogAction = {
         Type: 9,
         Text: 'Export',
     },
+    ImportData: {
+        Type: 10,
+        Text: 'Import',
+    },
 };
 
 const SortListDictionary = {

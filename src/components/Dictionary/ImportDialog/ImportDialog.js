@@ -5,7 +5,7 @@ import ImportDialogContent from '~/components/Dictionary/ImportDialog/ImportDial
 function ImportDialog({ open, onClose, dictId, dictName }) {
     const Content = (
         <>
-            <ImportDialogContent dictId={dictId} onClose={onClose} />
+            <ImportDialogContent dictId={dictId} dictName={dictName} onClose={onClose} />
         </>
     );
 
