@@ -31,7 +31,17 @@ function BaseDialog({ open, onClose, title, content, actions, isLoading, isFullS
                 >
                     <CloseIcon />
                 </IconButton>
-                <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+                <DialogTitle
+                    id="alert-dialog-title"
+                    sx={{
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        mr: 2,
+                    }}
+                >
+                    {title}
+                </DialogTitle>
                 <DialogContent
                     id="alert-dialog-description"
                     sx={{
