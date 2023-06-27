@@ -128,15 +128,9 @@ function DeleteDictionaryDialog({ open, onClose, dictId, dictName }) {
 
     const getAlertContent = () => {
         if (numberRecord?.NumberConcept || numberRecord?.NumberExample) {
-            let textConcept =
-                    numberRecord.NumberConcept > 1
-                        ? `${formatNumber(numberRecord.NumberConcept)} concepts`
-                        : `${numberRecord.NumberConcept} concept`,
-                textExample =
-                    numberRecord.NumberExample > 1
-                        ? `${formatNumber(numberRecord.NumberExample)} examples`
-                        : `${numberRecord.NumberExample} example`,
-                alertContent = `${textConcept} and ${textExample} in this dictionary will be lost and cannot be recovered. Are you sure?`;
+            let alertContent = `${formatNumber(numberRecord.NumberConcept)} concept(s) and ${formatNumber(
+                numberRecord.NumberExample,
+            )} example(s) in this dictionary will be lost and cannot be recovered. Are you sure?`;
             return alertContent;
         }
         return '';

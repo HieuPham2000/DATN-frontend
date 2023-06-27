@@ -38,7 +38,7 @@ function Dashboard() {
                                     {numeral(numberConcept).format(FormatThousand)}
                                 </Typography>
                                 <Typography variant="h5" className={cx('card-text')}>
-                                    {numberConcept >= 2 ? 'Concepts' : 'Concept'}
+                                    Concept(s)
                                 </Typography>
                             </div>
                             <div>
@@ -53,7 +53,7 @@ function Dashboard() {
                                     {numeral(numberExample).format(FormatThousand)}
                                 </Typography>
                                 <Typography variant="h5" className={cx('card-text')}>
-                                    {numberExample >= 2 ? 'Examples' : 'Example'}
+                                    Example(s)
                                 </Typography>
                             </div>
                             <div>
