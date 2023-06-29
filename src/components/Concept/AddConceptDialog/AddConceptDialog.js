@@ -16,14 +16,20 @@ import Loading from '~/components/Loading/Loading';
 const schema = yup.object().shape({
     title: yup.string().required('Concept is required'),
 });
-function AddConceptDialog({ open, onClose, handleAfter = () => {}, screenInfo = HUSTConstant.ScreenInfo.Concept }) {
+function AddConceptDialog({
+    open,
+    onClose,
+    defaultTitle = '',
+    handleAfter = () => {},
+    screenInfo = HUSTConstant.ScreenInfo.Concept,
+}) {
     const { data: accountInfo } = useAccountInfo();
     const dictionaryName = useMemo(() => accountInfo?.Dictionary?.DictionaryName ?? '', [accountInfo]);
 
     const { handleSubmit, control, reset, setError, setFocus } = useForm({
         mode: 'onSubmit',
         defaultValues: {
-            title: '',
+            title: defaultTitle || '',
             description: '',
         },
         resolver: yupResolver(schema),

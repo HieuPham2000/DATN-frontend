@@ -2,6 +2,7 @@ import { memo, useEffect, useState } from 'react';
 import {
     Box,
     InputAdornment,
+    Link,
     List,
     ListItem,
     ListItemButton,
@@ -17,6 +18,7 @@ import useDebounce from '~/hooks/useDebounce';
 import { searchConcept } from '~/services/conceptService';
 import EditConceptDialog from '~/components/Concept/EditConceptDialog';
 import DeleteConceptDialog from '~/components/Concept/DeleteConceptDialog';
+import AddConceptDialog from '~/components/Concept/AddConceptDialog';
 
 function ListSearchConcept({
     labelText = 'Search concept',
@@ -34,6 +36,7 @@ function ListSearchConcept({
     const [contextMenu, setContextMenu] = useState(null);
     const [openEditDialog, setOpenEditDialog] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [openAddDialog, setOpenAddDialog] = useState(false);
 
     const { data: dataSearch, isLoading: isLoadingSearch } = useQuery({
         queryKey: ['searchConcept', searchKey?.trim()],
@@ -107,12 +110,20 @@ function ListSearchConcept({
         setOpenDeleteDialog(true);
     };
 
+    const handleAdd = () => {
+        setOpenAddDialog(true);
+    };
+
     const handleAfterEditSuccess = () => {
         setReClickMaster(true);
         queryClient.invalidateQueries(['searchConcept']);
     };
 
     const handleAfterDeleteSuccess = () => {
+        queryClient.invalidateQueries(['searchConcept']);
+    };
+
+    const handleAfterAddSuccess = (newConceptTitle) => {
         queryClient.invalidateQueries(['searchConcept']);
     };
 
@@ -132,6 +143,14 @@ function ListSearchConcept({
                     onClose={() => setOpenDeleteDialog(false)}
                     conceptId={selectedRow?.ConceptId}
                     handleAfter={handleAfterDeleteSuccess}
+                />
+            )}
+            {openAddDialog && (
+                <AddConceptDialog
+                    open={openAddDialog}
+                    onClose={() => setOpenAddDialog(false)}
+                    handleAfter={handleAfterAddSuccess}
+                    defaultTitle={searchValue?.trim()}
                 />
             )}
             <Menu
@@ -195,7 +214,12 @@ function ListSearchConcept({
                     ))}
                 {!delayLoadingSearch && !isLoadingSearch && !dataSearch?.length && (
                     <ListItem>
-                        <ListItemText sx={{ textAlign: 'center' }}>No match concept</ListItemText>
+                        <ListItemText sx={{ textAlign: 'center' }}>
+                            No match concept.{' '}
+                            <Link sx={{ cursor: 'pointer' }} onClick={handleAdd}>
+                                Add?
+                            </Link>
+                        </ListItemText>
                     </ListItem>
                 )}
             </List>
