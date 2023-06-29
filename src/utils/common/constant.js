@@ -199,6 +199,10 @@ const LogAction = {
         Type: 13,
         Text: 'Delete concept',
     },
+    UpdateConceptRelationship: {
+        Type: 13,
+        Text: 'Update concept relation',
+    },
 };
 
 const SortListDictionary = {

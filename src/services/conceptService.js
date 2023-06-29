@@ -40,7 +40,7 @@ export const getConceptRelationship = (conceptId, parentId) => {
 };
 
 export const updateConceptRelationship = (conceptId, parentId, conceptLinkId, isForced) => {
-    return http.put('concept/get_concept_relationship', {
+    return http.put('concept/update_concept_relationship', {
         ConceptId: conceptId,
         ParentId: parentId,
         ConceptLinkId: conceptLinkId,
