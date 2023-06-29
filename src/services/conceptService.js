@@ -9,7 +9,7 @@ export const addConcept = (title, description) => {
 };
 
 export const updateConcept = (conceptId, title, description) => {
-    return http.put('concept/add_concept', {
+    return http.put('concept/update_concept', {
         ConceptId: conceptId,
         Title: title?.trim(),
         Description: description?.trim(),
@@ -17,7 +17,7 @@ export const updateConcept = (conceptId, title, description) => {
 };
 
 export const deleteConcept = (conceptId, isForced) => {
-    return http.delete('concept/add_concept', {
+    return http.delete('concept/delete_concept', {
         params: {
             conceptId,
             isForced,

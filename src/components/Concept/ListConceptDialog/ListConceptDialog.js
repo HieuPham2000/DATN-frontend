@@ -12,20 +12,28 @@ import {
     ListItem,
     ListItemButton,
     ListItemText,
+    Menu,
+    MenuItem,
     Skeleton,
     Snackbar,
     TextField,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Close, ContentCopy, Search } from '@mui/icons-material';
 import useDebounce from '~/hooks/useDebounce';
 import { searchConcept } from '~/services/conceptService';
+import EditConceptDialog from '~/components/Concept/EditConceptDialog/EditConceptDialog';
 
 function ListConceptDialog({ open, onClose }) {
+    const queryClient = useQueryClient();
     const [openSnack, setOpenSnack] = useState(false);
     const [selectedRow, setSelectedRow] = useState(null);
     const [searchValue, setSearchValue] = useState('');
     const searchKey = useDebounce(searchValue, 1000);
+    const [reClickMaster, setReClickMaster] = useState(false);
+
+    const [contextMenu, setContextMenu] = useState(null);
+    const [openEditDialog, setOpenEditDialog] = useState(false);
 
     // const { data: accountInfo } = useAccountInfo();
     // const dictId = useMemo(() => accountInfo?.Dictionary?.DictionaryId ?? '', [accountInfo]);
@@ -50,7 +58,13 @@ function ListConceptDialog({ open, onClose }) {
             return res.data.Data;
         },
         onSuccess: (data) => {
-            setSelectedRow(data ? data[0] : null);
+            if (!reClickMaster || !data || !data.length || !selectedRow) {
+                setSelectedRow(data ? data[0] : null);
+            } else {
+                let item = data.find((x) => x.ConceptId === selectedRow.ConceptId);
+                setSelectedRow(item ?? data[0]);
+                setReClickMaster(false);
+            }
         },
     });
 
@@ -63,7 +77,7 @@ function ListConceptDialog({ open, onClose }) {
         } else {
             const handler = setTimeout(() => {
                 setDelayLoadingSearch(false);
-            }, 1000);
+            }, 700);
 
             return () => {
                 clearTimeout(handler);
@@ -95,8 +109,60 @@ function ListConceptDialog({ open, onClose }) {
         setSelectedRow(concept);
     };
 
+    const handleContextMenu = (event, x) => {
+        event.preventDefault();
+        setContextMenu(
+            contextMenu === null
+                ? {
+                      mouseX: event.clientX + 2,
+                      mouseY: event.clientY - 6,
+                  }
+                : // repeated contextmenu when it is already open closes it with Chrome 84 on Ubuntu
+                  // Other native context menus might behave different.
+                  // With this behavior we prevent contextmenu from the backdrop to re-locale existing context menus.
+                  null,
+        );
+        setSelectedRow(x);
+    };
+
+    const handleCloseContextMenu = () => {
+        setContextMenu(null);
+    };
+
+    const handleEditConcept = () => {
+        handleCloseContextMenu();
+        setOpenEditDialog(true);
+    };
+    
+    const handleAfterEditSuccess = () => {
+        setReClickMaster(true);
+        queryClient.invalidateQueries(['searchConcept']);
+    };
+
     const Content = (
         <Box sx={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            {openEditDialog && (
+                <EditConceptDialog
+                    open={openEditDialog}
+                    onClose={() => setOpenEditDialog(false)}
+                    conceptId={selectedRow?.ConceptId}
+                    handleAfter={handleAfterEditSuccess}
+                />
+            )}
+            <Menu
+                open={contextMenu !== null}
+                onClose={handleCloseContextMenu}
+                anchorReference="anchorPosition"
+                anchorPosition={
+                    contextMenu !== null ? { top: contextMenu.mouseY, left: contextMenu.mouseX } : undefined
+                }
+            >
+                <MenuItem onClick={handleCloseContextMenu}>Add example</MenuItem>
+                <MenuItem onClick={handleCloseContextMenu}>View tree</MenuItem>
+                <MenuItem onClick={handleEditConcept}>Edit</MenuItem>
+                <MenuItem onClick={handleCloseContextMenu}>Delete</MenuItem>
+            </Menu>
+
             <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                 open={openSnack}
@@ -104,6 +170,7 @@ function ListConceptDialog({ open, onClose }) {
                 message="Copied to clipboard!"
                 autoHideDuration={1000}
             />
+
             <TextField
                 id="txtSearch"
                 label="Search"
@@ -120,6 +187,9 @@ function ListConceptDialog({ open, onClose }) {
                 }}
                 sx={{ my: 1 }}
                 autoFocus
+                onFocus={(event) => {
+                    event.target.select();
+                }}
             />
             <List sx={{ flex: 1, overflow: 'auto' }} dense>
                 {delayLoadingSearch && (
@@ -137,6 +207,7 @@ function ListConceptDialog({ open, onClose }) {
                         <ListItemButton
                             key={x.ConceptId}
                             onClick={() => handleSelectRow(x)}
+                            onContextMenu={(e) => handleContextMenu(e, x)}
                             selected={selectedRow?.ConceptId === x.ConceptId}
                         >
                             <ListItemText sx={{ textAlign: 'left' }}>{x.Title}</ListItemText>
