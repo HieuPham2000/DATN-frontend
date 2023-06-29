@@ -18,7 +18,13 @@ import { searchConcept } from '~/services/conceptService';
 import EditConceptDialog from '~/components/Concept/EditConceptDialog';
 import DeleteConceptDialog from '~/components/Concept/DeleteConceptDialog';
 
-function ListSearchConcept({ labelText = 'Search concept', autoFocus, selectedRow, setSelectedRow }) {
+function ListSearchConcept({
+    labelText = 'Search concept',
+    autoFocus,
+    selectedRow,
+    setSelectedRow,
+    defaultSearchValue = '',
+}) {
     const queryClient = useQueryClient();
     // const [selectedRow, setSelectedRow] = useState(null);
     const [searchValue, setSearchValue] = useState('');
@@ -65,6 +71,10 @@ function ListSearchConcept({ labelText = 'Search concept', autoFocus, selectedRo
             };
         }
     }, [isLoadingSearch]);
+
+    useEffect(() => {
+        setSearchValue(defaultSearchValue);
+    }, [defaultSearchValue]);
 
     const handleSelectRow = (concept) => {
         setSelectedRow(concept);

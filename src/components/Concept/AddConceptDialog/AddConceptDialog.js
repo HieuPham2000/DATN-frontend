@@ -77,7 +77,7 @@ function AddConceptDialog({ open, onClose, handleAfter = () => {}, screenInfo = 
                         reset();
                     }
 
-                    handleAfter();
+                    handleAfter(title);
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail) {
                     toast.error(data.Message || 'Add failed');
                     if (data.ErrorCode === HUSTConstant.ErrorCode.Err3001) {

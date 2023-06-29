@@ -29,6 +29,7 @@ function ConceptPage() {
     const [relation, setRelation] = useState(null);
     const [relationInputValue, setRelationInputValue] = useState('');
     const [isForcedUpdate, setForcedUpdate] = useState(false);
+    const [childSearchValue, setChildSearchValue] = useState('');
 
     /**
      * Lấy danh sách concept link
@@ -129,7 +130,8 @@ function ConceptPage() {
         setOpenAddDialog(true);
     };
 
-    const handleAfterAddSuccess = () => {
+    const handleAfterAddSuccess = (newConceptTitle) => {
+        setChildSearchValue(newConceptTitle);
         queryClient.invalidateQueries(['searchConcept']);
     };
 
@@ -186,6 +188,7 @@ function ConceptPage() {
                         labelText="Search child"
                         selectedRow={selectedChild}
                         setSelectedRow={setSelectedChild}
+                        defaultSearchValue={childSearchValue}
                     />
                 </Paper>
                 <Paper sx={{ ...stylePaper, p: 2, m: 1, mb: 2 }} className={cx('main-item')}>
