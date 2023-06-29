@@ -49,8 +49,8 @@ function ListConceptDialog({ open, onClose }) {
             });
             return res.data.Data;
         },
-        onSuccess: () => {
-            setSelectedRow(null);
+        onSuccess: (data) => {
+            setSelectedRow(data ? data[0] : null);
         },
     });
 
@@ -151,20 +151,29 @@ function ListConceptDialog({ open, onClose }) {
                     </ListItem>
                 )}
             </List>
-            <TextField
-                id="conceptDescription"
-                label="Description"
-                multiline
-                rows={2}
-                size="small"
-                fullWidth
-                InputProps={{
-                    readOnly: true,
-                }}
-                InputLabelProps={{ shrink: true }}
-                sx={{ mt: 2 }}
-                value={selectedRow?.Description || ''}
-            />
+
+            {delayLoadingSearch ? (
+                <>
+                    <Skeleton animation="wave" />
+                    <Skeleton animation="wave" />
+                    <Skeleton animation="wave" />
+                </>
+            ) : (
+                <TextField
+                    id="conceptDescription"
+                    label="Description"
+                    multiline
+                    rows={2}
+                    size="small"
+                    fullWidth
+                    InputProps={{
+                        readOnly: true,
+                    }}
+                    InputLabelProps={{ shrink: true }}
+                    sx={{ mt: 2 }}
+                    value={selectedRow?.Description || ''}
+                />
+            )}
         </Box>
     );
 
