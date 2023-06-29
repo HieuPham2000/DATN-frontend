@@ -114,7 +114,7 @@ function DictionaryPage() {
             <div>
                 <Grid container spacing={4}>
                     {sortedDictionaries?.map((item) => (
-                        <Grid item xs={6} sm={4} key={item.DictionaryId}>
+                        <Grid item xs={12} sm={4} key={item.DictionaryId}>
                             <DictionaryItem
                                 id={item.DictionaryId}
                                 name={item.DictionaryName}

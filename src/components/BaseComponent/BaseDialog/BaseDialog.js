@@ -11,7 +11,7 @@ function BaseDialog({ open, onClose, title, content, actions, isLoading, isFullS
         <div className={cx('wrapper')}>
             <Dialog
                 open={open}
-                onClose={onClose}
+                // onClose={onClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 fullWidth

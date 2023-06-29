@@ -20,7 +20,7 @@ const menuList = [
         default: true
     },
     {
-        text: 'Add concept',
+        text: 'Concept',
         icon: ConceptIcon,
         link: '/concept',
     },

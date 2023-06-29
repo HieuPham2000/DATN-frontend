@@ -1,12 +1,11 @@
 import { memo } from 'react';
 import { Button, Stack } from '@mui/material';
 import BaseDialog from '~/components/BaseComponent/BaseDialog';
-import { deleteDictionary, getNumberRecord } from '~/services/dictionaryService';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { getNumberRecord } from '~/services/dictionaryService';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import HUSTConstant from '~/utils/common/constant';
 import { saveLog } from '~/services/auditLogService';
-import { Enum } from '~/utils/common/enumeration';
 import exportImg from '~/assets/images/export.svg';
 import { backupDictionary, exportDictionary } from '~/services/templateService';
 import { HttpStatusCode } from 'axios';

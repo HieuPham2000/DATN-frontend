@@ -136,10 +136,13 @@ function AuditLogPage() {
                             </InputAdornment>
                         ),
                     }}
+                    onFocus={(event) => {
+                        event.target.select();
+                    }}
                 />
             </Box>
             <Paper sx={{ ...stylePaper, mx: 1, mt: 2, mb: 3, flex: 1, display: 'flex', overflow: 'auto' }}>
-                <Table stickyHeader aria-label="access history table" sx={{ minWidth: 800 }} size="small">  
+                <Table stickyHeader aria-label="access history table" sx={{ minWidth: 800 }} size="small">
                     <TableHead>
                         <TableRow>
                             <TableCell align="center">Date time</TableCell>

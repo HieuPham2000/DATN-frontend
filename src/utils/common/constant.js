@@ -143,6 +143,7 @@ const ScreenInfo = {
     AccountSettingSecurityTab: 'Account Settings/Security',
     AccessHistory: 'Access History',
     Dictionary: 'Dictionary',
+    Concept: 'Concept',
 };
 
 const LogAction = {
@@ -185,6 +186,22 @@ const LogAction = {
     ImportData: {
         Type: 10,
         Text: 'Import',
+    },
+    AddConcept: {
+        Type: 11,
+        Text: 'Add concept',
+    },
+    EditConcept: {
+        Type: 12,
+        Text: 'Edit concept',
+    },
+    DeleteConcept: {
+        Type: 13,
+        Text: 'Delete concept',
+    },
+    UpdateConceptRelationship: {
+        Type: 13,
+        Text: 'Update concept relation',
     },
 };
 

@@ -1,4 +1,4 @@
-import { Suspense, useCallback, useState } from 'react';
+import { Suspense, useCallback, useRef, useState } from 'react';
 import { Drawer, Fab, Tooltip } from '@mui/material';
 import { AutoStoriesTwoTone as DictionaryIcon } from '@mui/icons-material';
 
@@ -10,10 +10,14 @@ import HUSTConstant from '~/utils/common/constant';
 import Header from '../components/Header/Header';
 import Sidebar from '../components/Sidebar/Sidebar';
 import LoadingScreen from '~/components/LoadingScreen';
+import ListConceptDialog from '~/components/Concept/ListConceptDialog/ListConceptDialog';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 const cx = classNames.bind(styles);
 
 function DefaultLayout({ children }) {
+    const fabRef = useRef(null);
+    const [openConceptDialog, setOpenConceptDialog] = useState(false);
     const [showDrawer, setShowDrawer] = useState(false);
     const windowSize = useWindowSize();
 
@@ -26,6 +30,18 @@ function DefaultLayout({ children }) {
         },
         [],
     );
+
+    const handleOpenConceptDialog = (e) => {
+        e?.preventDefault();
+        setOpenConceptDialog(true);
+    };
+
+    const handleCloseConceptDialog = () => {
+        setOpenConceptDialog(false);
+    };
+
+    useHotkeys('alt+c', handleOpenConceptDialog);
+    useHotkeys('ctrl+q', handleCloseConceptDialog);
 
     return (
         <div className={cx('wrapper')}>
@@ -43,8 +59,15 @@ function DefaultLayout({ children }) {
                 <main className={cx('content')}>
                     <Suspense fallback={<LoadingScreen />}>{children}</Suspense>
                 </main>
-                <Fab aria-label="View all concepts" className={cx('btn-fab')}>
-                    <Tooltip title="View all concepts in this dictionary">
+                <ListConceptDialog open={openConceptDialog} onClose={handleCloseConceptDialog} />
+                <Fab
+                    ref={fabRef}
+                    aria-label="View all concepts"
+                    className={cx('btn-fab')}
+                    onClick={handleOpenConceptDialog}
+                    onTouchEnd={handleOpenConceptDialog}
+                >
+                    <Tooltip title="View all concepts (Alt+C)">
                         <DictionaryIcon color="primary" className={cx('btn-fab-icon')} />
                     </Tooltip>
                 </Fab>

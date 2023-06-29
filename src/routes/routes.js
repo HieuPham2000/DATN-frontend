@@ -6,7 +6,7 @@ const Login = lazy(() => import('~/pages/Login'));
 const Page404 = lazy(() => import('~/pages/Page404'));
 const Page500 = lazy(() => import('~/pages/Page500'));
 const Register = lazy(() => import('~/pages/Register'));
-const AddConcept = lazy(() => import('~/pages/AddConcept'));
+const ConceptPage = lazy(() => import('~/pages/ConceptPage'));
 const AddExample = lazy(() => import('~/pages/AddExample'));
 const SearchPage = lazy(() => import('~/pages/SearchPage'));
 const TreePage = lazy(() => import('~/pages/TreePage'));
@@ -43,7 +43,7 @@ const privateRoutes = [
     { path: '/', component: Dashboard },
     { path: '/dashboard', component: Dashboard },
     { path: '/dictionary', component: DictionaryPage },
-    { path: '/concept', component: AddConcept },
+    { path: '/concept', component: ConceptPage },
     { path: '/example', component: AddExample },
     { path: '/search', component: SearchPage },
     { path: '/tree', component: TreePage },
