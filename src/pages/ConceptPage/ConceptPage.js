@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import styles from './AddConcept.module.scss';
+import styles from './ConceptPage.module.scss';
 import classNames from 'classnames/bind';
 import { Autocomplete, Box, Button, Paper, TextField, Tooltip, Typography } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
@@ -15,11 +15,11 @@ import { toast } from 'react-toastify';
 import HUSTConstant from '~/utils/common/constant';
 import { saveLog } from '~/services/auditLogService';
 import { East } from '@mui/icons-material';
-import AlertDialog from '~/components/BaseComponent/AlertDialog/AlertDialog';
+import AlertDialog from '~/components/BaseComponent/AlertDialog';
 
 const cx = classNames.bind(styles);
 
-function AddConcept() {
+function ConceptPage() {
     const queryClient = useQueryClient();
     const [openAddDialog, setOpenAddDialog] = useState(false);
     const [openAlert, setOpenAlert] = useState(false);
@@ -256,4 +256,4 @@ function AddConcept() {
     );
 }
 
-export default AddConcept;
+export default ConceptPage;
