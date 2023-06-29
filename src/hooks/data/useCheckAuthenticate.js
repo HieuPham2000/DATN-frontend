@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { HttpStatusCode } from 'axios';
+// import { HttpStatusCode } from 'axios';
 import { checkAuthenticate } from '~/services/accountService';
 
 const useCheckAuthenticate = () =>
@@ -14,7 +14,7 @@ const useCheckAuthenticate = () =>
         // retry: (failureCount, error) => {
         //     return error?.response?.status !== HttpStatusCode.Unauthorized && failureCount <= 3 ? true : false;
         // },
-        retry: false
+        retry: false,
     });
 
 export default useCheckAuthenticate;
