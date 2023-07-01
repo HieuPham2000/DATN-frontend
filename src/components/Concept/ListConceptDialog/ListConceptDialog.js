@@ -55,7 +55,7 @@ function ListConceptDialog({ open, onClose }) {
         queryFn: async () => {
             const res = await searchConcept({
                 searchKey: searchKey?.trim(),
-                isSearchSoundex: true,
+                // isSearchSoundex: true,
             });
             return res.data.Data;
         },

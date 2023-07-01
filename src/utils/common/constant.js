@@ -144,6 +144,7 @@ const ScreenInfo = {
     AccessHistory: 'Access History',
     Dictionary: 'Dictionary',
     Concept: 'Concept',
+    Example: 'Example',
 };
 
 const LogAction = {
@@ -202,6 +203,10 @@ const LogAction = {
     UpdateConceptRelationship: {
         Type: 13,
         Text: 'Update concept relation',
+    },
+    AddExample: {
+        Type: 14,
+        Text: 'Add example',
     },
 };
 

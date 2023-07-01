@@ -16,6 +16,7 @@ import HUSTConstant from '~/utils/common/constant';
 import { saveLog } from '~/services/auditLogService';
 import { East } from '@mui/icons-material';
 import AlertDialog from '~/components/BaseComponent/AlertDialog';
+import useAccountInfo from '~/hooks/data/useAccountInfo';
 
 const cx = classNames.bind(styles);
 
@@ -30,6 +31,9 @@ function ConceptPage() {
     const [relationInputValue, setRelationInputValue] = useState('');
     const [isForcedUpdate, setForcedUpdate] = useState(false);
     const [childSearchValue, setChildSearchValue] = useState('');
+
+    const { data: accountInfo } = useAccountInfo();
+    const dictionaryName = useMemo(() => accountInfo?.Dictionary?.DictionaryName ?? '', [accountInfo]);
 
     /**
      * Lấy danh sách concept link
@@ -91,7 +95,8 @@ function ConceptPage() {
 
                     let logParam = {
                         ScreenInfo: HUSTConstant.ScreenInfo.Concept,
-                        ActionType: HUSTConstant.LogAction.ChangeInfo.Type,
+                        ActionType: HUSTConstant.LogAction.UpdateConceptRelationship.Type,
+                        Reference: `Dictionary: ${dictionaryName}`,
                         Description: logDescription,
                     };
 
@@ -177,7 +182,7 @@ function ConceptPage() {
                 <title>Concept | HUST PVO</title>
             </Helmet>
             <div className={cx('toolbar-wrapper')}>
-                <Typography variant="h4">Concepts</Typography>
+                <Typography variant="h4">Concept</Typography>
                 <Button sx={{ display: 'inline-block', minWidth: 100 }} variant="contained" onClick={handleAdd}>
                     Add
                 </Button>

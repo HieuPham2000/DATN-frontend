@@ -26,11 +26,16 @@ function ListSearchConcept({
     selectedRow,
     setSelectedRow,
     defaultSearchValue = '',
+    showContextMenu = true,
+    shrinkLabel = false,
+    defaultDelaySearch = 700,
+    delaySearch = 700,
+    setDelaySearch = null,
 }) {
     const queryClient = useQueryClient();
     // const [selectedRow, setSelectedRow] = useState(null);
     const [searchValue, setSearchValue] = useState('');
-    const searchKey = useDebounce(searchValue, 1000);
+    const searchKey = useDebounce(searchValue, delaySearch);
     const [reClickMaster, setReClickMaster] = useState(false);
 
     const [contextMenu, setContextMenu] = useState(null);
@@ -43,11 +48,14 @@ function ListSearchConcept({
         queryFn: async () => {
             const res = await searchConcept({
                 searchKey: searchKey?.trim(),
-                isSearchSoundex: true,
+                // isSearchSoundex: true,
             });
             return res.data.Data;
         },
         onSuccess: (data) => {
+            if (typeof setDelaySearch === 'function') {
+                setDelaySearch(defaultDelaySearch);
+            }
             if (!reClickMaster || !data || !data.length || !selectedRow) {
                 setSelectedRow(data ? data[0] : null);
             } else {
@@ -181,6 +189,9 @@ function ListSearchConcept({
                         </InputAdornment>
                     ),
                 }}
+                InputLabelProps={{
+                    shrink: shrinkLabel,
+                }}
                 sx={{ my: 1 }}
                 autoFocus={autoFocus}
                 onFocus={(event) => {
@@ -203,8 +214,9 @@ function ListSearchConcept({
                         <ListItemButton
                             key={x.ConceptId}
                             onClick={() => handleSelectRow(x)}
-                            onContextMenu={(e) => handleContextMenu(e, x)}
                             selected={selectedRow?.ConceptId === x.ConceptId}
+                            // onContextMenu={(e) => handleContextMenu(e, x)}
+                            {...(showContextMenu ? { onContextMenu: (e) => handleContextMenu(e, x) } : {})}
                         >
                             <ListItemText sx={{ textAlign: 'left' }}>{x.Title}</ListItemText>
                             {/* <IconButton onClick={() => handleCopyToClipboard(x)}>
