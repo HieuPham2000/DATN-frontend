@@ -19,6 +19,7 @@ import { saveLog } from '~/services/auditLogService';
 import { toast } from 'react-toastify';
 import useAccountInfo from '~/hooks/data/useAccountInfo';
 import ExampleRTEControl from '~/components/Example/ExampleRTEControl';
+import { useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 const schema = yup.object().shape({
@@ -36,12 +37,32 @@ const customStylePaper = {
     mb: 2,
 };
 function AddExample() {
+    // Xử lý nhận state khi được điều hướng tới từ màn khác
+    const location = useLocation();
+    // Dùng object để force update
+    const { concept: initConcept = { title: '' } } = useMemo(
+        () =>
+            location.state || {
+                concept: {
+                    title: '',
+                },
+            },
+        [location],
+    );
+
     const [reuseParam, setReuseParam] = useState(true);
     const [relation, setRelation] = useState(null);
     const [selectedConcept, setSelectedConcept] = useState(null);
     const [listLinkedConcept, setListLinkedConcept] = useState([]);
     const [searchConcept, setSearchConcept] = useState(''); // Note: searchConcept không chứa giá trị search mới nhất hiện tại
     const [delaySearchConcept, setDelaySearchConcept] = useState(700);
+
+    useEffect(() => {
+        setDelaySearchConcept(0);
+        // Truyền object để force update
+        setSearchConcept({ value: initConcept?.title || '' });
+        return window.history.replaceState({}, document.title);
+    }, [initConcept]);
 
     // =========================================================================
     const { data: accountInfo } = useAccountInfo();

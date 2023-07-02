@@ -24,8 +24,10 @@ import useDebounce from '~/hooks/useDebounce';
 import { searchConcept } from '~/services/conceptService';
 import EditConceptDialog from '~/components/Concept/EditConceptDialog';
 import DeleteConceptDialog from '~/components/Concept/DeleteConceptDialog';
+import { useNavigate } from 'react-router-dom';
 
 function ListConceptDialog({ open, onClose }) {
+    const navigate = useNavigate();
     const queryClient = useQueryClient();
     const [openSnack, setOpenSnack] = useState(false);
     const [selectedRow, setSelectedRow] = useState(null);
@@ -141,6 +143,23 @@ function ListConceptDialog({ open, onClose }) {
         setOpenDeleteDialog(true);
     };
 
+    /**
+     * Xử lý khi chọn Add example: Điều hướng sang màn example và tự động bind giá trị concept
+     */
+    const handleAddExample = () => {
+        handleCloseContextMenu();
+        handleClose();
+        // navigate('/example', { state: { concept: selectedRow?.Title || '' } });
+        // Truyền object để force update search example
+        navigate('/example', {
+            state: {
+                concept: {
+                    title: selectedRow?.Title || '',
+                },
+            },
+        });
+    };
+
     const handleAfterEditSuccess = () => {
         setReClickMaster(true);
         queryClient.invalidateQueries(['searchConcept']);
@@ -176,7 +195,7 @@ function ListConceptDialog({ open, onClose }) {
                     contextMenu !== null ? { top: contextMenu.mouseY, left: contextMenu.mouseX } : undefined
                 }
             >
-                <MenuItem onClick={handleCloseContextMenu}>Add example</MenuItem>
+                <MenuItem onClick={handleAddExample}>Add example</MenuItem>
                 <MenuItem onClick={handleCloseContextMenu}>View tree</MenuItem>
                 <MenuItem onClick={handleEditConcept}>Edit</MenuItem>
                 <MenuItem onClick={handleDeleteConcept}>Delete</MenuItem>

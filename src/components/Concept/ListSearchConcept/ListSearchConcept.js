@@ -19,6 +19,7 @@ import { searchConcept } from '~/services/conceptService';
 import EditConceptDialog from '~/components/Concept/EditConceptDialog';
 import DeleteConceptDialog from '~/components/Concept/DeleteConceptDialog';
 import AddConceptDialog from '~/components/Concept/AddConceptDialog';
+import { useNavigate } from 'react-router-dom';
 
 function ListSearchConcept({
     labelText = 'Search concept',
@@ -32,6 +33,7 @@ function ListSearchConcept({
     delaySearch = 700,
     setDelaySearch = null,
 }) {
+    const navigate = useNavigate();
     const queryClient = useQueryClient();
     // const [selectedRow, setSelectedRow] = useState(null);
     const [searchValue, setSearchValue] = useState('');
@@ -122,6 +124,22 @@ function ListSearchConcept({
         setOpenDeleteDialog(true);
     };
 
+    /**
+     * Xử lý khi chọn Add example: Điều hướng sang màn example và tự động bind giá trị concept
+     */
+    const handleAddExample = () => {
+        handleCloseContextMenu();
+        // navigate('/example', { state: { concept: selectedRow?.Title || '' } });
+        // Truyền object để force update search example
+        navigate('/example', {
+            state: {
+                concept: {
+                    title: selectedRow?.Title || '',
+                },
+            },
+        });
+    };
+
     const handleAdd = () => {
         setOpenAddDialog(true);
     };
@@ -173,7 +191,7 @@ function ListSearchConcept({
                     contextMenu !== null ? { top: contextMenu.mouseY, left: contextMenu.mouseX } : undefined
                 }
             >
-                <MenuItem onClick={handleCloseContextMenu}>Add example</MenuItem>
+                <MenuItem onClick={handleAddExample}>Add example</MenuItem>
                 <MenuItem onClick={handleCloseContextMenu}>View tree</MenuItem>
                 <MenuItem onClick={handleEditConcept}>Edit</MenuItem>
                 <MenuItem onClick={handleDeleteConcept}>Delete</MenuItem>
