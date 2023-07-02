@@ -21,3 +21,27 @@ export const addExample = ({
         ListExampleRelationship,
     });
 };
+
+export const searchExample = ({
+    Keyword,
+    ToneId,
+    ModeId,
+    RegisterId,
+    NuanceId,
+    DialectId,
+    ListLinkedConceptId,
+    IsSearchUndecided,
+    IsFulltextSearch,
+}) => {
+    return http.post('example/search_example', {
+        Keyword: Keyword?.trim(),
+        ToneId,
+        ModeId,
+        RegisterId,
+        NuanceId,
+        DialectId,
+        ListLinkedConceptId,
+        IsSearchUndecided,
+        IsFulltextSearch,
+    });
+};
