@@ -46,7 +46,12 @@ function DefaultLayout({ children }) {
     return (
         <div className={cx('wrapper')}>
             {windowSize.width < HUSTConstant.WindowSize.Lg ? (
-                <Drawer anchor="left" open={showDrawer} onClose={toggleDrawer(false)}>
+                <Drawer
+                    anchor="left"
+                    open={showDrawer}
+                    onClose={toggleDrawer(false)}
+                    sx={{ zIndex: 99999, position: 'relative' }}
+                >
                     <Sidebar insideDrawer />
                 </Drawer>
             ) : (
