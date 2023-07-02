@@ -109,8 +109,14 @@ function ExampleRTEControl({ style }) {
                 <Controller
                     name="example"
                     control={control}
-                    render={({ field }) => (
-                        <ReactQuill {...field} modules={modules} formats={formats} placeholder="Example (*)" />
+                    render={({ field: { ref, ...field } }) => (
+                        <ReactQuill
+                            ref={ref}
+                            {...field}
+                            modules={modules}
+                            formats={formats}
+                            placeholder="Example (*)"
+                        />
                     )}
                 />
             </StyledEditor>

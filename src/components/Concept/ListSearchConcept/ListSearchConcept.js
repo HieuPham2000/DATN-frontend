@@ -84,7 +84,11 @@ function ListSearchConcept({
     }, [isLoadingSearch]);
 
     useEffect(() => {
-        setSearchValue(defaultSearchValue);
+        if (typeof defaultSearchValue === 'object' && defaultSearchValue.hasOwnProperty('value')) {
+            setSearchValue(defaultSearchValue?.value);
+        } else {
+            setSearchValue(defaultSearchValue);
+        }
     }, [defaultSearchValue]);
 
     const handleSelectRow = (concept) => {
@@ -189,9 +193,13 @@ function ListSearchConcept({
                         </InputAdornment>
                     ),
                 }}
-                InputLabelProps={{
-                    shrink: shrinkLabel,
-                }}
+                {...(shrinkLabel
+                    ? {
+                          InputLabelProps: {
+                              shrink: shrinkLabel,
+                          },
+                      }
+                    : {})}
                 sx={{ my: 1 }}
                 autoFocus={autoFocus}
                 onFocus={(event) => {

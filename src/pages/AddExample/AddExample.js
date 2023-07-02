@@ -73,8 +73,11 @@ function AddExample() {
         resolver: yupResolver(schema),
     });
 
-    const { handleSubmit, reset, setError } = methods;
+    const { handleSubmit, reset, setError, setFocus } = methods;
 
+    useEffect(() => {
+        setFocus('example');
+    }, [setFocus]);
     // ==========================================================================
     const { mutate: handleSave } = useMutation(
         async (data) => {
@@ -200,16 +203,18 @@ function AddExample() {
     // ==================================================================================
     const resetNotReuseParam = () => {
         // TODO: bug do searchConcept không lưu giá trị mới nhất của searchValue
+        // Tạm fix bằng cách pass object => force update
         setDelaySearchConcept(0);
-        setSearchConcept('');
+        setSearchConcept({ value: '' });
         setListLinkedConcept([]);
         reset();
     };
 
     const resetReuseParam = (param) => {
         // TODO: bug do searchConcept không lưu giá trị mới nhất của searchValue
+        // Tạm fix bằng cách pass object => force update
         setDelaySearchConcept(0);
-        setSearchConcept('');
+        setSearchConcept({ value: '' });
         setListLinkedConcept([]);
         reset({
             example: '',
