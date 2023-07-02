@@ -23,7 +23,11 @@ yup.addMethod(yup.string, 'password', function (message) {
 });
 
 yup.addMethod(yup.string, 'textHtmlRequired', function (message) {
-    return this.test('textHtmlRequired', message, (value) => !!value?.replaceAll(/<.*?>/g, '')?.trim())
+    return this.test('textHtmlRequired', message, (value) => !!value?.replaceAll(/<.*?>/g, '')?.trim());
+});
+
+yup.addMethod(yup.string, 'textHtmlMaxLength', function (limit, message) {
+    return this.test('textHtmlMaxLength', message, (value) => (value?.replaceAll(/<.*?>/g, '')?.length || 0) <= limit);
 });
 
 export default yup;

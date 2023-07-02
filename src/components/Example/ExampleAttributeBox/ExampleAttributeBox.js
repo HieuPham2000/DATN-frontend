@@ -83,7 +83,7 @@ function ExampleAttributeBox() {
                 <Controller
                     name="note"
                     control={control}
-                    render={({ field }) => (
+                    render={({ field, fieldState: { error } }) => (
                         <TextField
                             id="txtNote"
                             label="Notes"
@@ -98,6 +98,9 @@ function ExampleAttributeBox() {
                                 shrink: true,
                             }}
                             {...field}
+                            error={!!error?.message}
+                            title={error?.message}
+                            helperText={error?.message}
                             onFocus={(event) => {
                                 event.target.select();
                             }}
