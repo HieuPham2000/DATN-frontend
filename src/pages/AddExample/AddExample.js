@@ -21,6 +21,7 @@ import useAccountInfo from '~/hooks/data/useAccountInfo';
 import ExampleRTEControl from '~/components/Example/ExampleRTEControl';
 import { useLocation } from 'react-router-dom';
 import { stripHtmlExceptHighlight } from '~/utils/common/utils';
+import AlertDialog from '~/components/BaseComponent/AlertDialog';
 
 const cx = classNames.bind(styles);
 const schema = yup.object().shape({
@@ -57,6 +58,7 @@ function AddExample() {
     const [listLinkedConcept, setListLinkedConcept] = useState([]);
     const [searchConcept, setSearchConcept] = useState(''); // Note: searchConcept không chứa giá trị search mới nhất hiện tại
     const [delaySearchConcept, setDelaySearchConcept] = useState(700);
+    const [openAlert, setOpenAlert] = useState(false);
 
     useEffect(() => {
         setDelaySearchConcept(0);
@@ -287,9 +289,46 @@ function AddExample() {
     };
 
     // ===========================================================================
+    const handleOpenAlert = () => {
+        setOpenAlert(true);
+    };
+
+    const handleCloseAlert = () => {
+        setOpenAlert(false);
+    };
+
+    const handleClickSave = (data) => {
+        if (listLinkedConcept && listLinkedConcept.length > 0) {
+            handleSave(data);
+        } else {
+            handleOpenAlert();
+        }
+    };
+
+    const handleClickAcceptAlert = () => {
+        handleCloseAlert();
+        handleSubmit(handleSave)();
+    };
+
+    // ===========================================================================
 
     return (
         <div className={cx('wrapper')}>
+            {openAlert && (
+                <AlertDialog
+                    title="Undecided example"
+                    content="This example is not linked to any concepts yet. It will be temporarily categorized as Undecided. Are you sure?"
+                    open={openAlert}
+                    onClose={handleCloseAlert}
+                >
+                    <Button color="minor" size="large" onClick={handleCloseAlert}>
+                        Cancel
+                    </Button>
+                    <Button size="large" onClick={handleClickAcceptAlert}>
+                        Accept continue
+                    </Button>
+                </AlertDialog>
+            )}
             <Helmet>
                 <title>Example | HUST PVO</title>
             </Helmet>
@@ -344,11 +383,7 @@ function AddExample() {
                                         <Typography color="text.secondary">No selected concept</Typography>
                                     ) : (
                                         <>
-                                            <Typography
-                                                sx={{ fontWeight: '500', mr: 1 }}
-                                                color="primary"
-                                                // component="span"
-                                            >
+                                            <Typography sx={{ fontWeight: '500', mr: 1 }} color="primary">
                                                 Selected concept:
                                             </Typography>
                                             <Chip label={selectedConcept.Title} />
@@ -399,7 +434,6 @@ function AddExample() {
                             </Paper>
                         </Grid>
                     </Grid>
-                    {/* <div className={cx('main-wrapper')}></div> */}
                 </FormProvider>
             </div>
 
@@ -415,13 +449,7 @@ function AddExample() {
                     sx={{ display: 'inline-block', minWidth: 100 }}
                     variant="contained"
                     size="large"
-                    onClick={handleSubmit(handleSave)}
-                    // loading={isLoadingUpdate}
-                    // disabled={
-                    //     isLoadingGetRelation ||
-                    //     relation === conceptRelationship?.ConceptLinkName ||
-                    //     selectedChild?.ConceptId === selectedParent?.ConceptId
-                    // }
+                    onClick={handleSubmit(handleClickSave)}
                 >
                     Save & Reset
                 </LoadingButton>

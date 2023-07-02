@@ -25,7 +25,7 @@ const menuList = [
         link: '/concept',
     },
     {
-        text: 'Add example',
+        text: 'Example',
         icon: ExampleIcon,
         link: '/example',
     },
