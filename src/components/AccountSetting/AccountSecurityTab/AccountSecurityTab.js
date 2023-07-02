@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './AccountSecurityTab.module.scss';
 import { Button, Paper, Typography } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
-import PasswordTextField from '~/components/PasswordTextField';
+import PasswordTextField from '~/components/BaseComponent/PasswordTextField';
 import yup from '~/utils/common/validate/yupGlobal';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Info } from '@mui/icons-material';

@@ -12,7 +12,7 @@ import { useMutation } from '@tanstack/react-query';
 import { checkAccessResetPassword, resetPassword } from '~/services/accountService';
 import { toast } from 'react-toastify';
 import { Controller, useForm, useWatch } from 'react-hook-form';
-import PasswordTextField from '~/components/PasswordTextField';
+import PasswordTextField from '~/components/BaseComponent/PasswordTextField';
 import yup from '~/utils/common/validate/yupGlobal';
 import { yupResolver } from '@hookform/resolvers/yup';
 import HUSTConstant from '~/utils/common/constant';
