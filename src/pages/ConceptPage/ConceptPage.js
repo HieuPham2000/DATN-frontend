@@ -31,6 +31,7 @@ function ConceptPage() {
     const [relationInputValue, setRelationInputValue] = useState('');
     const [isForcedUpdate, setForcedUpdate] = useState(false);
     const [childSearchValue, setChildSearchValue] = useState('');
+    const [delaySearchChild, setDelaySearchChild] = useState(700);
 
     const { data: accountInfo } = useAccountInfo();
     const dictionaryName = useMemo(() => accountInfo?.Dictionary?.DictionaryName ?? '', [accountInfo]);
@@ -136,6 +137,7 @@ function ConceptPage() {
     };
 
     const handleAfterAddSuccess = (newConceptTitle) => {
+        setDelaySearchChild(0);
         setChildSearchValue(newConceptTitle);
         queryClient.invalidateQueries(['searchConcept']);
     };
@@ -194,6 +196,8 @@ function ConceptPage() {
                         selectedRow={selectedChild}
                         setSelectedRow={setSelectedChild}
                         defaultSearchValue={childSearchValue}
+                        delaySearch={delaySearchChild}
+                        setDelaySearch={setDelaySearchChild}
                     />
                 </Paper>
                 <Paper sx={{ ...stylePaper, p: 2, m: 1, mb: 2 }} className={cx('main-item')}>
