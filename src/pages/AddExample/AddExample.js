@@ -11,7 +11,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import yup from '~/utils/common/validate/yupGlobal';
 import ExampleAttributeBox from '~/components/Example/ExampleAttributeBox';
-import ExampleControl from '~/components/Example/ExampleControl';
 import ExampleRelationAutocomplete from '~/components/Example/ExampleRelationAutocomplete';
 import { addExample } from '~/services/exampleService';
 import { Enum } from '~/utils/common/enumeration';
@@ -19,10 +18,11 @@ import HUSTConstant from '~/utils/common/constant';
 import { saveLog } from '~/services/auditLogService';
 import { toast } from 'react-toastify';
 import useAccountInfo from '~/hooks/data/useAccountInfo';
+import ExampleRTEControl from '~/components/Example/ExampleRTEControl';
 
 const cx = classNames.bind(styles);
 const schema = yup.object().shape({
-    example: yup.string().required('Example is required'),
+    example: yup.string().textHtmlRequired('Example is required'),
 });
 
 const customStylePaper = {
@@ -73,7 +73,7 @@ function AddExample() {
         resolver: yupResolver(schema),
     });
 
-    const { handleSubmit, reset, setError, resetField } = methods;
+    const { handleSubmit, reset, setError } = methods;
 
     // ==========================================================================
     const { mutate: handleSave } = useMutation(
@@ -98,18 +98,17 @@ function AddExample() {
                     saveAuditLog(reqData);
 
                     if (reuseParam) {
-                        resetReuseParam();
+                        resetReuseParam(reqData);
                     } else {
                         resetNotReuseParam();
                     }
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail) {
                     toast.error(data.Message || 'Add example failed');
-                    if (data.ErrorCode === HUSTConstant.ErrorCode.Err4001) {
-                        setError(
-                            'example',
-                            { type: HUSTConstant.ErrorCode.Err4001, message: data.Message },
-                            { shouldFocus: true },
-                        );
+                    if (
+                        data.ErrorCode === HUSTConstant.ErrorCode.Err4001 ||
+                        data.ErrorCode === HUSTConstant.ErrorCode.Err4002
+                    ) {
+                        setError('example', { type: data.ErrorCode, message: data.Message }, { shouldFocus: true });
                     }
                 } else {
                     toast.error('Add example failed');
@@ -207,12 +206,20 @@ function AddExample() {
         reset();
     };
 
-    const resetReuseParam = () => {
+    const resetReuseParam = (param) => {
         // TODO: bug do searchConcept không lưu giá trị mới nhất của searchValue
         setDelaySearchConcept(0);
         setSearchConcept('');
         setListLinkedConcept([]);
-        resetField('example');
+        reset({
+            example: '',
+            tone: param?.tone || null,
+            mode: param?.mode || null,
+            register: param?.register || null,
+            nuance: param?.nuance || null,
+            dialect: param?.dialect || null,
+            note: param?.note || '',
+        });
     };
 
     const saveAuditLog = (reqData) => {
@@ -264,7 +271,8 @@ function AddExample() {
                                 sx={{ ...customStylePaper, maxHeight: 280 }}
                                 className={cx('main-item', 'item-example')}
                             >
-                                <ExampleControl sx={{ mt: 1 }} />
+                                {/* <ExampleControl sx={{ mt: 1 }} /> */}
+                                <ExampleRTEControl style={{ marginTop: '8px' }} />
                             </Paper>
                         </Grid>
 

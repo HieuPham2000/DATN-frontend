@@ -98,6 +98,9 @@ const ErrorCode = {
     //Duplicate examples
     Err4001: 4001,
 
+    //No highlighted parts
+    Err4002: 4002,
+
     //Invalid parameters
     Err9000: 9000,
 

@@ -2,17 +2,17 @@ import * as yup from 'yup';
 import HUSTConstant, { REGEX_ONLY_NUMBER, REGEX_TEST_EMAIL, REGEX_TEST_PASSWORD } from '~/utils/common/constant';
 
 yup.addMethod(yup.string, 'email', function (message) {
-  return this.matches(REGEX_TEST_EMAIL, {
-      message: message || 'Incorrect email format.',
-      excludeEmptyString: true,
-  });
+    return this.matches(REGEX_TEST_EMAIL, {
+        message: message || 'Incorrect email format.',
+        excludeEmptyString: true,
+    });
 });
 
 yup.addMethod(yup.string, 'onlyNumber', function (message) {
-  return this.matches(REGEX_ONLY_NUMBER, {
-      message,
-      excludeEmptyString: true,
-  });
+    return this.matches(REGEX_ONLY_NUMBER, {
+        message,
+        excludeEmptyString: true,
+    });
 });
 
 yup.addMethod(yup.string, 'password', function (message) {
@@ -20,6 +20,10 @@ yup.addMethod(yup.string, 'password', function (message) {
         message: message || HUSTConstant.ValidateMessage.Password,
         excludeEmptyString: true,
     });
+});
+
+yup.addMethod(yup.string, 'textHtmlRequired', function (message) {
+    return this.test('textHtmlRequired', message, (value) => !!value?.replaceAll(/<.*?>/g, '')?.trim())
 });
 
 export default yup;
