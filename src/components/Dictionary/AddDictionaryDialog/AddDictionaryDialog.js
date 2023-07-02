@@ -12,7 +12,7 @@ import { saveLog } from '~/services/auditLogService';
 import { Enum } from '~/utils/common/enumeration';
 
 const schema = yup.object().shape({
-    dictionaryName: yup.string().required('Dictionary Name is required'),
+    dictionaryName: yup.string().trim().required('Dictionary Name is required'),
 });
 function AddDictionaryDialog({ open, onClose, dictionaries }) {
     const queryClient = useQueryClient();

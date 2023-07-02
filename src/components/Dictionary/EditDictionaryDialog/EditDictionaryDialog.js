@@ -13,7 +13,7 @@ import useAccountInfo from '~/hooks/data/useAccountInfo';
 import { updateDictionary } from '~/services/dictionaryService';
 
 const schema = yup.object().shape({
-    dictionaryName: yup.string().required('Dictionary Name is required'),
+    dictionaryName: yup.string().trim().required('Dictionary Name is required'),
 });
 function EditDictionaryDialog({ open, onClose, dictId, dictName }) {
     const queryClient = useQueryClient();

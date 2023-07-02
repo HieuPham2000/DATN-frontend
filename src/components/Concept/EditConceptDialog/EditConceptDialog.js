@@ -13,7 +13,7 @@ import { getConcept, updateConcept } from '~/services/conceptService';
 import useAccountInfo from '~/hooks/data/useAccountInfo';
 
 const schema = yup.object().shape({
-    title: yup.string().required('Concept is required'),
+    title: yup.string().trim().required('Concept is required'),
 });
 function EditConceptDialog({
     open,
