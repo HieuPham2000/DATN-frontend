@@ -22,7 +22,11 @@ import ExampleRTEControl from '~/components/Example/ExampleRTEControl';
 
 const cx = classNames.bind(styles);
 const schema = yup.object().shape({
-    example: yup.string().textHtmlRequired('Example is required'),
+    example: yup
+        .string()
+        .textHtmlMaxLength(1000, 'Maximum length is 1000 characters')
+        .textHtmlRequired('Example is required'),
+    note: yup.string().max(1000, 'Maximum length is 1000 characters'),
 });
 
 const customStylePaper = {
