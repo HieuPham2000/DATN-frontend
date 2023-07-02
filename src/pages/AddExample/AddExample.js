@@ -20,6 +20,7 @@ import { toast } from 'react-toastify';
 import useAccountInfo from '~/hooks/data/useAccountInfo';
 import ExampleRTEControl from '~/components/Example/ExampleRTEControl';
 import { useLocation } from 'react-router-dom';
+import { stripHtmlExceptHighlight } from '~/utils/common/utils';
 
 const cx = classNames.bind(styles);
 const schema = yup.object().shape({
@@ -254,7 +255,7 @@ function AddExample() {
 
     const saveAuditLog = (reqData) => {
         let logDescription = `Example: `,
-            logExample = reqData.example?.trim() || '';
+            logExample = stripHtmlExceptHighlight(reqData.example);
 
         if (reqData.tone?.ToneName && reqData.tone.ToneName !== 'Neutral') {
             logDescription += `[${reqData.tone.ToneName}] `;

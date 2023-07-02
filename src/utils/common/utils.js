@@ -103,3 +103,14 @@ export function getMapLogActionType() {
     );
     return obj;
 }
+
+/**
+ * Loại bỏ tag html, trừ thẻ highlight (thẻ mark)
+ * @param {*} str
+ * @param {*} doTrim
+ * @returns
+ */
+export function stripHtmlExceptHighlight(str, doTrim) {
+    str = str?.replaceAll(/<\/?(?!mark)\w*\b[^>]*>/g, '') || '';
+    return doTrim ? str.trim() : str;
+}
