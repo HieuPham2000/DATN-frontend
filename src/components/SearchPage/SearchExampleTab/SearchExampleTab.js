@@ -24,33 +24,34 @@ function SearchExampleTab() {
     const [lastSearchParam, setLastSearchParam] = useLocalStorage('lastSearchParam', '');
 
     // ============================================================
+    const defaultFormData = {
+        isSearchUndecided: false,
+        listLinkedConcept: [],
+        keyword: '',
+        tone: {
+            ToneName: 'All',
+            ToneId: null,
+        },
+        mode: {
+            ModeName: 'All',
+            ModeId: null,
+        },
+        register: {
+            RegisterName: 'All',
+            RegisterId: null,
+        },
+        nuance: {
+            NuanceName: 'All',
+            NuanceId: null,
+        },
+        dialect: {
+            DialectName: 'All',
+            DialectId: null,
+        },
+    };
     const methods = useForm({
         mode: 'onSubmit',
-        defaultValues: {
-            isSearchUndecided: false,
-            listLinkedConcept: [],
-            keyword: '',
-            tone: {
-                ToneName: 'All',
-                ToneId: null,
-            },
-            mode: {
-                ModeName: 'All',
-                ModeId: null,
-            },
-            register: {
-                RegisterName: 'All',
-                RegisterId: null,
-            },
-            nuance: {
-                NuanceName: 'All',
-                NuanceId: null,
-            },
-            dialect: {
-                DialectName: 'All',
-                DialectId: null,
-            },
-        },
+        defaultValues: JSON.parse(JSON.stringify(defaultFormData)),
     });
 
     const {
@@ -110,7 +111,7 @@ function SearchExampleTab() {
 
     // ============================================================
     const resetSearch = () => {
-        reset();
+        reset(defaultFormData);
     };
 
     return (
