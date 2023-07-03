@@ -9,7 +9,7 @@ import classNames from 'classnames/bind';
 import { useDarkMode } from '~/stores';
 import yup from '~/utils/common/validate/yupGlobal';
 import ToggleMode from '~/components/ToggleDarkMode';
-import PasswordTextField from '~/components/PasswordTextField';
+import PasswordTextField from '~/components/BaseComponent/PasswordTextField';
 import Loading from '~/components/Loading';
 
 import registerImg from '~/assets/images/register-img.svg';
@@ -87,14 +87,16 @@ function Register() {
 
                     setErrorServer(data.Message);
                 }
-            }
+            },
         },
     );
 
     return (
         <div className={cx('wrapper')}>
             {isLoading && <Loading />}
-            {openModal && <SendConfirmMailModal handleClose={() => setOpenModal(false)} email={email} password={password} />}
+            {openModal && (
+                <SendConfirmMailModal handleClose={() => setOpenModal(false)} email={email} password={password} />
+            )}
 
             <ToggleMode className={cx('btn-toggle-mode')} />
             <div className={cx('left-wrapper', isDarkMode && 'dark-mode')}>

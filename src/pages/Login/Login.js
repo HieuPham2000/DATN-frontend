@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames/bind';
 
 import ToggleMode from '~/components/ToggleDarkMode';
-import PasswordTextField from '~/components/PasswordTextField';
+import PasswordTextField from '~/components/BaseComponent/PasswordTextField';
 import { useDarkMode } from '~/stores';
 import yup from '~/utils/common/validate/yupGlobal';
 

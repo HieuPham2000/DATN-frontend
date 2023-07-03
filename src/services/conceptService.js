@@ -49,9 +49,13 @@ export const updateConceptRelationship = (conceptId, parentId, conceptLinkId, is
 };
 
 export const getListRecommendConcept = (keywords, dictionaryId) => {
+    let obj = {};
+    keywords.forEach((x, index) => {
+        obj[`keywords[${index}]`] = x;
+    });
     return http.get('concept/get_list_recommend_concept', {
         params: {
-            keywords,
+            ...obj,
             dictionaryId,
         },
     });

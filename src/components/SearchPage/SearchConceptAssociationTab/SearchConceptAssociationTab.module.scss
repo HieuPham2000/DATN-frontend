@@ -1,0 +1,15 @@
+.action-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.graph-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .no-data-graph {
+        height: 80%;
+    }
+}

@@ -5,8 +5,8 @@ import { Tab, Typography } from '@mui/material';
 import { AccountBox as GeneralIcon, VpnKey as SecurityIcon, Settings as SettingIcon } from '@mui/icons-material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { useState } from 'react';
-import AccountSecurityTab from '~/components/AccountSecurityTab';
-import AccountGeneralTab from '~/components/AccountGeneralTab';
+import AccountSecurityTab from '~/components/AccountSetting/AccountSecurityTab';
+import AccountGeneralTab from '~/components/AccountSetting/AccountGeneralTab';
 import SettingTab from '~/components/AccountSetting/SettingTab';
 
 const cx = classNames.bind(styles);

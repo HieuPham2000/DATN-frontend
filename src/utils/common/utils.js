@@ -103,3 +103,57 @@ export function getMapLogActionType() {
     );
     return obj;
 }
+
+/**
+ * Loại bỏ tag html, trừ thẻ highlight (thẻ mark)
+ * @param {*} str
+ * @param {*} doTrim
+ * @returns
+ */
+export function stripHtmlExceptHighlight(str, doTrim) {
+    str = str?.replaceAll(/<\/?(?!mark)\w*\b[^>]*>/g, '') || '';
+    return doTrim ? str.trim() : str;
+}
+
+/**
+ * Loại bỏ tag html, trừ thẻ highlight (thẻ mark)
+ * @param {*} str
+ * @param {*} doTrim
+ * @returns
+ */
+export function getDisplayExample(detailHtml) {
+    if (!detailHtml) {
+        return detailHtml;
+    }
+    let res = '',
+        fixNum = 50,
+        firstStartMark = detailHtml.indexOf('<mark>', 0),
+        firstEndMark = detailHtml.indexOf('</mark>', 0);
+
+    if (firstStartMark === -1 || firstEndMark === -1) {
+        res = detailHtml.substring(0, 50);
+        if (detailHtml.length > 50 && !res.endsWith('...')) {
+            res += '...';
+        }
+        return res;
+    }
+
+    let startIndex = Math.max(firstStartMark - fixNum, 0),
+        endIndex = Math.min(firstEndMark + 7 + fixNum, detailHtml.length);
+
+    let secondStartMark = detailHtml.indexOf('<mark>', firstEndMark);
+    if (secondStartMark !== -1) {
+        endIndex = Math.min(endIndex, secondStartMark);
+    }
+
+    res = detailHtml.substring(startIndex, endIndex);
+    if (startIndex > 0 && !res.startsWith('...')) {
+        res = '...' + res;
+    }
+
+    if (endIndex < detailHtml.length && !res.endsWith('...')) {
+        res += '...';
+    }
+
+    return res;
+}
