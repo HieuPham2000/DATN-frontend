@@ -15,6 +15,8 @@ import { searchExample } from '~/services/exampleService';
 import Markdown from '~/components/BaseComponent/Markdown/Markdown';
 import { getDisplayExample, stripHtmlExceptHighlight } from '~/utils/common/utils';
 import useLocalStorage from '~/hooks/useLocalStorage';
+import EditExampleDialog from '~/components/Example/EditExampleDialog';
+import { Info } from '@mui/icons-material';
 
 const cx = classNames.bind(styles);
 
@@ -22,6 +24,10 @@ function SearchExampleTab() {
     const [isSaveParam, setIsSaveParam] = useState(true);
     const [listExample, setListExample] = useState([]);
     const [lastSearchParam, setLastSearchParam] = useLocalStorage('lastSearchParam', '');
+
+    const [openDialog, setOpenDialog] = useState(false);
+    const [selectedExample, setSelectedExample] = useState(null);
+    const [isShowToastSuccess, setShowToastSuccess] = useState(true);
 
     // ============================================================
     const defaultFormData = {
@@ -91,8 +97,15 @@ function SearchExampleTab() {
         {
             onSuccess: (data, formData) => {
                 if (data?.Status === Enum.ServiceResultStatus.Success) {
+                    setSelectedExample(null);
                     setListExample(data.Data);
-                    toast.success('Search successfully');
+
+                    if (isShowToastSuccess) {
+                        toast.success('Search successfully');
+                    } else {
+                        setShowToastSuccess(true);
+                    }
+
                     if (isSaveParam) {
                         setLastSearchParam(formData);
                     } else {
@@ -114,8 +127,31 @@ function SearchExampleTab() {
         reset(defaultFormData);
     };
 
+    // ============================================================
+    const handleClickExample = (x) => {
+        setSelectedExample(x);
+    };
+
+    const handleDbClickExample = (x) => {
+        setOpenDialog(true);
+        setSelectedExample(x);
+    };
+
+    const handleAfterModifyExample = () => {
+        setShowToastSuccess(false);
+        handleSubmit(handleSearch)();
+    };
+
     return (
         <FormProvider {...methods}>
+            {openDialog && (
+                <EditExampleDialog
+                    open={openDialog}
+                    onClose={() => setOpenDialog(false)}
+                    exampleId={selectedExample?.ExampleId}
+                    handleAfter={handleAfterModifyExample}
+                />
+            )}
             <div className={cx('wrapper')}>
                 {isLoading && <Loading />}
                 <Grid container spacing={1}>
@@ -154,22 +190,44 @@ function SearchExampleTab() {
                     </Grid>
                 </Grid>
             </div>
-            <Paper sx={{ ...stylePaper, p: 2, m: 1, mb: 2, maxHeight: 400, overflow: 'auto' }}>
+            <Paper sx={{ ...stylePaper, p: 2, m: 1, mb: 2 }}>
                 <Typography>
                     <Typography component="span" color="primary" sx={{ fontWeight: '500', mb: 1 }}>
                         Search results:
                     </Typography>
                     {listExample.length === 0 ? ' No data' : ''}
                 </Typography>
-                {listExample.map((x, index) => (
-                    <ListItemButton key={index} sx={{ px: 2 }}>
-                        <Typography component="div">
-                            <Markdown
-                                children={`${index + 1} - ${getDisplayExample(stripHtmlExceptHighlight(x.DetailHtml))}`}
-                            />
+                {listExample.length > 0 && (
+                    <div style={{ display: 'flex', marginBottom: '4px' }}>
+                        <Typography
+                            variant="caption"
+                            color="text.secondary"
+                            sx={{ display: 'flex', alignItems: 'flex-start' }}
+                        >
+                            <Info fontSize="small" color="text.secondary" sx={{ mr: 0.2, pb: 0.2 }} />
+                            Double-click to view/edit/delete example
                         </Typography>
-                    </ListItemButton>
-                ))}
+                    </div>
+                )}
+                <div style={{ maxHeight: 400, overflow: 'auto' }}>
+                    {listExample.map((x, index) => (
+                        <ListItemButton
+                            key={index}
+                            sx={{ px: 2 }}
+                            onClick={() => handleClickExample(x)}
+                            onDoubleClick={() => handleDbClickExample(x)}
+                            selected={x.ExampleId === selectedExample?.ExampleId}
+                        >
+                            <Typography component="div">
+                                <Markdown
+                                    children={`${index + 1} - ${getDisplayExample(
+                                        stripHtmlExceptHighlight(x.DetailHtml),
+                                    )}`}
+                                />
+                            </Typography>
+                        </ListItemButton>
+                    ))}
+                </div>
             </Paper>
         </FormProvider>
     );
