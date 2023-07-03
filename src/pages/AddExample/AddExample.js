@@ -352,7 +352,7 @@ function AddExample() {
                                     value={relation}
                                     setValue={setRelation}
                                     sx={{ mt: 1 }}
-                                    disabled={!selectedConcept || !relation}
+                                    disabled={!selectedConcept}
                                 />
                                 <Button
                                     sx={{ mt: 2, display: 'inline-block', minWidth: 100 }}
