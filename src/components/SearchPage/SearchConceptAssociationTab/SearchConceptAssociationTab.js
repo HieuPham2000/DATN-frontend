@@ -185,7 +185,7 @@ function SearchConceptAssociationTab() {
                         <ListItemText>
                             {index + 1} - {x.Key}
                         </ListItemText>
-                        <IconButton onClick={() => handleCopyToClipboard(x)}>
+                        <IconButton onClick={() => handleCopyToClipboard(x.Key)}>
                             <ContentCopy fontSize="small" />
                         </IconButton>
                     </ListItemButton>
