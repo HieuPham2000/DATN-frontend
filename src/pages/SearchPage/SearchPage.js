@@ -3,14 +3,16 @@ import styles from './SearchPage.module.scss';
 import classNames from 'classnames/bind';
 import { Tab, Typography } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { useState } from 'react';
 import { Hub as SearchConceptIcon, StickyNote2 as SearchExampleIcon } from '@mui/icons-material';
 import SearchExampleTab from '~/components/SearchPage/SearchExampleTab';
+import SearchConceptAssociationTab from '~/components/SearchPage/SearchConceptAssociationTab';
+import useLocalStorage from '~/hooks/useLocalStorage';
 
 const cx = classNames.bind(styles);
 
 function SearchPage() {
-    const [value, setValue] = useState('example');
+    const [value, setValue] = useLocalStorage('searchTab', 'example');
+    // const [value, setValue] = useState('example');
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -42,7 +44,7 @@ function SearchPage() {
                     <SearchExampleTab />
                 </TabPanel>
                 <TabPanel value="concept" sx={{ px: 0, py: 1 }}>
-                    <></>
+                    <SearchConceptAssociationTab />
                 </TabPanel>
             </TabContext>
         </div>
