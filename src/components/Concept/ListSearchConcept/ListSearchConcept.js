@@ -154,6 +154,8 @@ function ListSearchConcept({
     };
 
     const handleAfterAddSuccess = (newConceptTitle) => {
+        setDelaySearch(0);
+        setSearchValue(newConceptTitle);
         queryClient.invalidateQueries(['searchConcept']);
     };
 
