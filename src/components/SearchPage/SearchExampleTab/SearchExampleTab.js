@@ -160,8 +160,7 @@ function SearchExampleTab() {
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <SearchExampleLinkedConceptBox />
-
-                        <Box className={cx('action-wrapper')} sx={{ px: 1, pt: 2 }}>
+                        <Box sx={{ px: 1 }}>
                             <FormControlLabel
                                 id="ckbSaveParam"
                                 label="Save last search parameters"
@@ -169,6 +168,8 @@ function SearchExampleTab() {
                                 checked={isSaveParam}
                                 onChange={() => setIsSaveParam(!isSaveParam)}
                             />
+                        </Box>
+                        <Box className={cx('action-wrapper')} sx={{ px: 1}}>
                             <Button
                                 sx={{ display: 'inline-block', minWidth: 100, mr: 2 }}
                                 size="large"
