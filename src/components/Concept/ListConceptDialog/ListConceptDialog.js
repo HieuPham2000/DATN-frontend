@@ -160,6 +160,19 @@ function ListConceptDialog({ open, onClose }) {
         });
     };
 
+    /**
+     * Xử lý khi chọn View tree: Điều hướng sang màn tree và tự động bind giá trị concept
+     */
+    const handleViewTree = () => {
+        handleCloseContextMenu();
+        handleClose();
+        navigate('/tree', {
+            state: {
+                concept: !!selectedRow ? { ...selectedRow } : null,
+            },
+        });
+    };
+
     const handleAfterEditSuccess = () => {
         setReClickMaster(true);
         queryClient.invalidateQueries(['searchConcept']);
@@ -196,7 +209,7 @@ function ListConceptDialog({ open, onClose }) {
                 }
             >
                 <MenuItem onClick={handleAddExample}>Add example</MenuItem>
-                <MenuItem onClick={handleCloseContextMenu}>View tree</MenuItem>
+                <MenuItem onClick={handleViewTree}>View tree</MenuItem>
                 <MenuItem onClick={handleEditConcept}>Edit</MenuItem>
                 <MenuItem onClick={handleDeleteConcept}>Delete</MenuItem>
             </Menu>
@@ -289,9 +302,6 @@ function ListConceptDialog({ open, onClose }) {
     const Action = (
         <>
             <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', pl: 2 }}>
-                {/* {data?.LastUpdatedAt && (
-                    <Typography variant="caption">Last updated: {formatDateTime(data?.LastUpdatedAt)}</Typography>
-                )} */}
                 <Box sx={{ flex: '1 1 auto' }} />
                 <Button onClick={handleClose}>Close</Button>
             </Box>

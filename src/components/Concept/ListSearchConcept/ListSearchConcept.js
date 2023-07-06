@@ -140,6 +140,18 @@ function ListSearchConcept({
         });
     };
 
+    /**
+     * Xử lý khi chọn View tree: Điều hướng sang màn tree và tự động bind giá trị concept
+     */
+    const handleViewTree = () => {
+        handleCloseContextMenu();
+        navigate('/tree', {
+            state: {
+                concept: !!selectedRow ? { ...selectedRow } : null,
+            },
+        });
+    };
+
     const handleAdd = () => {
         setOpenAddDialog(true);
     };
@@ -194,7 +206,7 @@ function ListSearchConcept({
                 }
             >
                 <MenuItem onClick={handleAddExample}>Add example</MenuItem>
-                <MenuItem onClick={handleCloseContextMenu}>View tree</MenuItem>
+                <MenuItem onClick={handleViewTree}>View tree</MenuItem>
                 <MenuItem onClick={handleEditConcept}>Edit</MenuItem>
                 <MenuItem onClick={handleDeleteConcept}>Delete</MenuItem>
             </Menu>

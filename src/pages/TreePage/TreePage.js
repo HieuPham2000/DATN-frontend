@@ -5,13 +5,14 @@ import { Box, Button, Typography } from '@mui/material';
 import useLocalStorage from '~/hooks/useLocalStorage';
 import { useMutation } from '@tanstack/react-query';
 import ConceptAutocomplete from '~/components/TreePage/ConceptAutocomplete';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import { getLinkedExampleByRelationshipType, getTree } from '~/services/treeService';
 import Loading from '~/components/Loading';
 import { Enum } from '~/utils/common/enumeration';
 import SimpleView from '~/components/TreePage/SimpleView';
 import searchImg from '~/assets/images/search.svg';
+import { useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -24,6 +25,30 @@ function TreePage() {
     const [listExample, setListExample] = useState([]);
     const [listPrev, setListPrev] = useState([]);
     const [listNext, setListNext] = useState([]);
+
+    // =============================================================================
+
+    // Xử lý nhận state khi được điều hướng tới từ màn khác
+    const location = useLocation();
+    // Dùng object để force update
+    const { concept: initConcept = {} } = useMemo(
+        () =>
+            location.state || {
+                concept: {},
+            },
+        [location],
+    );
+
+    useEffect(() => {
+        if (initConcept && initConcept.ConceptId) {
+            setRootConcept({ ...initConcept });
+        } else {
+            setRootConcept(null);
+        }
+        return window.history.replaceState({}, document.title);
+    }, [initConcept]);
+
+    // =============================================================================
 
     const { mutate: handleShowTree, isLoading: isLoadingShowTree } = useMutation(
         async () => {
@@ -68,10 +93,8 @@ function TreePage() {
         //     setListPrev([]);
         //     setListNext([]);
         // }
-        // setListExample([]);
         if (selectedConcept) {
             setRootConcept(selectedConcept);
-            // handleShowTree();
         } else {
             toast.warning('Concept is required');
         }
@@ -81,8 +104,6 @@ function TreePage() {
         // setListPrev([...listPrev, rootConcept]);
         setSelectedConcept(concept);
         setRootConcept(concept);
-        // setListExample([]);
-        // handleShowTree();
     };
 
     const handleClickRelationType = (exampleLinkId) => {
@@ -92,6 +113,7 @@ function TreePage() {
     useEffect(() => {
         if (rootConcept) {
             setListExample([]);
+            setSelectedConcept(rootConcept);
             handleShowTree();
         }
     }, [rootConcept, handleShowTree]);
