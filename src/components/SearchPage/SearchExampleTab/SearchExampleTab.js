@@ -1,6 +1,18 @@
 import classNames from 'classnames/bind';
 import styles from './SearchExampleTab.module.scss';
-import { Box, Button, Checkbox, FormControlLabel, Grid, ListItemButton, Paper, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    Checkbox,
+    FormControlLabel,
+    Grid,
+    IconButton,
+    ListItemButton,
+    ListItemText,
+    Paper,
+    Tooltip,
+    Typography,
+} from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { memo, useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
@@ -16,7 +28,8 @@ import Markdown from '~/components/BaseComponent/Markdown/Markdown';
 import { getDisplayExample, stripHtmlExceptHighlight } from '~/utils/common/utils';
 import useLocalStorage from '~/hooks/useLocalStorage';
 import EditExampleDialog from '~/components/Example/EditExampleDialog';
-import { Info } from '@mui/icons-material';
+import { Edit } from '@mui/icons-material';
+import ExampleShortView from '~/components/Example/ExampleShortView';
 
 const cx = classNames.bind(styles);
 
@@ -133,8 +146,8 @@ function SearchExampleTab() {
     };
 
     const handleDbClickExample = (x) => {
-        setOpenDialog(true);
         setSelectedExample(x);
+        setOpenDialog(true);
     };
 
     const handleAfterModifyExample = () => {
@@ -169,7 +182,7 @@ function SearchExampleTab() {
                                 onChange={() => setIsSaveParam(!isSaveParam)}
                             />
                         </Box>
-                        <Box className={cx('action-wrapper')} sx={{ px: 1}}>
+                        <Box className={cx('action-wrapper')} sx={{ px: 1 }}>
                             <Button
                                 sx={{ display: 'inline-block', minWidth: 100, mr: 2 }}
                                 size="large"
@@ -198,7 +211,7 @@ function SearchExampleTab() {
                     </Typography>
                     {listExample.length === 0 ? ' No data' : ''}
                 </Typography>
-                {listExample.length > 0 && (
+                {/* {listExample.length > 0 && (
                     <div style={{ display: 'flex', marginBottom: '4px' }}>
                         <Typography
                             variant="caption"
@@ -209,8 +222,8 @@ function SearchExampleTab() {
                             Double-click to view/edit/delete example
                         </Typography>
                     </div>
-                )}
-                <div style={{ maxHeight: 400, overflow: 'auto' }}>
+                )} */}
+                <div style={{ maxHeight: 320, overflow: 'auto' }}>
                     {listExample.map((x, index) => (
                         <ListItemButton
                             key={index}
@@ -219,15 +232,38 @@ function SearchExampleTab() {
                             onDoubleClick={() => handleDbClickExample(x)}
                             selected={x.ExampleId === selectedExample?.ExampleId}
                         >
-                            <Typography component="div">
+                            <ListItemText>
                                 <Markdown
                                     children={`${index + 1} - ${getDisplayExample(
                                         stripHtmlExceptHighlight(x.DetailHtml),
                                     )}`}
                                 />
-                            </Typography>
+                            </ListItemText>
+                            <Tooltip title="Edit/Delete">
+                                <IconButton onClick={() => handleDbClickExample(x)}>
+                                    <Edit fontSize="small" />
+                                </IconButton>
+                            </Tooltip>
                         </ListItemButton>
                     ))}
+                </div>
+            </Paper>
+            <Paper sx={{ ...stylePaper, p: 2, m: 1, mb: 2 }}>
+                <Typography>
+                    <Typography component="span" color="primary" sx={{ fontWeight: '500', mb: 1 }}>
+                        Selected example:
+                    </Typography>
+                    {!selectedExample ? ' No data' : ''}
+                    {!!selectedExample && (
+                        <Tooltip title="Edit/Delete">
+                            <IconButton onClick={() => handleDbClickExample(selectedExample)} sx={{ mb: 1 }}>
+                                <Edit fontSize="small" />
+                            </IconButton>
+                        </Tooltip>
+                    )}
+                </Typography>
+                <div style={{ maxHeight: 200, overflow: 'auto' }}>
+                    <ExampleShortView exampleId={selectedExample?.ExampleId} />
                 </div>
             </Paper>
         </FormProvider>

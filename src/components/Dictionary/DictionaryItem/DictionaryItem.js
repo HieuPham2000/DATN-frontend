@@ -176,7 +176,7 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
             <Tooltip title={name}>
                 <Box
                     className={cx('content-wrapper')}
-                    onDoubleClick={handleDbClickDictionary}
+                    onDoubleClick={handleDbClickDictionary} // không hoạt động trên mobile
                     // onClick={handleClickDictionary}
                 >
                     <IconButton

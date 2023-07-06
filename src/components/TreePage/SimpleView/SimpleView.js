@@ -1,5 +1,5 @@
-import { Info } from '@mui/icons-material';
-import { Box, Grid, ListItemButton, ListItemText, Paper, Tooltip, Typography } from '@mui/material';
+import { Edit } from '@mui/icons-material';
+import { Box, Grid, IconButton, ListItemButton, ListItemText, Paper, Tooltip, Typography } from '@mui/material';
 import { memo, useEffect, useState } from 'react';
 import Markdown from '~/components/BaseComponent/Markdown/Markdown';
 import EditExampleDialog from '~/components/Example/EditExampleDialog/EditExampleDialog';
@@ -55,7 +55,7 @@ function SimpleView({ treeData, listExample, onClickConcept, onClickRelationType
                     </Typography>
                     {listExample.length === 0 ? ' No data' : ''}
                 </Typography>
-                {listExample?.length > 0 && (
+                {/* {listExample?.length > 0 && (
                     <div style={{ display: 'flex', marginBottom: '4px' }}>
                         <Typography
                             variant="caption"
@@ -66,7 +66,7 @@ function SimpleView({ treeData, listExample, onClickConcept, onClickRelationType
                             Double-click to view/edit/delete example
                         </Typography>
                     </div>
-                )}
+                )} */}
                 <div style={{ maxHeight: 400, overflow: 'auto' }}>
                     {listExample?.map((x, index) => (
                         <ListItemButton
@@ -83,6 +83,11 @@ function SimpleView({ treeData, listExample, onClickConcept, onClickRelationType
                                     )}`}
                                 />
                             </Typography>
+                            <Tooltip title="View/Edit/Delete">
+                                <IconButton onClick={() => handleDbClickExample(x.ExampleId)}>
+                                    <Edit fontSize="small" />
+                                </IconButton>
+                            </Tooltip>
                         </ListItemButton>
                     ))}
                 </div>
