@@ -20,6 +20,8 @@ import EditConceptDialog from '~/components/Concept/EditConceptDialog';
 import DeleteConceptDialog from '~/components/Concept/DeleteConceptDialog';
 import AddConceptDialog from '~/components/Concept/AddConceptDialog';
 import { useNavigate } from 'react-router-dom';
+import HUSTConstant from '~/utils/common/constant';
+import { getUserSettingByKey } from '~/services/userSettingService';
 
 function ListSearchConcept({
     labelText = 'Search concept',
@@ -45,12 +47,21 @@ function ListSearchConcept({
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [openAddDialog, setOpenAddDialog] = useState(false);
 
+    const { data: settingData } = useQuery({
+        queryKey: ['userSetting', HUSTConstant.UserSettingKey.IsSearchSoundex],
+        queryFn: async () => {
+            const res = await getUserSettingByKey(HUSTConstant.UserSettingKey.IsSearchSoundex);
+            return res.data.Data;
+        },
+        staleTime: 30000,
+    });
+
     const { data: dataSearch, isLoading: isLoadingSearch } = useQuery({
         queryKey: ['searchConcept', searchKey?.trim()],
         queryFn: async () => {
             const res = await searchConcept({
                 searchKey: searchKey?.trim(),
-                // isSearchSoundex: true,
+                isSearchSoundex: settingData?.SettingValue,
             });
             return res.data.Data;
         },
@@ -218,6 +229,7 @@ function ListSearchConcept({
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
                 inputProps={{ maxLength: 100 }}
+                autoComplete="off"
                 InputProps={{
                     endAdornment: (
                         <InputAdornment position="end">

@@ -25,6 +25,8 @@ import { searchConcept } from '~/services/conceptService';
 import EditConceptDialog from '~/components/Concept/EditConceptDialog';
 import DeleteConceptDialog from '~/components/Concept/DeleteConceptDialog';
 import { useNavigate } from 'react-router-dom';
+import { getUserSettingByKey } from '~/services/userSettingService';
+import HUSTConstant from '~/utils/common/constant';
 
 function ListConceptDialog({ open, onClose }) {
     const navigate = useNavigate();
@@ -39,25 +41,21 @@ function ListConceptDialog({ open, onClose }) {
     const [openEditDialog, setOpenEditDialog] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
-    // const { data: accountInfo } = useAccountInfo();
-    // const dictId = useMemo(() => accountInfo?.Dictionary?.DictionaryId ?? '', [accountInfo]);
-
-    // const { data, isLoading } = useQuery({
-    //     queryKey: ['listConcept', dictId],
-    //     queryFn: async () => {
-    //         const res = await getListConcept();
-    //         return res.data.Data;
-    //     },
-    // });
-
-    // const listConcept = useMemo(() => data?.ListConcept || [], [data]);
+    const { data: settingData } = useQuery({
+        queryKey: ['userSetting', HUSTConstant.UserSettingKey.IsSearchSoundex],
+        queryFn: async () => {
+            const res = await getUserSettingByKey(HUSTConstant.UserSettingKey.IsSearchSoundex);
+            return res.data.Data;
+        },
+        staleTime: 30000,
+    });
 
     const { data: dataSearch, isLoading: isLoadingSearch } = useQuery({
         queryKey: ['searchConcept', searchKey?.trim()],
         queryFn: async () => {
             const res = await searchConcept({
                 searchKey: searchKey?.trim(),
-                // isSearchSoundex: true,
+                isSearchSoundex: settingData?.SettingValue,
             });
             return res.data.Data;
         },
@@ -137,7 +135,7 @@ function ListConceptDialog({ open, onClose }) {
         handleCloseContextMenu();
         setOpenEditDialog(true);
     };
-    
+
     const handleDeleteConcept = () => {
         handleCloseContextMenu();
         setOpenDeleteDialog(true);
@@ -229,6 +227,7 @@ function ListConceptDialog({ open, onClose }) {
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
                 inputProps={{ maxLength: 100 }}
+                autoComplete="off"
                 InputProps={{
                     endAdornment: (
                         <InputAdornment position="end">
