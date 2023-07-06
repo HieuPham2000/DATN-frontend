@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { memo, useEffect, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Enum } from '~/utils/common/enumeration';
 import { toast } from 'react-toastify';
 import { LoadingButton } from '@mui/lab';
@@ -34,6 +34,7 @@ import ExampleShortView from '~/components/Example/ExampleShortView';
 const cx = classNames.bind(styles);
 
 function SearchExampleTab() {
+    const queryClient = useQueryClient();
     const [isSaveParam, setIsSaveParam] = useState(true);
     const [listExample, setListExample] = useState([]);
     const [lastSearchParam, setLastSearchParam] = useLocalStorage('lastSearchParam', '');
@@ -152,6 +153,7 @@ function SearchExampleTab() {
 
     const handleAfterModifyExample = () => {
         setShowToastSuccess(false);
+        queryClient.invalidateQueries(['example', selectedExample?.ExampleId]);
         handleSubmit(handleSearch)();
     };
 
