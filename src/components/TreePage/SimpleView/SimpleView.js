@@ -1,4 +1,4 @@
-import { Edit } from '@mui/icons-material';
+import { East as ArrowRightIcon, Edit, North as ArrowUpIcon } from '@mui/icons-material';
 import { Box, Grid, IconButton, ListItemButton, ListItemText, Paper, Tooltip, Typography } from '@mui/material';
 import { memo, useEffect, useState } from 'react';
 import Markdown from '~/components/BaseComponent/Markdown/Markdown';
@@ -76,13 +76,13 @@ function SimpleView({ treeData, listExample, onClickConcept, onClickRelationType
                             onDoubleClick={() => handleDbClickExample(x.ExampleId)}
                             selected={x.ExampleId === selectedExampleId}
                         >
-                            <Typography component="div">
+                            <ListItemText>
                                 <Markdown
                                     children={`${index + 1} - ${getDisplayExample(
                                         stripHtmlExceptHighlight(x.ExampleHtml),
                                     )}`}
                                 />
-                            </Typography>
+                            </ListItemText>
                             <Tooltip title="View/Edit/Delete">
                                 <IconButton onClick={() => handleDbClickExample(x.ExampleId)}>
                                     <Edit fontSize="small" />
@@ -92,7 +92,17 @@ function SimpleView({ treeData, listExample, onClickConcept, onClickRelationType
                     ))}
                 </div>
             </Paper>
-            <Paper sx={{ ...stylePaper, p: 2, mt: 2, width: '100%', overflow: 'auto' }}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    my: 1,
+                }}
+            >
+                <ArrowUpIcon color="primary" />
+            </Box>
+            <Paper sx={{ ...stylePaper, p: 2, width: '100%', overflow: 'auto' }}>
                 <Box
                     sx={{
                         display: 'flex',
@@ -130,31 +140,56 @@ function SimpleView({ treeData, listExample, onClickConcept, onClickRelationType
                     ))}
                 </Box>
             </Paper>
-            <Grid container spacing={1} sx={{ mt: 2 }}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    my: 1,
+                }}
+            >
+                <ArrowUpIcon color="primary" />
+            </Box>
+            <Grid container spacing={1}>
                 <Grid item xs={12} sm={12} md={4} order={{ md: 2, sm: 1, xs: 1 }}>
-                    <Paper
+                    <Box
                         sx={{
-                            ...stylePaper,
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            width: 200,
-                            height: 50,
-                            p: 2,
-                            m: '0 auto',
-                            bgcolor: 'primary.main',
-                            color: 'primary.contrastText',
-                            overflow: 'hidden',
-                            borderRadius: '40px',
+                            my: 1,
                         }}
-                        id="paper1"
                     >
-                        <Tooltip title={treeData.Concept?.Title}>
-                            <Typography variant="h6" sx={textEllipsisText}>
-                                {treeData.Concept?.Title}
-                            </Typography>
-                        </Tooltip>
-                    </Paper>
+                        <Box sx={{ display: { md: 'block', sm: 'none', xs: 'none' } }}>
+                            <ArrowRightIcon color="primary" />
+                        </Box>
+                        <Paper
+                            sx={{
+                                ...stylePaper,
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                width: 200,
+                                height: 50,
+                                p: 2,
+                                m: '0 auto',
+                                bgcolor: 'primary.main',
+                                color: 'primary.contrastText',
+                                overflow: 'hidden',
+                                borderRadius: '40px',
+                            }}
+                            id="paper1"
+                        >
+                            <Tooltip title={treeData.Concept?.Title}>
+                                <Typography variant="h6" sx={textEllipsisText}>
+                                    {treeData.Concept?.Title}
+                                </Typography>
+                            </Tooltip>
+                        </Paper>
+                        <Box sx={{ display: { md: 'block', sm: 'none', xs: 'none' } }}>
+                            <ArrowRightIcon color="primary" />
+                        </Box>
+                    </Box>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} order={{ md: 1, sm: 1, xs: 2 }}>
                     <Paper
