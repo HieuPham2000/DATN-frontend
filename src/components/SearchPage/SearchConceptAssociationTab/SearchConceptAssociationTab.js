@@ -146,6 +146,13 @@ function SearchConceptAssociationTab() {
         handleOpenSnack();
     };
 
+    // const fullScreen = () => {
+    //     ref.current.requestFullscreen();
+    // };
+
+    // const exitFullScreen = () => {
+    //     document.exitFullscreen();
+    // };
     // ==============================================================
 
     return (
@@ -185,7 +192,7 @@ function SearchConceptAssociationTab() {
                         <ListItemText>
                             {index + 1} - {x.Key}
                         </ListItemText>
-                        <IconButton onClick={() => handleCopyToClipboard(x)}>
+                        <IconButton onClick={() => handleCopyToClipboard(x.Key)}>
                             <ContentCopy fontSize="small" />
                         </IconButton>
                     </ListItemButton>
@@ -198,12 +205,22 @@ function SearchConceptAssociationTab() {
                     </Typography>
                     {graphData.nodes.length === 0 ? ' No data' : ''}
                 </Typography>
-                <div className={cx('graph-wrapper')} style={{ width: '100%', height: '100%' }} ref={ref}>
+                <Box
+                    className={cx('graph-wrapper')}
+                    sx={{
+                        width: '100%',
+                        height: 'calc(100% - 24px)',
+                        // '&::backdrop, &:fullscreen': {
+                        //     bgcolor: 'background.default',
+                        // },
+                    }}
+                    ref={ref}
+                >
                     {graphData.nodes.length > 0 && <Graph id="graph-concept-link" data={graphData} config={config} />}
                     {graphData.nodes.length === 0 && (
                         <img src={searchImg} alt="no data" className={cx('no-data-graph')} />
                     )}
-                </div>
+                </Box>
             </Paper>
         </FormProvider>
     );

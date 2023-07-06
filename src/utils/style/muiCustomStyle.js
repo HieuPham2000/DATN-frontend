@@ -10,3 +10,15 @@ export const stylePaper = {
     overflow: 'hidden',
     borderRadius: '16px',
 };
+
+export const textEllipsisText = {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+};
+
+export const styleTreeItem = {
+    '& .MuiTreeItem-label': {
+        py: 0.5,
+    },
+};

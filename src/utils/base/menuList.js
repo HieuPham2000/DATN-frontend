@@ -35,7 +35,7 @@ const menuList = [
         link: '/search',
     },
     {
-        text: 'View tree',
+        text: 'Tree',
         icon: TreeIcon,
         link: '/tree',
     },

@@ -43,7 +43,10 @@ function AddConceptDialog({
     const [isClose, setIsClose] = useState(false);
 
     const handleClose = () => {
-        reset();
+        reset({
+            title: '',
+            description: '',
+        });
         onClose();
     };
 
@@ -80,7 +83,10 @@ function AddConceptDialog({
                         handleClose();
                     } else {
                         setFocus('title');
-                        reset();
+                        reset({
+                            title: '',
+                            description: '',
+                        });
                     }
 
                     handleAfter(title);

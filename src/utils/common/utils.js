@@ -157,3 +157,17 @@ export function getDisplayExample(detailHtml) {
 
     return res;
 }
+
+/**
+ * Lấy ra mảng hiển thị thuộc tính example
+ * @param {object} example
+ * @returns
+ */
+export function getDisplayExampleAttribute(example) {
+    if (!example) {
+        return [];
+    }
+    let res = [example.ToneName, example.ModeName, example.RegisterName, example.NuanceName, example.DialectName];
+
+    return res.filter((x) => x && x !== 'Neutral');
+}

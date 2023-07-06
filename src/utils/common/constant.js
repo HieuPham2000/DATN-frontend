@@ -148,6 +148,7 @@ const ScreenInfo = {
     Dictionary: 'Dictionary',
     Concept: 'Concept',
     Example: 'Example',
+    EditExample: 'Edit example',
 };
 
 const LogAction = {
@@ -210,6 +211,14 @@ const LogAction = {
     AddExample: {
         Type: 14,
         Text: 'Add example',
+    },
+    EditExample: {
+        Type: 15,
+        Text: 'Edit example',
+    },
+    DeleteExample: {
+        Type: 16,
+        Text: 'Delete example',
     },
 };
 

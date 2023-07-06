@@ -1,27 +1,27 @@
 import { Helmet } from 'react-helmet-async';
-import styles from './AddExample.module.scss';
+import styles from './EditExampleDialogContent.module.scss';
 import classNames from 'classnames/bind';
-import { Box, Button, Checkbox, Chip, FormControlLabel, Grid, Paper, Tooltip, Typography } from '@mui/material';
+import { Box, Button, Chip, Grid, Paper, Tooltip, Typography } from '@mui/material';
 import { stylePaper } from '~/utils/style/muiCustomStyle';
 import ListSearchConcept from '~/components/Concept/ListSearchConcept/ListSearchConcept';
 import { LoadingButton } from '@mui/lab';
-import { useEffect, useMemo, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { memo, useEffect, useMemo, useState } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import yup from '~/utils/common/validate/yupGlobal';
 import ExampleAttributeBox from '~/components/Example/ExampleAttributeBox';
 import ExampleRelationAutocomplete from '~/components/Example/ExampleRelationAutocomplete';
-import { addExample } from '~/services/exampleService';
+import { deleteExample, getExample, updateExample } from '~/services/exampleService';
 import { Enum } from '~/utils/common/enumeration';
 import HUSTConstant from '~/utils/common/constant';
 import { saveLog } from '~/services/auditLogService';
 import { toast } from 'react-toastify';
 import useAccountInfo from '~/hooks/data/useAccountInfo';
 import ExampleRTEControl from '~/components/Example/ExampleRTEControl';
-import { useLocation } from 'react-router-dom';
 import { stripHtmlExceptHighlight } from '~/utils/common/utils';
 import AlertDialog from '~/components/BaseComponent/AlertDialog';
+import Loading from '~/components/Loading';
 
 const cx = classNames.bind(styles);
 const schema = yup.object().shape({
@@ -38,38 +38,22 @@ const customStylePaper = {
     m: 1,
     mb: 2,
 };
-function AddExample() {
-    // Xử lý nhận state khi được điều hướng tới từ màn khác
-    const location = useLocation();
-    // Dùng object để force update
-    const { concept: initConcept = { title: '' } } = useMemo(
-        () =>
-            location.state || {
-                concept: {
-                    title: '',
-                },
-            },
-        [location],
-    );
-
-    const [reuseParam, setReuseParam] = useState(true);
+function EditExampleDialogContent({ onClose, exampleId, handleAfter = () => {} }) {
     const [relation, setRelation] = useState(null);
+
     const [selectedConcept, setSelectedConcept] = useState(null);
+
     const [listLinkedConcept, setListLinkedConcept] = useState([]);
+
     const [searchConcept, setSearchConcept] = useState(''); // Note: searchConcept không chứa giá trị search mới nhất hiện tại
     const [delaySearchConcept, setDelaySearchConcept] = useState(700);
-    const [openAlert, setOpenAlert] = useState(false);
 
-    useEffect(() => {
-        setDelaySearchConcept(0);
-        // Truyền object để force update
-        setSearchConcept({ value: initConcept?.title || '' });
-        return window.history.replaceState({}, document.title);
-    }, [initConcept]);
+    const [openSaveAlert, setOpenSaveAlert] = useState(false);
+    const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
 
     // =========================================================================
     const { data: accountInfo } = useAccountInfo();
-    const dictionaryName = useMemo(() => accountInfo?.Dictionary?.DictionaryName ?? '', [accountInfo]);
+    const dictionary = useMemo(() => accountInfo?.Dictionary ?? {}, [accountInfo]);
     // =========================================================================
 
     const methods = useForm({
@@ -106,10 +90,63 @@ function AddExample() {
     useEffect(() => {
         setFocus('example');
     }, [setFocus]);
-    // ==========================================================================
-    const { mutate: handleSave } = useMutation(
+
+    //#region Lấy dữ liệu
+    const { data: currentExample, isLoading: isLoadingExample } = useQuery({
+        queryKey: ['example', exampleId],
+        queryFn: async () => {
+            const res = await getExample(exampleId);
+            return res.data.Data;
+        },
+    });
+
+    useEffect(() => {
+        if (currentExample) {
+            reset({
+                example: currentExample.DetailHtml || '',
+                tone: {
+                    ToneId: currentExample.ToneId,
+                    ToneName: currentExample.ToneName,
+                },
+                mode: {
+                    ModeId: currentExample.ModeId,
+                    ModeName: currentExample.ModeName,
+                },
+                register: {
+                    RegisterId: currentExample.RegisterId,
+                    RegisterName: currentExample.RegisterName,
+                },
+                nuance: {
+                    NuanceId: currentExample.NuanceId,
+                    NuanceName: currentExample.NuanceName,
+                },
+                dialect: {
+                    DialectId: currentExample.DialectId,
+                    DialectName: currentExample.DialectName,
+                },
+                note: currentExample.note,
+            });
+            setListLinkedConcept(
+                (currentExample.ListExampleRelationship || []).map((x) => ({
+                    ConceptId: x.ConceptId,
+                    Concept: x.Concept,
+                    ExampleLinkId: x.ExampleLinkId,
+                    ExampleLinkName: x.ExampleLinkName,
+                })),
+            );
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentExample]);
+    //#endregion
+
+    //#region API save, delete
+    const { mutate: handleSave, isLoading: isLoadingSave } = useMutation(
         async (data) => {
-            const res = await addExample({
+            const res = await updateExample({
+                ModifiedDate: currentExample?.ModifiedDate,
+                ExampleId: exampleId,
+                DictionaryId: dictionary.DictionaryId,
                 DetailHtml: data.example,
                 ToneId: data.tone?.ToneId,
                 ModeId: data.mode?.ModeId,
@@ -124,17 +161,12 @@ function AddExample() {
         {
             onSuccess: (data, reqData) => {
                 if (data?.Status === Enum.ServiceResultStatus.Success) {
-                    toast.success('Add example successfully');
-
-                    saveAuditLog(reqData);
-
-                    if (reuseParam) {
-                        resetReuseParam(reqData);
-                    } else {
-                        resetNotReuseParam();
-                    }
+                    toast.success('Save successfully');
+                    saveAuditLogUpdate(reqData);
+                    handleAfter();
+                    handleClose();
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail) {
-                    toast.error(data.Message || 'Add example failed');
+                    toast.error(data.Message || 'Save failed');
                     if (
                         data.ErrorCode === HUSTConstant.ErrorCode.Err4001 ||
                         data.ErrorCode === HUSTConstant.ErrorCode.Err4002
@@ -142,11 +174,32 @@ function AddExample() {
                         setError('example', { type: data.ErrorCode, message: data.Message }, { shouldFocus: true });
                     }
                 } else {
-                    toast.error('Add example failed');
+                    toast.error('Save failed');
                 }
             },
         },
     );
+    const { mutate: handleDelete, isLoading: isLoadingDelete } = useMutation(
+        async () => {
+            const res = await deleteExample(exampleId);
+            return res.data;
+        },
+        {
+            onSuccess: (data) => {
+                if (data?.Status === Enum.ServiceResultStatus.Success) {
+                    toast.success('Delete successfully');
+                    saveAuditLogDelete();
+                    handleAfter();
+                    handleClose();
+                } else if (data?.Status === Enum.ServiceResultStatus.Fail) {
+                    toast.error(data.Message || 'Delete failed');
+                } else {
+                    toast.error('Delete failed');
+                }
+            },
+        },
+    );
+    //#endregion
 
     // ==========================================================================
     const handleAddLinkedConcept = () => {
@@ -190,17 +243,6 @@ function AddExample() {
             Title: linkedConcept.Concept,
             ConceptId: linkedConcept.ConceptId,
         });
-        // if (searchConcept !== linkedConcept.Concept) {
-        //     setDelaySearchConcept(0);
-        //     setSearchConcept(linkedConcept.Concept);
-        //     console.log('khác', searchConcept, linkedConcept.Concept);
-        // } else {
-        //     setSelectedConcept({
-        //         Title: linkedConcept.Concept,
-        //         ConceptId: linkedConcept.ConceptId,
-        //     });
-        //     console.log('bằng');
-        // }
     };
 
     const handleSaveLink = () => {
@@ -229,33 +271,8 @@ function AddExample() {
     }, [selectedConcept, listLinkedConcept]);
 
     // ==================================================================================
-    const resetNotReuseParam = () => {
-        // TODO: bug do searchConcept không lưu giá trị mới nhất của searchValue
-        // Tạm fix bằng cách pass object => force update
-        setDelaySearchConcept(0);
-        setSearchConcept({ value: '' });
-        setListLinkedConcept([]);
-        reset();
-    };
-
-    const resetReuseParam = (param) => {
-        // TODO: bug do searchConcept không lưu giá trị mới nhất của searchValue
-        // Tạm fix bằng cách pass object => force update
-        setDelaySearchConcept(0);
-        setSearchConcept({ value: '' });
-        setListLinkedConcept([]);
-        reset({
-            example: '',
-            tone: param?.tone || null,
-            mode: param?.mode || null,
-            register: param?.register || null,
-            nuance: param?.nuance || null,
-            dialect: param?.dialect || null,
-            note: param?.note || '',
-        });
-    };
-
-    const saveAuditLog = (reqData) => {
+    const saveAuditLogUpdate = (reqData) => {
+        // TODO: Cần có cách log thông tin hữu ích hơn
         let logDescription = `Example: `,
             logExample = stripHtmlExceptHighlight(reqData.example);
 
@@ -280,48 +297,81 @@ function AddExample() {
         logDescription += logExample;
 
         let logParam = {
-            ScreenInfo: HUSTConstant.ScreenInfo.Example,
-            ActionType: HUSTConstant.LogAction.AddExample.Type,
-            Reference: `Dictionary: ${dictionaryName}`,
+            ScreenInfo: HUSTConstant.ScreenInfo.EditExample,
+            ActionType: HUSTConstant.LogAction.EditExample.Type,
+            Reference: `Dictionary: ${dictionary.DictionaryName}`,
             Description: logDescription,
         };
         saveLog(logParam);
     };
 
+    const saveAuditLogDelete = () => {
+        let logDescription = `Example: `,
+            logExample = stripHtmlExceptHighlight(currentExample?.DetailHtml);
+
+        if (logExample.length > 50) {
+            logExample = logExample.substring(0, 50) + '...';
+        }
+        logDescription += logExample;
+
+        let logParam = {
+            ScreenInfo: HUSTConstant.ScreenInfo.EditExample,
+            ActionType: HUSTConstant.LogAction.DeleteExample.Type,
+            Reference: `Dictionary: ${dictionary.DictionaryName}`,
+            Description: logDescription,
+        };
+        saveLog(logParam);
+    };
     // ===========================================================================
-    const handleOpenAlert = () => {
-        setOpenAlert(true);
+    const handleOpenSaveAlert = () => {
+        setOpenSaveAlert(true);
     };
 
-    const handleCloseAlert = () => {
-        setOpenAlert(false);
+    const handleCloseSaveAlert = () => {
+        setOpenSaveAlert(false);
     };
 
     const handleClickSave = (data) => {
         if (listLinkedConcept && listLinkedConcept.length > 0) {
             handleSave(data);
         } else {
-            handleOpenAlert();
+            handleOpenSaveAlert();
         }
     };
 
     const handleClickAcceptAlert = () => {
-        handleCloseAlert();
+        handleCloseSaveAlert();
         handleSubmit(handleSave)();
     };
+    // ================================= Click delete & Delete alert ============
+    const handleOpenDeleteAlert = () => {
+        setOpenDeleteAlert(true);
+    };
 
+    const handleCloseDeleteAlert = () => {
+        setOpenDeleteAlert(false);
+    };
+
+    const handleClickDelete = () => {
+        handleOpenDeleteAlert();
+    };
+    // ================================== Close ==================================
+    const handleClose = () => {
+        onClose();
+    };
     // ===========================================================================
 
     return (
         <div className={cx('wrapper')}>
-            {openAlert && (
+            {(isLoadingExample || isLoadingDelete || isLoadingSave) && <Loading />}
+            {openSaveAlert && (
                 <AlertDialog
                     title="Undecided example"
                     content="This example is not linked to any concepts yet. It will be temporarily categorized as Undecided. Are you sure?"
-                    open={openAlert}
-                    onClose={handleCloseAlert}
+                    open={openSaveAlert}
+                    onClose={handleCloseSaveAlert}
                 >
-                    <Button color="minor" size="large" onClick={handleCloseAlert}>
+                    <Button color="minor" size="large" onClick={handleCloseSaveAlert}>
                         Cancel
                     </Button>
                     <Button size="large" onClick={handleClickAcceptAlert}>
@@ -329,11 +379,25 @@ function AddExample() {
                     </Button>
                 </AlertDialog>
             )}
+            {openDeleteAlert && (
+                <AlertDialog
+                    title="Confirm example deletion"
+                    content="Deleted example cannot be recovered. Are you sure?"
+                    open={openDeleteAlert}
+                    onClose={handleCloseDeleteAlert}
+                >
+                    <Button color="minor" size="large" onClick={handleCloseDeleteAlert}>
+                        Cancel
+                    </Button>
+                    <Button color="error" size="large" onClick={handleDelete}>
+                        Delete
+                    </Button>
+                </AlertDialog>
+            )}
             <Helmet>
-                <title>Example | HUST PVO</title>
+                <title>Edit Example | HUST PVO</title>
             </Helmet>
             <div className={cx('main-wrapper')}>
-                <Typography variant="h4">Example</Typography>
                 <FormProvider {...methods}>
                     <Grid container spacing={1}>
                         <Grid item xs={12} md={5} order={{ md: 1, sm: 1, xs: 1 }}>
@@ -341,7 +405,6 @@ function AddExample() {
                                 sx={{ ...customStylePaper, maxHeight: 280 }}
                                 className={cx('main-item', 'item-example')}
                             >
-                                {/* <ExampleControl sx={{ mt: 1 }} /> */}
                                 <ExampleRTEControl style={{ marginTop: '8px' }} />
                             </Paper>
                         </Grid>
@@ -437,25 +500,31 @@ function AddExample() {
                 </FormProvider>
             </div>
 
-            <Box className={cx('action-wrapper')} sx={{ px: 1, pt: 2 }}>
-                <FormControlLabel
-                    id="ckbReuseParam"
-                    label="Re-use parameters"
-                    control={<Checkbox />}
-                    checked={reuseParam}
-                    onChange={() => setReuseParam(!reuseParam)}
-                />
+            <Box className={cx('action-wrapper')} sx={{ px: 1, py: 1 }}>
+                <Button sx={{ display: 'inline-block', minWidth: 100, mr: 1 }} size="large" onClick={handleClose}>
+                    Cancel
+                </Button>
+                <LoadingButton
+                    sx={{ display: 'inline-block', minWidth: 100, mr: 1 }}
+                    size="large"
+                    color="error"
+                    loading={isLoadingDelete}
+                    onClick={handleClickDelete}
+                >
+                    Delete
+                </LoadingButton>
                 <LoadingButton
                     sx={{ display: 'inline-block', minWidth: 100 }}
                     variant="contained"
                     size="large"
+                    loading={isLoadingSave}
                     onClick={handleSubmit(handleClickSave)}
                 >
-                    Save & Reset
+                    Save & Close
                 </LoadingButton>
             </Box>
         </div>
     );
 }
 
-export default AddExample;
+export default memo(EditExampleDialogContent);
