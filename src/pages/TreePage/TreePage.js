@@ -165,7 +165,7 @@ function TreePage() {
                         <img src={searchImg} alt="search" className={cx('img-no-data')} />
                     </Box>
                 )}
-                {!!rootConcept && (
+                {!fullMode && !!rootConcept && (
                     <SimpleView
                         treeData={treeData}
                         listExample={listExample}
@@ -174,13 +174,7 @@ function TreePage() {
                         reloadShowTree={reloadShowTree}
                     />
                 )}
-                {/* <FullView
-                    treeData={treeData}
-                    listExample={listExample}
-                    onClickConcept={handleClickConceptItem}
-                    onClickRelationType={handleClickRelationType}
-                    reload={reloadShowTree}
-                /> */}
+                {fullMode && !!rootConcept && <FullView rootConcept={rootConcept} setRootConcept={setRootConcept} />}
             </Box>
         </div>
     );

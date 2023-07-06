@@ -61,6 +61,12 @@ const Enum = {
         British: 3,
         Other: 4,
     },
+    TreeFolderType: {
+        Root: 999,
+        Parent: 1,
+        Children: 2,
+        Example: 3,
+    },
 };
 
 export { Enum };

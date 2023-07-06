@@ -32,7 +32,7 @@ function ExampleShortView({ exampleId }) {
         }
     }, [isLoading]);
 
-    if (!exampleId) {
+    if (!exampleId || !currentExample) {
         return <></>;
     }
 

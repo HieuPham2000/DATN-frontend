@@ -16,3 +16,9 @@ export const textEllipsisText = {
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
 };
+
+export const styleTreeItem = {
+    '& .MuiTreeItem-label': {
+        py: 0.5,
+    },
+};
