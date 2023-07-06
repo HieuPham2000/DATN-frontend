@@ -12,6 +12,16 @@
     }
 }
 
+@media screen and (max-width: 600px) {
+    .main-wrapper {
+        flex-direction: column;
+
+        .left-wrapper {
+            margin-right: 0;
+        }
+    }
+}
+
 .img-wrapper {
     display: flex;
     justify-content: center;
