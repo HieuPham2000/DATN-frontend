@@ -23,8 +23,6 @@ function TreePage() {
     const [rootConcept, setRootConcept] = useState(null);
     const [treeData, setTreeData] = useState({});
     const [listExample, setListExample] = useState([]);
-    const [listPrev, setListPrev] = useState([]);
-    const [listNext, setListNext] = useState([]);
 
     // =============================================================================
 
@@ -89,10 +87,6 @@ function TreePage() {
     );
 
     const handleClickShowTree = () => {
-        // if (!!selectedConcept && selectedConcept.Title !== rootConcept.Title) {
-        //     setListPrev([]);
-        //     setListNext([]);
-        // }
         if (selectedConcept) {
             setRootConcept(selectedConcept);
         } else {
@@ -101,7 +95,6 @@ function TreePage() {
     };
 
     const handleClickConceptItem = (concept) => {
-        // setListPrev([...listPrev, rootConcept]);
         setSelectedConcept(concept);
         setRootConcept(concept);
     };
