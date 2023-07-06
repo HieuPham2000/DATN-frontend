@@ -8,6 +8,8 @@ import { Category as ConceptIcon, StickyNote2 as ExampleIcon } from '@mui/icons-
 import { useMemo } from 'react';
 import numeral from 'numeral';
 import { FormatThousand } from '~/utils/common/config';
+import MostRecentConcept from '~/components/Dashboard/MostRecentConcept';
+import MostRecentExample from '~/components/Dashboard/MostRecentExample';
 
 const cx = classNames.bind(styles);
 
@@ -60,6 +62,12 @@ function Dashboard() {
                                 <ExampleIcon style={{ fontSize: 120 }} className={cx('ic-example')} />
                             </div>
                         </Paper>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <MostRecentConcept />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <MostRecentExample />
                     </Grid>
                 </Grid>
             </div>
