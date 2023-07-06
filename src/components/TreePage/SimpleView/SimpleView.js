@@ -1,12 +1,12 @@
 import { East as ArrowRightIcon, Edit, North as ArrowUpIcon } from '@mui/icons-material';
 import { Box, Grid, IconButton, ListItemButton, ListItemText, Paper, Tooltip, Typography } from '@mui/material';
 import { memo, useEffect, useState } from 'react';
-import Markdown from '~/components/BaseComponent/Markdown/Markdown';
-import EditExampleDialog from '~/components/Example/EditExampleDialog/EditExampleDialog';
+import Markdown from '~/components/BaseComponent/Markdown';
+import EditExampleDialog from '~/components/Example/EditExampleDialog';
 import { getDisplayExample, stripHtmlExceptHighlight } from '~/utils/common/utils';
 import { stylePaper, textEllipsisText } from '~/utils/style/muiCustomStyle';
 
-function SimpleView({ treeData, listExample, onClickConcept, onClickRelationType }) {
+function SimpleView({ treeData, listExample, onClickConcept, onClickRelationType, reloadShowTree }) {
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedExampleId, setSelectedExampleId] = useState(null);
     const [selectedExampleLinkId, setSelectedExampleLinkId] = useState(null);
@@ -21,6 +21,7 @@ function SimpleView({ treeData, listExample, onClickConcept, onClickRelationType
     };
 
     const handleAfterModifyExample = () => {
+        reloadShowTree();
         onClickRelationType(selectedExampleLinkId);
     };
 

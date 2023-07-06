@@ -1,11 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 import styles from './TreePage.module.scss';
 import classNames from 'classnames/bind';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, FormControlLabel, Switch, Typography } from '@mui/material';
 import useLocalStorage from '~/hooks/useLocalStorage';
 import { useMutation } from '@tanstack/react-query';
 import ConceptAutocomplete from '~/components/TreePage/ConceptAutocomplete';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import { getLinkedExampleByRelationshipType, getTree } from '~/services/treeService';
 import Loading from '~/components/Loading';
@@ -13,11 +13,12 @@ import { Enum } from '~/utils/common/enumeration';
 import SimpleView from '~/components/TreePage/SimpleView';
 import searchImg from '~/assets/images/search.svg';
 import { useLocation } from 'react-router-dom';
+import FullView from '~/components/TreePage/FullView';
 
 const cx = classNames.bind(styles);
 
 function TreePage() {
-    const [mode, setMode] = useLocalStorage('treeViewMode', 'simple');
+    const [fullMode, setFullMode] = useLocalStorage('treeFullMode', false);
 
     const [selectedConcept, setSelectedConcept] = useState(null);
     const [rootConcept, setRootConcept] = useState(null);
@@ -94,14 +95,17 @@ function TreePage() {
         }
     };
 
-    const handleClickConceptItem = (concept) => {
+    const handleClickConceptItem = useCallback((concept) => {
         setSelectedConcept(concept);
         setRootConcept(concept);
-    };
+    }, []);
 
-    const handleClickRelationType = (exampleLinkId) => {
-        getExampleByRelationType(exampleLinkId);
-    };
+    const handleClickRelationType = useCallback(
+        (exampleLinkId) => {
+            getExampleByRelationType(exampleLinkId);
+        },
+        [getExampleByRelationType],
+    );
 
     useEffect(() => {
         if (rootConcept) {
@@ -111,13 +115,33 @@ function TreePage() {
         }
     }, [rootConcept, handleShowTree]);
 
+    const reloadShowTree = useCallback(() => {
+        handleShowTree();
+    }, [handleShowTree]);
+
     return (
         <div className={cx('wrapper')}>
             <Helmet>
                 <title>Tree | HUST PVO</title>
             </Helmet>
-            <Typography variant="h4">Tree</Typography>
-            {/* <FormControlLabel control={<Switch defaultChecked />} label="Label" /> */}
+            <Box
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                }}
+            >
+                <Typography variant="h4">Tree</Typography>
+                <FormControlLabel
+                    control={<Switch checked={fullMode} onChange={() => setFullMode(!fullMode)} />}
+                    label="Full mode"
+                    sx={{
+                        ml: 2,
+                        mr: 0,
+                    }}
+                />
+            </Box>
+
             {isLoadingShowTree && <Loading />}
             <Box className={cx('main-wrapper')} sx={{ mt: 2 }}>
                 <Box className={cx('search-wrapper')}>
@@ -147,10 +171,16 @@ function TreePage() {
                         listExample={listExample}
                         onClickConcept={handleClickConceptItem}
                         onClickRelationType={handleClickRelationType}
+                        reloadShowTree={reloadShowTree}
                     />
                 )}
-                {/* <Button onClick={handlePrev}>Prev</Button>
-                <Button onClick={handlePNext}>Next</Button> */}
+                {/* <FullView
+                    treeData={treeData}
+                    listExample={listExample}
+                    onClickConcept={handleClickConceptItem}
+                    onClickRelationType={handleClickRelationType}
+                    reload={reloadShowTree}
+                /> */}
             </Box>
         </div>
     );
