@@ -3,18 +3,20 @@ import styles from './SettingTab.module.scss';
 import { Button, Checkbox, FormControlLabel, Paper } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import HUSTConstant from '~/utils/common/constant';
-import { useMutation } from '@tanstack/react-query';
-import { updatePassword } from '~/services/userService';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Enum } from '~/utils/common/enumeration';
 import { toast } from 'react-toastify';
 import { LoadingButton } from '@mui/lab';
 import Loading from '~/components/Loading/Loading';
 import { saveLog } from '~/services/auditLogService';
 import { stylePaper } from '~/utils/style/muiCustomStyle';
+import { getUserSettingByKey, saveUserSettingWithKey } from '~/services/userSettingService';
+import { useEffect } from 'react';
 
 const cx = classNames.bind(styles);
 
 function SettingTab() {
+    const queryClient = useQueryClient();
     const {
         handleSubmit,
         control,
@@ -27,29 +29,44 @@ function SettingTab() {
         },
     });
 
-    /**
-     * Call api
-     */
+    const { data: settingData } = useQuery({
+        queryKey: ['userSetting', HUSTConstant.UserSettingKey.IsSearchSoundex],
+        queryFn: async () => {
+            const res = await getUserSettingByKey(HUSTConstant.UserSettingKey.IsSearchSoundex);
+            return res.data.Data;
+        },
+        staleTime: 30000,
+    });
+
+    useEffect(() => {
+        reset({
+            isSearchSoundex: settingData?.SettingValue === 'true',
+        });
+    }, [settingData, reset]);
+
     const { mutate: handleSave, isLoading } = useMutation(
         async (data) => {
-            const res = await updatePassword(data.oldPassword, data.newPassword);
+            const res = await saveUserSettingWithKey(HUSTConstant.UserSettingKey.IsSearchSoundex, data.isSearchSoundex);
             return res.data;
         },
         {
-            onSuccess: (data) => {
+            onSuccess: (data, reqData) => {
                 if (data?.Status === Enum.ServiceResultStatus.Success) {
                     toast.success('Update successfully');
-
+                    queryClient.invalidateQueries(['userSetting', HUSTConstant.UserSettingKey.IsSearchSoundex]);
+                    let description = '';
+                    if (reqData.isSearchSoundex) {
+                        description = 'Check "Use Soundex Search..."';
+                    } else {
+                        description = 'Uncheck "Use Soundex Search..."';
+                    }
                     let logParam = {
-                        ScreenInfo: HUSTConstant.ScreenInfo.AccountSettingSecurityTab,
-                        ActionType: HUSTConstant.LogAction.ChangePassword.Type,
+                        ScreenInfo: HUSTConstant.ScreenInfo.AccountSettingSettingTab,
+                        ActionType: HUSTConstant.LogAction.ChangeSetting.Type,
+                        Description: description,
                     };
                     saveLog(logParam);
-                    reset();
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail) {
-                    if (data.ErrorCode === HUSTConstant.ErrorCode.Err1000) {
-                        data.Message = 'Incorrect password';
-                    }
                     toast.error(data.Message || 'Update failed');
                 } else {
                     toast.error('Update failed');

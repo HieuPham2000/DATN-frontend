@@ -12,6 +12,7 @@ import Sidebar from '../components/Sidebar/Sidebar';
 import LoadingScreen from '~/components/LoadingScreen';
 import ListConceptDialog from '~/components/Concept/ListConceptDialog/ListConceptDialog';
 import { useHotkeys } from 'react-hotkeys-hook';
+import Draggable from 'react-draggable';
 
 const cx = classNames.bind(styles);
 
@@ -43,6 +44,24 @@ function DefaultLayout({ children }) {
     useHotkeys('alt+c', handleOpenConceptDialog);
     useHotkeys('ctrl+q', handleCloseConceptDialog);
 
+    const [startX, setStartX] = useState(null);
+    const [startY, setStartY] = useState(null);
+
+    const handleTouchStart = (event) => {
+        const touch = event.touches[0];
+        setStartX(touch.clientX);
+        setStartY(touch.clientY);
+    };
+
+    const handleTouchEnd = (event) => {
+        const touch = event.changedTouches[0];
+        const endX = touch.clientX;
+        const endY = touch.clientY;
+        const distance = Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2);
+        if (distance < 5) {
+            handleOpenConceptDialog();
+        }
+    };
     return (
         <div className={cx('wrapper')}>
             {windowSize.width < HUSTConstant.WindowSize.Lg ? (
@@ -65,18 +84,22 @@ function DefaultLayout({ children }) {
                     <Suspense fallback={<LoadingScreen />}>{children}</Suspense>
                 </main>
                 <ListConceptDialog open={openConceptDialog} onClose={handleCloseConceptDialog} />
+            </div>
+            <Draggable nodeRef={fabRef} bounds="parent">
                 <Fab
                     ref={fabRef}
                     aria-label="View all concepts"
                     className={cx('btn-fab')}
                     onClick={handleOpenConceptDialog}
-                    onTouchEnd={handleOpenConceptDialog}
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
+                    // onTouchStart={handleOpenConceptDialog}
                 >
                     <Tooltip title="View all concepts (Alt+C)">
                         <DictionaryIcon color="primary" className={cx('btn-fab-icon')} />
                     </Tooltip>
                 </Fab>
-            </div>
+            </Draggable>
         </div>
     );
 }

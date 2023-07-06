@@ -144,6 +144,7 @@ const FileContentType = {
 const ScreenInfo = {
     AccountSettingGeneralTab: 'Account Settings/General',
     AccountSettingSecurityTab: 'Account Settings/Security',
+    AccountSettingSettingTab: 'Account Settings/Setting',
     AccessHistory: 'Access History',
     Dictionary: 'Dictionary',
     Concept: 'Concept',
@@ -220,11 +221,19 @@ const LogAction = {
         Type: 16,
         Text: 'Delete example',
     },
+    ChangeSetting: {
+        Type: 17,
+        Text: 'Change setting',
+    },
 };
 
 const SortListDictionary = {
     DescLastView: 'LastView',
     AscName: 'Name',
+};
+
+const UserSettingKey = {
+    IsSearchSoundex: 'IS_SEARCH_SOUNDEX',
 };
 
 const HUSTConstant = {
@@ -245,6 +254,7 @@ const HUSTConstant = {
     ScreenInfo,
     LogAction,
     SortListDictionary,
+    UserSettingKey,
 };
 
 export default HUSTConstant;
