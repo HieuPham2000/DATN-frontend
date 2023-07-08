@@ -37,9 +37,9 @@ function DefaultLayout({ children }) {
         setOpenConceptDialog(true);
     };
 
-    const handleCloseConceptDialog = () => {
+    const handleCloseConceptDialog = useCallback(() => {
         setOpenConceptDialog(false);
-    };
+    }, []);
 
     useHotkeys('alt+c', handleOpenConceptDialog);
     useHotkeys('ctrl+q', handleCloseConceptDialog);
@@ -64,6 +64,8 @@ function DefaultLayout({ children }) {
     };
     return (
         <div className={cx('wrapper')}>
+            <ListConceptDialog open={openConceptDialog} onClose={handleCloseConceptDialog} />
+            
             {windowSize.width < HUSTConstant.WindowSize.Lg ? (
                 <Drawer
                     anchor="left"
@@ -83,7 +85,6 @@ function DefaultLayout({ children }) {
                 <main className={cx('content')}>
                     <Suspense fallback={<LoadingScreen />}>{children}</Suspense>
                 </main>
-                <ListConceptDialog open={openConceptDialog} onClose={handleCloseConceptDialog} />
             </div>
             <Draggable nodeRef={fabRef} bounds="parent">
                 <Fab
