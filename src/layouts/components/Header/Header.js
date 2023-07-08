@@ -12,6 +12,7 @@ import { useCollapseSidebar } from '~/stores';
 import UserMenu from '~/layouts/components/Header/UserMenu';
 import { HelpTwoTone as HelpIcon } from '@mui/icons-material';
 import { toast } from 'react-toastify';
+import Utility from '~/layouts/components/Header/Utility';
 
 const cx = classNames.bind(styles);
 
@@ -43,18 +44,18 @@ function Header({ toggleDrawer }) {
                 <DictionaryInfo small={isSmallDictionaryInfo} />
             </div>
             <div className={cx('wrapper-right')}>
+                <Utility />
                 <Tooltip title="Help & FAQs">
                     <IconButton
                         className={cx('btn-help')}
                         onClick={handleClickHelp}
                         aria-label="button-help"
+                        sx={{ mr: 1 }}
                     >
-                        <HelpIcon style={{ fontSize: 32 }} color="minor" />
+                        <HelpIcon style={{ fontSize: 28 }} color="minor" />
                     </IconButton>
                 </Tooltip>
-                <Tooltip title="Toggle Dark Mode">
-                    <ToggleDarkMode />
-                </Tooltip>
+                <ToggleDarkMode />
 
                 <UserMenu />
             </div>

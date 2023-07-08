@@ -24,7 +24,7 @@ const LocalStorageKey = {
 
 const WindowSize = {
     Xs: 0,
-    Sm: 576,
+    Sm: 600,
     Md: 768,
     Lg: 992,
     Xl: 1200,
@@ -236,6 +236,12 @@ const UserSettingKey = {
     IsSearchSoundex: 'IS_SEARCH_SOUNDEX',
 };
 
+const SoureApiDictionary = {
+    FreeDictionaryApi: 'FreeDictionaryApi',
+    WordsApi: 'WordsApi',
+    WordNet: 'WordNet',
+};
+
 const HUSTConstant = {
     USER_SESSION,
     REGEX_TEST_EMAIL,
@@ -255,6 +261,7 @@ const HUSTConstant = {
     LogAction,
     SortListDictionary,
     UserSettingKey,
+    SoureApiDictionary
 };
 
 export default HUSTConstant;
