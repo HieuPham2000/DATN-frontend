@@ -80,6 +80,7 @@ function UserMenu() {
                             opacity: open ? 0.7 : 1,
                         }}
                         src={user.Avatar}
+                        alt='avatar'
                     />
                 </IconButton>
             </Tooltip>
