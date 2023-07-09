@@ -12,7 +12,7 @@ export const translate = (text) => {
     return http.get('helper/translate', { params: { text } });
 };
 
-export const getWordsapiResult = (word) => {
+export const getWordsApiResult = (word) => {
     return http.get('helper/wordsapi', { params: { word } });
 };
 

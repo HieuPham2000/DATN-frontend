@@ -171,3 +171,19 @@ export function getDisplayExampleAttribute(example) {
 
     return res.filter((x) => x && x !== 'Neutral');
 }
+
+/**
+ * Chuyển camel case sang title case
+ * VD: 'helloThere' or 'HelloThere' to 'Hello There'
+ * @param {string} str
+ */
+export function convertCamelCaseToTitleCase(str) {
+    if (!str) {
+        return '';
+    }
+
+    const result = str.replace(/([A-Z])/g, ' $1');
+    const finalResult = result.charAt(0).toUpperCase() + result.slice(1);
+
+    return finalResult;
+}

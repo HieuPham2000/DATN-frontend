@@ -1,7 +1,7 @@
 import { memo } from 'react';
-import { Tab } from '@mui/material';
+import { Box, Tab } from '@mui/material';
 import { FindInPage, Translate } from '@mui/icons-material';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { TabContext, TabList } from '@mui/lab';
 import useLocalStorage from '~/hooks/useLocalStorage';
 import styles from './HelperDialogContent.module.scss';
 import classNames from 'classnames/bind';
@@ -10,7 +10,7 @@ import LookupTab from '~/components/Helper/LookupTab';
 
 const cx = classNames.bind(styles);
 
-function HelperDialogContent({ param }) {
+function HelperDialogContent() {
     const [value, setValue] = useLocalStorage('utilityTab', 'translate');
 
     const handleChange = (event, newValue) => {
@@ -41,12 +41,20 @@ function HelperDialogContent({ param }) {
                         className={cx('tab-title')}
                     />
                 </TabList>
-                <TabPanel value="translate" sx={{ px: 0, py: 1 }}>
+                {/* <TabPanel value="translate" sx={{ px: 0, py: 1 }}>
                     <TranslateTab />
                 </TabPanel>
                 <TabPanel value="lookup" sx={{ px: 0, py: 1 }}>
                     <LookupTab />
-                </TabPanel>
+                </TabPanel> */}
+                <Box sx={{ px: 0, py: 1 }}>
+                    <div style={{ display: value === 'translate' ? 'block' : 'none' }}>
+                        <TranslateTab />
+                    </div>
+                    <div style={{ display: value === 'lookup' ? 'block' : 'none' }}>
+                        <LookupTab />
+                    </div>
+                </Box>
             </TabContext>
         </>
     );

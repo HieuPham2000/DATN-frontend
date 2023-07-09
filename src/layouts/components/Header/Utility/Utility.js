@@ -1,7 +1,7 @@
 import { IconButton, Tooltip } from '@mui/material';
 import HelperDialog from '~/components/Helper/HelperDialog';
 import { TipsAndUpdatesTwoTone as TipsIcon } from '@mui/icons-material';
-import { useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 
 function Utility() {
     const [openHelperDialog, setOpenHelperDialog] = useState(false);
@@ -22,11 +22,7 @@ function Utility() {
         <>
             <HelperDialog open={openHelperDialog} onClose={handleCloseHelperDialog} />
             <Tooltip title="Utility">
-                <IconButton
-                    onClick={handleClickTips}
-                    aria-label="button-tips"
-                    sx={{ mr: 1 }}
-                >
+                <IconButton onClick={handleClickTips} aria-label="button-tips" sx={{ mr: 1 }}>
                     <TipsIcon style={{ fontSize: 28 }} color="minor" />
                 </IconButton>
             </Tooltip>
@@ -34,4 +30,4 @@ function Utility() {
     );
 }
 
-export default Utility;
+export default memo(Utility);

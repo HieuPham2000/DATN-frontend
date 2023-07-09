@@ -1,22 +1,22 @@
-import { memo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import { Close } from '@mui/icons-material';
-import HelperDialogContent from '~/components/Helper/HelperDialogContent/HelperDialogContent';
+import HelperDialogContent from '~/components/Helper/HelperDialogContent';
 
 function HelperDialog({ open, onClose }) {
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         onClose();
-    };
+    }, [onClose]);
 
-    const Content = <HelperDialogContent />;
-
-    const Action = (
-        <>
+    const Content = useMemo(() => <HelperDialogContent />, []);
+    const Action = useMemo(
+        () => (
             <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', pl: 2 }}>
                 <Box sx={{ flex: '1 1 auto' }} />
                 <Button onClick={handleClose}>Close</Button>
             </Box>
-        </>
+        ),
+        [handleClose],
     );
     return (
         <>
@@ -32,6 +32,7 @@ function HelperDialog({ open, onClose }) {
                         minHeight: '90vh',
                     },
                 }}
+                keepMounted
             >
                 <IconButton
                     aria-label="close"

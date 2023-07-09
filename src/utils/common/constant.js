@@ -236,7 +236,7 @@ const UserSettingKey = {
     IsSearchSoundex: 'IS_SEARCH_SOUNDEX',
 };
 
-const SoureApiDictionary = {
+const SourceApiDictionary = {
     FreeDictionaryApi: 'FreeDictionaryApi',
     WordsApi: 'WordsApi',
     WordNet: 'WordNet',
@@ -261,7 +261,7 @@ const HUSTConstant = {
     LogAction,
     SortListDictionary,
     UserSettingKey,
-    SoureApiDictionary
+    SourceApiDictionary,
 };
 
 export default HUSTConstant;

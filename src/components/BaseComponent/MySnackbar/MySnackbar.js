@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Snackbar } from '@mui/material';
 
-function MySnackbar({ open, setOpen, message }) {
+function MySnackbar({ open, setOpen, message = 'Copied to clipboard!' }) {
     const handleCloseSnack = (_, reason) => {
         if (reason === 'clickaway') {
             return;
