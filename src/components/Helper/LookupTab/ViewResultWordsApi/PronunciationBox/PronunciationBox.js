@@ -7,14 +7,7 @@ function PronunciationBox({ pronunciation }) {
         return <></>;
     }
     return (
-        <Box
-            sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                mt: 1,
-            }}
-        >
+        <Box sx={{ mt: 1 }}>
             <Typography color="primary" fontWeight="500">
                 Pronunciation:
             </Typography>
@@ -23,6 +16,7 @@ function PronunciationBox({ pronunciation }) {
                     display: 'flex',
                     alignItems: 'center',
                     gap: '8px',
+                    flexWrap: 'wrap',
                 }}
             >
                 {Object.keys(pronunciation).map((key) => (
