@@ -7,7 +7,7 @@ function DefinitionBox({ meanings }) {
         return <></>;
     }
     return (
-        <Box>
+        <Box sx={{ mt: 1 }}>
             <Typography color="primary" fontWeight="500">
                 Meanings:
             </Typography>
