@@ -14,21 +14,6 @@ const AuditLogPage = lazy(() => import('~/pages/AuditLogPage'));
 const UserSettingPage = lazy(() => import('~/pages/UserSettingPage'));
 const ActivateAccountResult = lazy(() => import('~/pages/ActivateAccountResult'));
 const ResetPassword = lazy(() => import('~/pages/ResetPassword'));
-// import Dashboard from '~/pages/Dashboard';
-// import ForgotPassword from '~/pages/ForgotPassword';
-// import DictionaryPage from '~/pages/DictionaryPage';
-// import Login from '~/pages/Login';
-// import Page404 from '~/pages/Page404';
-// import Page500 from '~/pages/Page500';
-// import Register from '~/pages/Register';
-// import AddConcept from '~/pages/AddConcept';
-// import AddExample from '~/pages/AddExample';
-// import SearchPage from '~/pages/SearchPage';
-// import TreePage from '~/pages/TreePage';
-// import AuditLogPage from '~/pages/AuditLogPage';
-// import UserSettingPage from '~/pages/UserSettingPage';
-// import ActivateAccountResult from '~/pages/ActivateAccountResult';
-// import ResetPassword from '~/pages/ResetPassword';
 
 // Public routes
 const publicRoutes = [

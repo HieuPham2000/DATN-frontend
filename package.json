@@ -37,10 +37,21 @@
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.2",
     "rehype-raw": "^6.1.1",
-    "simplebar-react": "^3.2.4",
     "web-vitals": "^2.1.4",
     "yup": "^1.1.1",
-    "zustand": "^4.3.7"
+    "zustand": "^4.3.7",
+    "workbox-background-sync": "^5.1.3",
+    "workbox-broadcast-update": "^5.1.3",
+    "workbox-cacheable-response": "^5.1.3",
+    "workbox-core": "^5.1.3",
+    "workbox-expiration": "^5.1.3",
+    "workbox-google-analytics": "^5.1.3",
+    "workbox-navigation-preload": "^5.1.3",
+    "workbox-precaching": "^5.1.3",
+    "workbox-range-requests": "^5.1.3",
+    "workbox-routing": "^5.1.3",
+    "workbox-strategies": "^5.1.3",
+    "workbox-streams": "^5.1.3"
   },
   "devDependencies": {
     "babel-plugin-module-resolver": "^5.0.0",

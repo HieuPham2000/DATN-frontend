@@ -1,0 +1,10 @@
+.tab-title {
+    text-transform: none !important;
+    margin-left: 36px;
+    min-height: 48px !important;
+    padding: 0 6px !important;
+
+    &:not(:last-of-type) {
+        margin-right: 40px !important;
+    }
+}

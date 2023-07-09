@@ -1,0 +1,18 @@
+.flex-space {
+    flex: 1;
+}
+.source-wrapper {
+    .toolbar {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 4px 0;
+    }
+}
+
+
+.action-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
