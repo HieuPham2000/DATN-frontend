@@ -12,6 +12,7 @@ import { useMutation } from '@tanstack/react-query';
 import { activateAccount } from '~/services/accountService';
 import { toast } from 'react-toastify';
 import HUSTConstant from '~/utils/common/constant';
+import { Helmet } from 'react-helmet-async';
 
 const cx = classNames.bind(styles);
 
@@ -58,6 +59,9 @@ function ActivateAccountResult() {
 
     return (
         <div className={cx('wrapper')}>
+            <Helmet>
+                <title>Activate Account | HUST PVO</title>
+            </Helmet>
             {isLoading && <Loading text="Wait for activate your account" dense />}
             <ToggleMode className={cx('btn-toggle-mode')} />
             <div className={cx('form-wrapper')}>

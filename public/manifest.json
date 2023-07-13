@@ -3,9 +3,24 @@
     "name": "HUST PVO",
     "icons": [
         {
+            "src": "logo16.png",
+            "type": "image/png",
+            "sizes": "16x16"
+        },
+        {
+            "src": "logo24.png",
+            "type": "image/png",
+            "sizes": "24x24"
+        },
+        {
             "src": "favicon.ico",
-            "sizes": "64x64 32x32 24x24 16x16",
+            "sizes": "32x32",
             "type": "image/x-icon"
+        },
+        {
+            "src": "logo64.png",
+            "type": "image/png",
+            "sizes": "64x64"
         },
         {
             "src": "logo192.png",

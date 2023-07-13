@@ -4,12 +4,16 @@ import classNames from 'classnames/bind';
 import page404Img from '~/assets/images/page404.svg';
 import styles from './Page404.module.scss';
 import ToggleMode from '~/components/ToggleDarkMode';
+import { Helmet } from 'react-helmet-async';
 
 const cx = classNames.bind(styles);
 
 function Page404() {
     return (
         <div className={cx('wrapper')}>
+            <Helmet>
+                <title>Page not found | HUST PVO</title>
+            </Helmet>
             <ToggleMode className={cx('btn-toggle-mode')} />
             <div className={cx('form-wrapper')}>
                 <Typography variant="h3" textAlign="center" mb={2}>
