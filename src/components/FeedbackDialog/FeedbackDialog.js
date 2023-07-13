@@ -19,7 +19,8 @@ import {
 } from '@mui/icons-material';
 
 const cx = classNames.bind(styles);
-const email = process.env["EMAIL_SUPPORT"] || 'hieu.pt183535@gmail.com';
+const email = process.env.REACT_APP_EMAIL_SUPPORT || 'hieu.pt183535@gmail.com';
+
 function FeedbackDialog({ open, onClose, userEmail }) {
     const handleFeedbackImprovement = () => {
         let subject = '[Feedback][App improvement] HUST PVO feedback',
