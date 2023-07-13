@@ -11,7 +11,6 @@ import useWindowSize from '~/hooks/useWindowSize';
 import { useCollapseSidebar } from '~/stores';
 import UserMenu from '~/layouts/components/Header/UserMenu';
 import { HelpTwoTone as HelpIcon } from '@mui/icons-material';
-import { toast } from 'react-toastify';
 import Utility from '~/layouts/components/Header/Utility';
 
 const cx = classNames.bind(styles);
@@ -29,8 +28,8 @@ function Header({ toggleDrawer }) {
         (windowSize.width >= HUSTConstant.WindowSize.Lg && !isCollapsedSidebar);
 
     const handleClickHelp = () => {
-        toast.info('Coming soon');
-        // window.open('/documentation', '_blank');
+        // toast.info('Coming soon');
+        window.open('https://hieupham2000.github.io/HUSTPVO-documentation/', '_blank');
     };
 
     return (

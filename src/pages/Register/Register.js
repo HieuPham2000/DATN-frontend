@@ -21,6 +21,7 @@ import { Enum } from '~/utils/common/enumeration';
 import { toast } from 'react-toastify';
 import HUSTConstant from '~/utils/common/constant';
 import SendConfirmMailModal from '~/components/SendConfirmMailModal';
+import { Helmet } from 'react-helmet-async';
 
 const cx = classNames.bind(styles);
 
@@ -93,6 +94,9 @@ function Register() {
 
     return (
         <div className={cx('wrapper')}>
+            <Helmet>
+                <title>Register | HUST PVO</title>
+            </Helmet>
             {isLoading && <Loading />}
             {openModal && (
                 <SendConfirmMailModal handleClose={() => setOpenModal(false)} email={email} password={password} />

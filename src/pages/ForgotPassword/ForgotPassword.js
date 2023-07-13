@@ -16,6 +16,7 @@ import { toast } from 'react-toastify';
 import Loading from '~/components/Loading';
 import SendResetPasswordMailModal from '~/components/SendResetPasswordMailModal';
 import Countdown from 'react-countdown';
+import { Helmet } from 'react-helmet-async';
 
 const cx = classNames.bind(styles);
 
@@ -119,6 +120,9 @@ function ForgotPassword() {
 
     return (
         <div className={cx('wrapper')}>
+            <Helmet>
+                <title>Forgot Password | HUST PVO</title>
+            </Helmet>
             {isLoading && <Loading />}
 
             {openModal && <SendResetPasswordMailModal handleClose={() => setOpenModal(false)} email={email} />}

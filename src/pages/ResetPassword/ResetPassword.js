@@ -16,6 +16,7 @@ import PasswordTextField from '~/components/BaseComponent/PasswordTextField';
 import yup from '~/utils/common/validate/yupGlobal';
 import { yupResolver } from '@hookform/resolvers/yup';
 import HUSTConstant from '~/utils/common/constant';
+import { Helmet } from 'react-helmet-async';
 
 const cx = classNames.bind(styles);
 
@@ -115,6 +116,9 @@ function ResetPassword() {
 
     return (
         <div className={cx('wrapper')}>
+            <Helmet>
+                <title>Reset Password | HUST PVO</title>
+            </Helmet>
             {isLoading && <Loading text="Wait for the server to check the token" dense />}
             {isLoadingUpdate && <Loading />}
             <ToggleMode className={cx('btn-toggle-mode')} />
