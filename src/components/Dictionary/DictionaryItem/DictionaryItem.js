@@ -64,6 +64,7 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
 
                     queryClient.invalidateQueries(['listDictionary']);
                     queryClient.invalidateQueries(['accountInfo']);
+                    queryClient.invalidateQueries(['searchConcept']);
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail) {
                     toast.error(data.Message || 'Load failed');
                 } else {
