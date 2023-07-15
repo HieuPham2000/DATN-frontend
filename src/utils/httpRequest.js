@@ -24,21 +24,21 @@ const clearRequestSession = () => {
 };
 
 export const setUserSession = (sessionId) => {
-    // if (process.env.NODE_ENV === 'development') {
-    //     setSessionInStorage(sessionId);
-    //     setRequestSession(sessionId);
-    // }
-    setSessionInStorage(sessionId);
-    setRequestSession(sessionId);
+    if (process.env.NODE_ENV === 'development') {
+        setSessionInStorage(sessionId);
+        setRequestSession(sessionId);
+    }
+    // setSessionInStorage(sessionId);
+    // setRequestSession(sessionId);
 };
 
 export const clearUserSession = () => {
-    // if (process.env.NODE_ENV === 'development') {
-    //     clearSessionInStorage();
-    //     clearRequestSession();
-    // }
-    clearSessionInStorage();
-    clearRequestSession();
+    if (process.env.NODE_ENV === 'development') {
+        clearSessionInStorage();
+        clearRequestSession();
+    }
+    // clearSessionInStorage();
+    // clearRequestSession();
 };
 
 (() => {
