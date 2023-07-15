@@ -5,18 +5,23 @@ import { getListDictionary, transferDictionary } from '~/services/dictionaryServ
 import yup from '~/utils/common/validate/yupGlobal';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm, useWatch } from 'react-hook-form';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import HUSTConstant from '~/utils/common/constant';
 import { saveLog } from '~/services/auditLogService';
 import { Enum } from '~/utils/common/enumeration';
 import Loading from '~/components/Loading';
+import useAccountInfo from '~/hooks/data/useAccountInfo';
 
 const schema = yup.object().shape({
     destDictionaryName: yup.string().required('Destination Dictionary is required'),
 });
 
 function TransferDialog({ open, onClose, dictId, dictName }) {
+    const queryClient = useQueryClient();
+    const { data: accountInfo } = useAccountInfo();
+    const currentDictionary = useMemo(() => accountInfo?.Dictionary, [accountInfo]);
+
     const { handleSubmit, control, reset, setValue } = useForm({
         mode: 'onSubmit',
         defaultValues: {
@@ -78,6 +83,15 @@ function TransferDialog({ open, onClose, dictId, dictName }) {
                     reset();
 
                     handleClose();
+
+                    // 15.07.2023: invalidate để load lại form View all concepts
+                    if (
+                        destDictionaryName &&
+                        currentDictionary &&
+                        destDictionaryName === currentDictionary.DictionaryName
+                    ) {
+                        queryClient.invalidateQueries(['searchConcept']);
+                    }
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail) {
                     if (data.ErrorCode === HUSTConstant.ErrorCode.Err2003) {
                         toast.warning(data.Message);

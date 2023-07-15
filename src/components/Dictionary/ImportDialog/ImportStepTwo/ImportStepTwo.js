@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import styles from './ImportStepTwo.module.scss';
 import { stylePaper } from '~/utils/style/muiCustomStyle';
 import { doImport } from '~/services/templateService';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import HUSTConstant from '~/utils/common/constant';
 import Loading from '~/components/Loading';
@@ -15,9 +15,14 @@ import { Enum } from '~/utils/common/enumeration';
 import { getNumberRecord } from '~/services/dictionaryService';
 import AlertDialog from '~/components/BaseComponent/AlertDialog/AlertDialog';
 import { saveLog } from '~/services/auditLogService';
+import useAccountInfo from '~/hooks/data/useAccountInfo';
 const cx = classNames.bind(styles);
 
 function ImportStepTwo({ onBack, onNext, dictId, dictName, importData, setNumberSuccessRecord }) {
+    const queryClient = useQueryClient();
+    const { data: accountInfo } = useAccountInfo();
+    const currentDictionaryId = useMemo(() => accountInfo?.Dictionary?.DictionaryId, [accountInfo]);
+
     const { data: numberRecord } = useQuery({
         queryKey: ['numberRecord', dictId],
         queryFn: async () => {
@@ -115,6 +120,12 @@ function ImportStepTwo({ onBack, onNext, dictId, dictName, importData, setNumber
                     };
                     saveLog(logParam);
                     onNext();
+
+                    // 15.07.2023: invalidate để load lại form View all concepts
+                    if (dictId === currentDictionaryId) {
+                        queryClient.invalidateQueries(['searchConcept']);
+                    }
+
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail) {
                     toast.error(data.Message || 'Import failed');
                 } else {
