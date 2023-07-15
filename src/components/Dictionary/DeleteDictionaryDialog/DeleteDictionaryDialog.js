@@ -50,6 +50,11 @@ function DeleteDictionaryDialog({ open, onClose, dictId, dictName }) {
                     saveLog(logParam);
                     handleClose();
                     queryClient.invalidateQueries(['listDictionary']);
+
+                    // 15.07.2023: invalidate để load lại form View all concepts
+                    if (dictId === currentDictionaryId) {
+                        queryClient.invalidateQueries(['searchConcept']);
+                    }
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail) {
                     toast.error(data.Message || 'Delete failed');
                 } else {
@@ -76,6 +81,11 @@ function DeleteDictionaryDialog({ open, onClose, dictId, dictName }) {
                     };
                     saveLog(logParam);
                     handleClose();
+
+                    // 15.07.2023: invalidate để load lại form View all concepts
+                    if (dictId === currentDictionaryId) {
+                        queryClient.invalidateQueries(['searchConcept']);
+                    }
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail) {
                     toast.error(data.Message || 'Clear data failed');
                 } else {

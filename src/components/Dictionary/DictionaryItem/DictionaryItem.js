@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { memo, useRef, useState } from 'react';
 import { stylePaper } from '~/utils/style/muiCustomStyle';
-import dictionaryImg from '~/assets/images/dictionary.png';
+import dictionaryImg from '~/assets/images/dictionary.webp';
 import { CloudDownload, Delete, DriveFileMove, Edit, ImportContacts, Input, MoreVert } from '@mui/icons-material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { loadDictionary as loadDictionaryService } from '~/services/dictionaryService';
@@ -64,6 +64,7 @@ function DictionaryItem({ id, name, lastViewAt, active }) {
 
                     queryClient.invalidateQueries(['listDictionary']);
                     queryClient.invalidateQueries(['accountInfo']);
+                    queryClient.invalidateQueries(['searchConcept']);
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail) {
                     toast.error(data.Message || 'Load failed');
                 } else {
