@@ -51,7 +51,7 @@ function ListConceptDialog({ open, onClose }) {
     });
 
     const { data: dataSearch, isLoading: isLoadingSearch } = useQuery({
-        queryKey: ['searchConcept', searchKey?.trim()],
+        queryKey: ['searchConcept', searchKey?.trim(), settingData?.SettingValue],
         queryFn: async () => {
             const res = await searchConcept({
                 searchKey: searchKey?.trim(),
