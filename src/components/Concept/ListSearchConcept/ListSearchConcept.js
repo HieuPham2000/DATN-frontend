@@ -177,7 +177,9 @@ function ListSearchConcept({
     };
 
     const handleAfterAddSuccess = (newConceptTitle) => {
-        setDelaySearch(0);
+        if (setDelaySearch && typeof setDelaySearch === 'function') {
+            setDelaySearch(0);
+        }
         setSearchValue(newConceptTitle);
         queryClient.invalidateQueries(['searchConcept']);
     };
