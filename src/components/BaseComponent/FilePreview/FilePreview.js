@@ -87,6 +87,10 @@ export default function FilePreview({ thumbnail, files, onRemove, sx }) {
                                 component: 'span',
                                 typography: 'caption',
                             }}
+                            sx={{
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                            }}
                         />
 
                         {onRemove && (
