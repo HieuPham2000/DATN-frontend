@@ -25,7 +25,13 @@ function UserSettingPage() {
             <Typography variant="h4">Account Settings</Typography>
 
             <TabContext value={value}>
-                <TabList onChange={handleChange} aria-label="Account settings tab">
+                <TabList
+                    onChange={handleChange}
+                    aria-label="Account settings tab"
+                    variant="scrollable"
+                    scrollButtons
+                    allowScrollButtonsMobile
+                >
                     <Tab
                         label="General"
                         value="general"
