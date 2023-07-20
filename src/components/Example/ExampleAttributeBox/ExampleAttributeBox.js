@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useMemo } from 'react';
 import { Box, Paper, TextField } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import { stylePaper } from '~/utils/style/muiCustomStyle';
@@ -11,27 +11,33 @@ import styles from './ExampleAttributeBox.module.scss';
 const cx = classNames.bind(styles);
 function ExampleAttributeBox() {
     const { control } = useFormContext();
-    const [listTone, setListTone] = useState([]);
-    const [listMode, setListMode] = useState([]);
-    const [listRegister, setListRegister] = useState([]);
-    const [listNuance, setListNuance] = useState([]);
-    const [listDialect, setListDialect] = useState([]);
+    // const [listTone, setListTone] = useState([]);
+    // const [listMode, setListMode] = useState([]);
+    // const [listRegister, setListRegister] = useState([]);
+    // const [listNuance, setListNuance] = useState([]);
+    // const [listDialect, setListDialect] = useState([]);
 
-    const { isLoading: isLoadingExampleAttrs } = useQuery({
+    const { data: dataAttr, isLoading: isLoadingExampleAttrs } = useQuery({
         queryKey: ['listExampleAttribute'],
         queryFn: async () => {
             const res = await getListExampleAttribute();
             return res.data.Data;
         },
-        onSuccess: (data) => {
-            setListTone(data?.ListTone || []);
-            setListMode(data?.ListMode || []);
-            setListRegister(data?.ListRegister || []);
-            setListNuance(data?.ListNuance || []);
-            setListDialect(data?.ListDialect || []);
-        },
+        // onSuccess: (data) => {
+        //     setListTone(data?.ListTone || []);
+        //     setListMode(data?.ListMode || []);
+        //     setListRegister(data?.ListRegister || []);
+        //     setListNuance(data?.ListNuance || []);
+        //     setListDialect(data?.ListDialect || []);
+        // },
         staleTime: 30000,
     });
+
+    const listTone = useMemo(() => dataAttr?.ListTone || [], [dataAttr]);
+    const listMode = useMemo(() => dataAttr?.ListMode || [], [dataAttr]);
+    const listRegister = useMemo(() => dataAttr?.ListRegister || [], [dataAttr]);
+    const listNuance = useMemo(() => dataAttr?.ListNuance || [], [dataAttr]);
+    const listDialect = useMemo(() => dataAttr?.ListDialect || [], [dataAttr]);
 
     return (
         <>
