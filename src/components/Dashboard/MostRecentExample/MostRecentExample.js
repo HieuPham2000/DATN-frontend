@@ -1,13 +1,28 @@
 import { memo, useEffect, useState } from 'react';
-import { Box, FormControl, InputLabel, MenuItem, Paper, Select, Skeleton, Typography } from '@mui/material';
+import {
+    Box,
+    FormControl,
+    InputLabel,
+    ListItemButton,
+    MenuItem,
+    Paper,
+    Select,
+    Skeleton,
+    Typography,
+} from '@mui/material';
 import { stylePaper } from '~/utils/style/muiCustomStyle';
 import { getListMostRecentExample } from '~/services/dashboardService';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getDisplayExample, stripHtmlExceptHighlight } from '~/utils/common/utils';
 import Markdown from '~/components/BaseComponent/Markdown';
+import EditExampleDialog from '~/components/Example/EditExampleDialog';
 
 function MostRecentExample() {
+    const queryClient = useQueryClient();
+
     const [limitExample, setLimitExample] = useState(5);
+    const [openDialog, setOpenDialog] = useState(false);
+    const [selectedExample, setSelectedExample] = useState(null);
 
     const { data: listMostRecentExample, isLoading } = useQuery({
         queryKey: ['getListMostRecentExample', limitExample],
@@ -33,8 +48,29 @@ function MostRecentExample() {
         }
     }, [isLoading]);
 
+    // =============================================================
+
+    const handleClickExample = (x) => {
+        setSelectedExample(x);
+        setOpenDialog(true);
+    };
+
+    const handleAfterModifyExample = () => {
+        setSelectedExample(null);
+        queryClient.invalidateQueries(['getListMostRecentExample']);
+        queryClient.invalidateQueries(['numberRecord']);
+    };
+
     return (
         <Paper sx={{ ...stylePaper, p: 2 }}>
+            {openDialog && (
+                <EditExampleDialog
+                    open={openDialog}
+                    onClose={() => setOpenDialog(false)}
+                    exampleId={selectedExample?.ExampleId}
+                    handleAfter={handleAfterModifyExample}
+                />
+            )}
             <Box
                 sx={{
                     display: 'flex',
@@ -72,11 +108,15 @@ function MostRecentExample() {
             ) : (
                 <Box sx={{ mt: 1, maxHeight: 280, overflowY: 'auto' }}>
                     {listMostRecentExample?.map((x, index) => (
-                        <Typography component="div" key={index} sx={{ px: 1, py: 0.5 }}>
-                            <Markdown
-                                children={`${index + 1} - ${getDisplayExample(stripHtmlExceptHighlight(x.DetailHtml))}`}
-                            />
-                        </Typography>
+                        <ListItemButton key={index} onClick={() => handleClickExample(x)}>
+                            <Typography component="div" sx={{ px: 1, py: 0.5 }}>
+                                <Markdown
+                                    children={`${index + 1} - ${getDisplayExample(
+                                        stripHtmlExceptHighlight(x.DetailHtml),
+                                    )}`}
+                                />
+                            </Typography>
+                        </ListItemButton>
                     ))}
                 </Box>
             )}

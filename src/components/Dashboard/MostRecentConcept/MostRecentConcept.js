@@ -1,10 +1,22 @@
 import { memo, useEffect, useState } from 'react';
-import { Box, FormControl, InputLabel, MenuItem, Paper, Select, Skeleton, Typography } from '@mui/material';
+import {
+    Box,
+    FormControl,
+    InputLabel,
+    ListItemButton,
+    MenuItem,
+    Paper,
+    Select,
+    Skeleton,
+    Typography,
+} from '@mui/material';
 import { stylePaper } from '~/utils/style/muiCustomStyle';
 import { getListMostRecentConcept } from '~/services/dashboardService';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 function MostRecentConcept() {
+    const navigate = useNavigate();
     const [limitConcept, setLimitConcept] = useState(5);
 
     const { data: listMostRecentConcept, isLoading } = useQuery({
@@ -30,6 +42,17 @@ function MostRecentConcept() {
             };
         }
     }, [isLoading]);
+
+    /**
+     * Xử lý khi chọn View tree: Điều hướng sang màn tree và tự động bind giá trị concept
+     */
+    const handleViewTree = (selectedRow) => {
+        navigate('/tree', {
+            state: {
+                concept: !!selectedRow ? { ...selectedRow } : null,
+            },
+        });
+    };
 
     return (
         <Paper sx={{ ...stylePaper, p: 2 }}>
@@ -71,9 +94,11 @@ function MostRecentConcept() {
             ) : (
                 <Box sx={{ mt: 1, maxHeight: 280, overflowY: 'auto' }}>
                     {listMostRecentConcept?.map((x, index) => (
-                        <Typography key={index} sx={{ px: 1, py: 0.5 }}>
-                            {index + 1} - {x.Title}
-                        </Typography>
+                        <ListItemButton key={index} onClick={() => handleViewTree(x)}>
+                            <Typography sx={{ px: 1, py: 0.5 }}>
+                                {index + 1} - {x.Title}
+                            </Typography>
+                        </ListItemButton>
                     ))}
                 </Box>
             )}
