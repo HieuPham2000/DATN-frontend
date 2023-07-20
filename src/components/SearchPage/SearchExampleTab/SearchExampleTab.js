@@ -115,7 +115,7 @@ function SearchExampleTab() {
                     setListExample(data.Data);
 
                     if (isShowToastSuccess) {
-                        toast.success('Search successfully');
+                        // toast.success('Search successfully');
                     } else {
                         setShowToastSuccess(true);
                     }
