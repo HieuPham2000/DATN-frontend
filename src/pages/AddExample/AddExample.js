@@ -22,6 +22,8 @@ import ExampleRTEControl from '~/components/Example/ExampleRTEControl';
 import { useLocation } from 'react-router-dom';
 import { stripHtmlExceptHighlight } from '~/utils/common/utils';
 import AlertDialog from '~/components/BaseComponent/AlertDialog';
+import Loading from '~/components/Loading';
+import useLocalStorage from '~/hooks/useLocalStorage';
 
 const cx = classNames.bind(styles);
 const schema = yup.object().shape({
@@ -38,6 +40,32 @@ const customStylePaper = {
     m: 1,
     mb: 2,
 };
+
+const exampleDefaultValue = {
+    example: '',
+    tone: {
+        ToneName: 'Neutral',
+        ToneId: null,
+    },
+    mode: {
+        ModeName: 'Neutral',
+        ModeId: null,
+    },
+    register: {
+        RegisterName: 'Neutral',
+        RegisterId: null,
+    },
+    nuance: {
+        NuanceName: 'Neutral',
+        NuanceId: null,
+    },
+    dialect: {
+        DialectName: 'Neutral',
+        DialectId: null,
+    },
+    note: '',
+};
+
 function AddExample() {
     // Xử lý nhận state khi được điều hướng tới từ màn khác
     const location = useLocation();
@@ -52,7 +80,7 @@ function AddExample() {
         [location],
     );
 
-    const [reuseParam, setReuseParam] = useState(true);
+    const [reuseParam, setReuseParam] = useLocalStorage('reuseParamAddExample', true);
     const [relation, setRelation] = useState(null);
     const [selectedConcept, setSelectedConcept] = useState(null);
     const [listLinkedConcept, setListLinkedConcept] = useState([]);
@@ -74,30 +102,7 @@ function AddExample() {
 
     const methods = useForm({
         mode: 'onSubmit',
-        defaultValues: {
-            example: '',
-            tone: {
-                ToneName: 'Neutral',
-                ToneId: null,
-            },
-            mode: {
-                ModeName: 'Neutral',
-                ModeId: null,
-            },
-            register: {
-                RegisterName: 'Neutral',
-                RegisterId: null,
-            },
-            nuance: {
-                NuanceName: 'Neutral',
-                NuanceId: null,
-            },
-            dialect: {
-                DialectName: 'Neutral',
-                DialectId: null,
-            },
-            note: '',
-        },
+        defaultValues: JSON.parse(JSON.stringify(exampleDefaultValue)),
         resolver: yupResolver(schema),
     });
 
@@ -107,7 +112,7 @@ function AddExample() {
         setFocus('example');
     }, [setFocus]);
     // ==========================================================================
-    const { mutate: handleSave } = useMutation(
+    const { mutate: handleSave, isLoading: isLoadingSave } = useMutation(
         async (data) => {
             const res = await addExample({
                 DetailHtml: data.example,
@@ -235,7 +240,7 @@ function AddExample() {
         setDelaySearchConcept(0);
         setSearchConcept({ value: '' });
         setListLinkedConcept([]);
-        reset();
+        reset(JSON.parse(JSON.stringify(exampleDefaultValue)));
     };
 
     const resetReuseParam = (param) => {
@@ -246,11 +251,26 @@ function AddExample() {
         setListLinkedConcept([]);
         reset({
             example: '',
-            tone: param?.tone || null,
-            mode: param?.mode || null,
-            register: param?.register || null,
-            nuance: param?.nuance || null,
-            dialect: param?.dialect || null,
+            tone: param?.tone || {
+                ToneName: 'Neutral',
+                ToneId: null,
+            },
+            mode: param?.mode || {
+                ModeName: 'Neutral',
+                ModeId: null,
+            },
+            register: param?.register || {
+                RegisterName: 'Neutral',
+                RegisterId: null,
+            },
+            nuance: param?.nuance || {
+                NuanceName: 'Neutral',
+                NuanceId: null,
+            },
+            dialect: param?.dialect || {
+                DialectName: 'Neutral',
+                DialectId: null,
+            },
             note: param?.note || '',
         });
     };
@@ -314,6 +334,7 @@ function AddExample() {
 
     return (
         <div className={cx('wrapper')}>
+            {isLoadingSave && <Loading />}
             {openAlert && (
                 <AlertDialog
                     title="Undecided example"
