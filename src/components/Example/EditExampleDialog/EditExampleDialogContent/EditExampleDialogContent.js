@@ -124,7 +124,7 @@ function EditExampleDialogContent({ onClose, exampleId, handleAfter = () => {} }
                     DialectId: currentExample.DialectId,
                     DialectName: currentExample.DialectName,
                 },
-                note: currentExample.note,
+                note: currentExample.Note,
             });
             setListLinkedConcept(
                 (currentExample.ListExampleRelationship || []).map((x) => ({
