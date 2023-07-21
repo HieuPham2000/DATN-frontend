@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#00ab55" />
+        <meta name="description" content="Organize your vocabulary in a personalized way" />
+        <meta
+            name="keywords"
+            content="hust pvo, hust, pvo, english, vocabulary, learning vocabulary, learning method"
+        />
+        <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+        <title>HUST PVO - Personalized vocabulary organizer</title>
+        <meta data-rh="true" name="twitter:card" content="summary_large_image" />
+        <meta data-rh="true" property="og:image" content="%PUBLIC_URL%/social_card.png" />
+        <meta data-rh="true" name="twitter:image" content="%PUBLIC_URL%/social_card.png" />
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            html,
+            body {
+                color: rgba(0, 0, 0, 0.87);
+                font-family: 'Helvetica', 'Verdana', sans-serif;
+                -moz-osx-font-smoothing: grayscale;
+                -webkit-font-smoothing: antialiased;
+                height: 100%;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                font-size: 62.5%;
+            }
+
+            html {
+                overflow: hidden;
+            }
+
+            body {
+                background: linear-gradient(315deg, rgba(56, 182, 255, 0.2) 0%, rgba(0, 0, 0, 0) 100%),
+                    linear-gradient(141deg, rgba(0, 171, 85, 0.2) 0%, rgba(0, 0, 0, 0) 100%), #fff;
+                font-size: 1.6rem;
+                position: relative;
+            }
+
+            .wrapper {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .title {
+                font-size: 5rem;
+                text-shadow: 0 0 1.5px #000;
+                letter-spacing: 5px;
+                line-height: 1rem;
+                text-align: center;
+            }
+
+            .subtitle {
+                font-weight: 300;
+                font-size: 1.6rem;
+                text-align: center;
+            }
+
+            .logo-img {
+              width: 250px;
+              margin-bottom: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <img src="%PUBLIC_URL%/logo-with-text-right.png" class="logo-img" alt="HUSTPVO logo"/>
+            <h1 class="title">OFFLINE</h1>
+            <h4 class="subtitle">Please check your internet connection</h4>
+        </div>
+    </body>
+</html>
