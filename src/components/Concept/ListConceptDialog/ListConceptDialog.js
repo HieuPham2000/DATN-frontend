@@ -24,13 +24,16 @@ import useDebounce from '~/hooks/useDebounce';
 import { searchConcept } from '~/services/conceptService';
 import EditConceptDialog from '~/components/Concept/EditConceptDialog';
 import DeleteConceptDialog from '~/components/Concept/DeleteConceptDialog';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getUserSettingByKey } from '~/services/userSettingService';
 import HUSTConstant from '~/utils/common/constant';
 
 function ListConceptDialog({ open, onClose }) {
     const navigate = useNavigate();
+    const { pathname } = useLocation();
+
     const queryClient = useQueryClient();
+
     const [openSnack, setOpenSnack] = useState(false);
     const [selectedRow, setSelectedRow] = useState(null);
     const [searchValue, setSearchValue] = useState('');
@@ -174,10 +177,19 @@ function ListConceptDialog({ open, onClose }) {
     const handleAfterEditSuccess = () => {
         setReClickMaster(true);
         queryClient.invalidateQueries(['searchConcept']);
+
+        if (pathname === '/' || pathname === '/dashboard') {
+            queryClient.invalidateQueries(['getListMostRecentConcept']);
+        }
     };
 
     const handleAfterDeleteSuccess = () => {
         queryClient.invalidateQueries(['searchConcept']);
+
+        if (pathname === '/' || pathname === '/dashboard') {
+            queryClient.invalidateQueries(['getListMostRecentConcept']);
+            queryClient.invalidateQueries(['numberRecord']);
+        }
     };
 
     const Content = (

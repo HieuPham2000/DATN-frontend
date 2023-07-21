@@ -168,6 +168,25 @@ function Login() {
         }
     };
 
+    /**
+     * Xử lý submit khi Enter
+     */
+    useEffect(() => {
+        const keyDownHandler = (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                handleSubmit(handleLogin)();
+            }
+        };
+
+        document.addEventListener('keydown', keyDownHandler);
+
+        return () => {
+            document.removeEventListener('keydown', keyDownHandler);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <div className={cx('wrapper')}>
             <Helmet>

@@ -83,7 +83,7 @@ function SearchConceptAssociationTab() {
             onSuccess: (data) => {
                 if (data?.Status === Enum.ServiceResultStatus.Success) {
                     processAfterSearchSuccess(data?.Data);
-                    toast.success('Search successfully');
+                    // toast.success('Search successfully');
                 } else if (data?.Status === Enum.ServiceResultStatus.Fail) {
                     setListResult([]);
                     toast.error(data.Message || 'Search failed');
