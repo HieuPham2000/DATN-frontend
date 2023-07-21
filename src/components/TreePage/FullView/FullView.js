@@ -8,6 +8,7 @@ import ExampleFolderContent from '~/components/TreePage/FullView/ExampleFolderCo
 import { useQuery } from '@tanstack/react-query';
 import ConceptFolderContent from '~/components/TreePage/FullView/ConceptFolderContent';
 import { getTree } from '~/services/treeService';
+import Loading from '~/components/Loading';
 // import { Box } from '@mui/material';
 // import searchImg from '~/assets/images/search.svg';
 
@@ -29,7 +30,7 @@ function FullView({ rootConcept, setRootConcept }) {
         }
     }, [selectedNode]);
 
-    const { data: treeData } = useQuery({
+    const { data: treeData, isLoading } = useQuery({
         queryKey: ['getTree', rootConcept?.ConceptId],
         queryFn: async () => {
             const res = await getTree(rootConcept?.ConceptId);
@@ -52,6 +53,9 @@ function FullView({ rootConcept, setRootConcept }) {
     }, []);
 
     if (!rootConcept || !treeData) {
+        if (isLoading) {
+            return <Loading />;
+        }
         return (
             <>
                 {/* <Box className={cx('img-wrapper')}>

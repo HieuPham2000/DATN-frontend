@@ -60,7 +60,7 @@ function GridConceptRelation({ rootConcept, listChildren, listParent, onClickCon
                     }}
                     id="paper2"
                 >
-                    <Typography color="primary" fontWeight="500">
+                    <Typography color="primary" fontWeight="500" pl={1}>
                         Children
                     </Typography>
                     <Box>
@@ -95,7 +95,7 @@ function GridConceptRelation({ rootConcept, listChildren, listParent, onClickCon
                         m: '0 auto',
                     }}
                 >
-                    <Typography color="primary" fontWeight="500">
+                    <Typography color="primary" fontWeight="500" pl={1}>
                         Parent
                     </Typography>
                     <Box>
