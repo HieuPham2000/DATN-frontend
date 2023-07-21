@@ -2,6 +2,7 @@ import { North as ArrowUpIcon } from '@mui/icons-material';
 import { Box } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { memo, useEffect, useState } from 'react';
+import Loading from '~/components/Loading';
 import GridConceptRelation from '~/components/TreePage/SimpleView/GridConceptRelation';
 import ListExample from '~/components/TreePage/SimpleView/ListExample';
 import ListExampleRelation from '~/components/TreePage/SimpleView/ListExampleRelation';
@@ -29,7 +30,7 @@ function SimpleView({ rootConcept, setRootConcept }) {
         setSelectedExampleLinkId(null);
     }, [rootConcept]);
 
-    const { data: treeData } = useQuery({
+    const { data: treeData, isLoading } = useQuery({
         queryKey: ['getTree', rootConcept?.ConceptId],
         queryFn: async () => {
             const res = await getTree(rootConcept?.ConceptId);
@@ -43,6 +44,9 @@ function SimpleView({ rootConcept, setRootConcept }) {
     };
 
     if (!rootConcept || !treeData) {
+        if (isLoading) {
+            return <Loading />;
+        }
         return <></>;
     }
 
