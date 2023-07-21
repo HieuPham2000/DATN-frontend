@@ -10,7 +10,7 @@
 import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
-import { offlineFallback } from 'workbox-recipes';
+// import { offlineFallback } from 'workbox-recipes';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 
@@ -72,6 +72,6 @@ self.addEventListener('message', (event) => {
 
 // Any other custom service worker logic can go here.
 // Set up offline fallback
-offlineFallback({
-  pageFallback: process.env.PUBLIC_URL + '/offline.html',
-});
+// offlineFallback({
+//   pageFallback: process.env.PUBLIC_URL + '/offline.html',
+// });
